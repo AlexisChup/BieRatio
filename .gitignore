@@ -1,0 +1,14 @@
+.expo
+.git
+.idea
+Access_Token
+Aides
+assets
+node_modules
+reset-cache
+.watchmanconfig
+app.json
+scripts
+babel.config.js
+package-lock.json
+package.json
