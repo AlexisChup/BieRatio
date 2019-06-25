@@ -10,11 +10,29 @@ class RatioSearchBeer extends React.Component {
   render(){
     return(
 
-      <TouchableOpacity
-        style = {{ flex : 1 }}
-        onPress = {() => this.props.navigation.navigate('Home')}>
-        <Text style = {{ flex: 1 }}>Faire la recherche en fonction des ratios</Text>
-      </TouchableOpacity>
+
+
+        <View
+
+        style = {{ flex: 1, backgroundColor: 'tomato'}}
+
+
+        onMoveShouldSetResponder={
+          (evt) => true
+        }
+        onResponderMove={
+          (evt) => {
+            console.log('onResponderMove', (evt.nativeEvent.locationY/ 50).toFixed(1) );
+          }
+        }
+
+      >
+        <Text>Yo</Text>
+      </View>
+
+
+
+
     )
   }
 

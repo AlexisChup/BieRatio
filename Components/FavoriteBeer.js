@@ -1,85 +1,141 @@
 
 import React from 'react'
 
-import { StyleSheet, View, FlatList, SafeAreaView, Text, ScrollView } from 'react-native'
-import { Bar, VictoryBar, VictoryChart, VictoryTheme, VictoryVoronoiContainer, VictoryContainer } from "victory-native";
+import { Alert, StyleSheet, View, FlatList, SafeAreaView, Text, ScrollView } from 'react-native'
+import VerticalSlider from 'rn-vertical-slider'
 
-const data = [
-  { x: "Goût", y: 2.5, fill:"#376285", opacity: 1, label: "G" },
-  { x: "Prix", y: 1.3, fill: "#e7eb96", opacity: 1, label: "P" },
-  { x: "Alcool", y: 3.8, fill: "#fe0a00", opacity: 0.8, label: "A" },
+const colorBackItem = "#E4E4E4"
+const colorTaste = "#FFE73C"
+const colorPrice = "#FF762D"
+const colorAlcool = "#F32E2E"
 
-];
 
 class FavoriteBeer extends React.Component{
+
+
+
 
   constructor(props){
     super(props)
     this.state= {
-      scrollEnabled: false
+      taste: 0,
+      price: 0,
+      alcool: 0
     }
-    this.text = "A"
+
+  }
+
+
+  updateSliderTaste (value){
+    const number = value.toFixed(2)
+    this.setState({
+      taste : number
+    })
+    console.log(" state de taste : " + this.state.taste);
+  }
+
+  updateSliderPrice (value){
+    const number = value.toFixed(2)
+    this.setState({
+      price : number
+    })
+    console.log(" state de price : " + this.state.price);
+  }
+
+  updateSliderAlcool (value){
+    const number = value.toFixed(2)
+    this.setState({
+      alcool : number
+    })
+    console.log(" state de alcool : " + this.state.alcool);
   }
 
 
 
   render() {
-    VictoryTheme.material.axis.style.grid.stroke = 'none'
-
     return(
-      <SafeAreaView style = {styles.main_container}>
+      <View style = {styles.main_container}>
+        <View
+          style = {styles.container_slider}
+        >
+          <View style = {styles.container}>
+            <VerticalSlider
+              value={1}
+              disabled={false}
+              min={1}
+              max={5}
+              onChange={(value: number) => {
+                this.updateSliderTaste(value)
+              }}
+              onComplete={(value: number) => {
 
-          <View style={styles.container}>
-            <VictoryChart
-              width={350}
-              theme={VictoryTheme.material}
-              domain={{ x: [0.5, 3.5], y: [0, 5] }}
-              // containerComponent={
-              //   <VictoryVoronoiContainer
-              //     labels={(d) => `${d.x}, ${d.y}`}
-              //   />
-              // }
-
-            >
-              <VictoryBar
-                data={data}
-                barRatio = {0.8}
-                cornerRadius = {{ top: 15 }}
-                style = {{
-                  data: {
-                    fill: (d) => d.fill,stroke: "black", strokeWidth: 2,
-                    opacity: (d) => d.opacity
-                  }
-                }}
-                categories = {{
-                  x: ["Goût", "Prix", "Alcool"]
-                }}
-              />
-            </VictoryChart>
-
-            <VictoryBar
-              data={[
-                {x: 1, y: 2},
-                {x: 2, y: 4},
-                {x: 3, y: 7},
-                {x: 4, y: 3},
-                {x: 5, y: 5},
-              ]}
-              dataComponent={
-                <Bar
-                  events={{
-                    onClick: () => console.log("Appuie sur une bar")
-                  }}
-                />
-              }
+              }}
+              width={50}
+              height={300}
+              step={0.2}
+              borderRadius={150}
+              minimumTrackTintColor={colorTaste}
+              maximumTrackTintColor={colorBackItem}
+              showBallIndicator = {true}
+              ballIndicatorColor={colorTaste}
+              ballIndicatorTextColor={'white'}
             />
-
-
-
-
           </View>
 
-      </SafeAreaView>
+          <View style = {styles.container}>
+            <VerticalSlider
+              value={1}
+              disabled={false}
+              min={1}
+              max={5}
+              onChange={(value: number) => {
+                this.updateSliderPrice (value)
+              }}
+              onComplete={(value: number) => {
+                //console.log("COMPLETE", value);
+              }}
+              width={50}
+              height={300}
+              step={0.2}
+              borderRadius={150}
+              minimumTrackTintColor={colorPrice}
+              maximumTrackTintColor={colorBackItem}
+              showBallIndicator
+              ballIndicatorColor={colorPrice}
+              ballIndicatorTextColor={colorBackItem}
+            />
+          </View>
+          <View style = {styles.container}>
+            <VerticalSlider
+              value={1}
+              disabled={false}
+              min={1}
+              max={5}
+              onChange={(value: number) => {
+                this.updateSliderAlcool(value)
+              }}
+              onComplete={(value: number) => {
+
+              }}
+              width={50}
+              height={300}
+              step={0.2}
+              borderRadius={150}
+              minimumTrackTintColor={colorAlcool}
+              maximumTrackTintColor={colorBackItem}
+              showBallIndicator
+              ballIndicatorColor={colorAlcool}
+              ballIndicatorTextColor={colorBackItem}
+            />
+          </View>
+        </View>
+        <View style = {styles.description_slider}>
+          <Text style = {[styles.description_slider_text,{color : colorTaste} ]}>Goût</Text>
+          <Text style = {[styles.description_slider_text,{color : colorPrice} ]}>Prix</Text>
+          <Text style = {[styles.description_slider_text,{color : colorAlcool} ]}>Alcool</Text>
+        </View>
+      </View>
+
     )
   }
 }
@@ -88,16 +144,32 @@ class FavoriteBeer extends React.Component{
 
 
 const styles = StyleSheet.create({
-
   main_container: {
-    flex:1,
+    flex: 1
+  },
+  container_slider: {
+    flex:3,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: 'row',
+    alignContent : 'space-around',
+    borderColor: 'red',
+    borderWidth: 2,
 
   },
   container: {
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "#f5fcff"
+    flex: 1,
+    margin: 60,
+  },
+  description_slider: {
+    marginTop : 10,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  description_slider_text: {
+    fontSize: 25,
+
   },
 
 })
