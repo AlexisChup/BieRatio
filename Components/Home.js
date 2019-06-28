@@ -4,7 +4,7 @@ import React from 'react'
 import { Dimensions, Image, TouchableOpacity, StyleSheet, View, TextInput, Button, Text, FlatList, SafeAreaView } from 'react-native'
 
 import RatioSearchBeer from './RatioSearchBeer'
-import DiscoverBeer from './DiscoverBeer'
+import NameSearchBeer from './NameSearchBeer'
 import FavoriteBeer from './FavoriteBeer'
 import {
   Card,

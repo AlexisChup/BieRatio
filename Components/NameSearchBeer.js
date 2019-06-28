@@ -6,7 +6,7 @@ import BeerItem from './BeerItem'
 import Home from './Home'
 
 
-class DiscoverBeer extends React.Component {
+class NameSearchBeer extends React.Component {
   static navigationOptions = ({ navigate, navigation }) => ({
     title: 'Recherche par nom',
     headerLeft: () => {
@@ -156,4 +156,4 @@ const styles = StyleSheet.create({
 
 
 
-export default DiscoverBeer
+export default NameSearchBeer

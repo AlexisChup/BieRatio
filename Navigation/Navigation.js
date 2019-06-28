@@ -9,7 +9,7 @@ import Home from '../Components/Home'
 
 import FavoriteBeer from '../Components/FavoriteBeer'
 
-import DiscoverBeer from '../Components/DiscoverBeer'
+import NameSearchBeer from '../Components/NameSearchBeer'
 import DescriptionBeer from '../Components/DescriptionBeer'
 import RatioSearchBeer from '../Components/RatioSearchBeer'
 
@@ -25,11 +25,21 @@ const HomeStack = createStackNavigator({ //Permet d'assembler plusieurs vues
   },
 })
 
-const RatioStack  = createStackNavigator ({ RatioSearchBeer: RatioSearchBeer })
+const RatioSearchStack  = createStackNavigator ({
+  RatioSearchBeer: {
+    screen : RatioSearchBeer
+  },
+  DescriptionBeer:{
+    screen: DescriptionBeer,
+    navigationOptions: {
+      title: 'Description',
+    },
+  }
+})
 
-const DiscoverBeerStack = createStackNavigator({
-  DiscoverBeer:{
-    screen: DiscoverBeer,
+const NameSearchStack = createStackNavigator({
+  NameSearchBeer:{
+    screen: NameSearchBeer,
   },
   DescriptionBeer:{
     screen: DescriptionBeer,
@@ -44,7 +54,7 @@ const DiscoverBeerStack = createStackNavigator({
 const AppMenuNavigator = createBottomTabNavigator(
   {
   SearchRatio: {      //Le nom en bas
-    screen: RatioStack,   // On lui fournit la bonne vue
+    screen: RatioSearchStack,   // On lui fournit la bonne vue
     navigationOptions: {
       tabBarIcon: () => {
         return <Image
@@ -54,7 +64,7 @@ const AppMenuNavigator = createBottomTabNavigator(
     }
   },
   NameStack: {
-    screen: DiscoverBeerStack,
+    screen: NameSearchStack,
     navigationOptions: {
       tabBarIcon: () => {
         return <Image
