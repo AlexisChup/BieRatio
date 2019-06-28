@@ -4,6 +4,8 @@ import { Image, TouchableOpacity, Alert, StyleSheet, View, FlatList, SafeAreaVie
 import VerticalSlider from 'rn-vertical-slider'
 import { Button } from 'react-native-elements'
 
+import DescriptionBeer from './DescriptionBeer'
+
 const colorBackItem = "#E4E4E4"
 const colorTaste = "#FFE73C"
 const colorPrice = "#FF762D"
@@ -32,6 +34,11 @@ class RatioSearchBeer extends React.Component{
         <Text> Goût : {this.taste} </Text>
         <Text> Prix : {this.price} </Text>
         <Text> Alcool : {this.alcool} </Text>
+        <Button
+          type= "outline"
+          title= "Rechercher"
+          onPress = {() => this.props.navigation.navigate("DescriptionBeer", {bid: 33040})}
+        />
       </View>
 
     )
