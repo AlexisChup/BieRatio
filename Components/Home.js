@@ -3,7 +3,7 @@
 import React from 'react'
 import { Dimensions, Image, TouchableOpacity, StyleSheet, View, TextInput, Button, Text, FlatList, SafeAreaView } from 'react-native'
 
-import RatioSearchBeer from './RatioSearchBeer'
+import RatioBeer from './RatioBeer'
 import NameSearchBeer from './NameSearchBeer'
 import FavoriteBeer from './FavoriteBeer'
 import {
@@ -37,7 +37,7 @@ class Home extends React.Component {
         <Divider style = {styles.divider} />
         <TouchableOpacity
           style = {styles.item}
-          onPress = {() => this.props.navigation.navigate('RatioSearchBeer')}>
+          onPress = {() => this.props.navigation.navigate('RatioBeer')}>
           <Image
             style = {styles.image}
             source = {require('../Images/ic_Ratio_Search_Beer.png')}
@@ -47,7 +47,7 @@ class Home extends React.Component {
         <Divider style = {styles.divider} />
         <TouchableOpacity
           style = {styles.item}
-          onPress = {() => this.props.navigation.navigate('DiscoverBeer')}>
+          onPress = {() => this.props.navigation.navigate('NameSearchBeer')}>
           <Image
             style = {styles.image}
             source = {require('../Images/ic_sort_alphabet.png')}

@@ -10,9 +10,12 @@ import Home from '../Components/Home'
 import FavoriteBeer from '../Components/FavoriteBeer'
 
 import NameSearchBeer from '../Components/NameSearchBeer'
-import DescriptionBeer from '../Components/DescriptionBeer'
+
+
+import RatioBeer from '../Components/RatioBeer'
 import RatioSearchBeer from '../Components/RatioSearchBeer'
 
+import DescriptionBeer from '../Components/DescriptionBeer'
 
 
 
@@ -26,6 +29,9 @@ const HomeStack = createStackNavigator({ //Permet d'assembler plusieurs vues
 })
 
 const RatioSearchStack  = createStackNavigator ({
+  RatioBeer: {
+    screen : RatioBeer
+  },
   RatioSearchBeer: {
     screen : RatioSearchBeer
   },
