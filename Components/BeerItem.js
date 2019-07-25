@@ -1,14 +1,47 @@
 import React from 'react'
-import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, TextInput, Button, Text, FlatList, SafeAreaView } from 'react-native'
-import DescriptionBeer from './DescriptionBeer'
+import { Image, TouchableOpacity, StyleSheet, View, Text, } from 'react-native'
+
 import {
-  Card,
   Divider,
+  Icon,
 } from 'react-native-elements'
+
+import Flag from 'react-native-flags';
+
+import FadeIn from './Animations/FadeIn'
 
 class BeerItem extends React.Component {
 
-
+  _displayFlag(){
+    const beer = this.props.beer
+    const { getCode, getName } = require('country-list');
+    var codeState = getCode( beer.brewery.country_name );
+    if(codeState === undefined){
+      if(beer.brewery.country_name === "Russia"){
+        codeState = getCode("Russian Federation")
+      }else if (beer.brewery.country_name === "England"){
+        codeState = getCode("United Kingdom")
+      }
+    }
+    if (codeState != undefined){
+      return (
+        <Flag
+          code = {codeState}
+          size = { 64 }
+          type = 'shiny'
+        />
+      )
+    }
+    else{
+      return(
+        <Icon
+          type = "material-community"
+          name = "flag-remove"
+          size = {64}        
+        />
+      )
+    }
+  }
 
     render(){
       const { beer, displayDetailForBeer } = this.props
@@ -16,29 +49,32 @@ class BeerItem extends React.Component {
 
       return(
 
-        <TouchableOpacity
-          style = {styles.main_container}
-          onPress ={() => displayDetailForBeer(beer.beer.bid)}>
-          <View style = {styles.beer_item}>
-            <Image
-              style ={styles.image_item}
-              source={{uri: beer.beer.beer_label}}
-            />
-            <View style = {styles.description_item}>
-              <Text style = {styles.title_item} numberOfLines={1}>{beer.beer.beer_name}</Text>
-
-              <View style = {styles.texte_item}>
-                <Text style = {styles.description_texte}>{beer.beer.bid}</Text>
-
-                <View style = {styles.separate}></View>
-                <Text style = {styles.description_texte}>{beer.beer.beer_abv}%</Text>
+        <FadeIn>
+          <TouchableOpacity
+            onPress ={() => displayDetailForBeer(beer.beer.bid)}>
+            <View style = {styles.beer_item}>
+              <Image
+                style ={styles.image_item}
+                source={{uri: beer.beer.beer_label}}
+              />
+              <View style = {styles.description_item}>
+                <Text style = {styles.title_item} numberOfLines={1}>
+                  {beer.beer.beer_name}
+                </Text>
+                <View style = { styles.flag }>
+                  <Image
+                    style = { styles.image }
+                    source = {require('../Images/ic_brewery.png')}
+                  />
+                  <Text style = { styles.brewery }> : </Text>
+                  {this._displayFlag()}
+                </View>
               </View>
-
             </View>
-          </View>
-          <Divider style = { styles.divider }/>
+            <Divider style = { styles.divider }/>
 
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </FadeIn>
 
 
 
@@ -51,53 +87,41 @@ class BeerItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  main_container: {
-
-  },
   beer_item: {
     flexDirection: 'row',
-    // borderColor: 'transparent',
-    // borderBottomColor: 'gray',
-    // borderWidth: 4,
     padding: 3,
   },
   image_item: {
     height: 100,
     width: 100,
     margin: 5,
+    resizeMode: "contain",
   },
   description_item: {
     flexDirection: 'column',
-    margin: 3,
     flex: 1,
+    justifyContent: 'space-between',
   },
   title_item:{
     fontWeight: 'bold',
     fontSize: 20,
-    flexWrap: 'wrap',
-    margin: 5,
-    paddingRight: 5,
-    flex: 1,
   },
-  texte_item:{
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginLeft: 5,
+  flag:{
+    justifyContent: 'center',
     flexDirection: 'row',
-    flex: 3,
-  },
-  description_texte:{
-    fontSize: 15,
-  },
-  separate: {
-    height: 21,
-    width: 1,
-    borderWidth:2,
-    backgroundColor: 'black',
   },
   divider: {
     height: 5,
-    backgroundColor: 'black',
+    backgroundColor: '#fcb900',
+  },
+  image: {
+    marginTop: 10,
+    height: 45,
+    width: 45,
+  },
+  brewery: {
+    fontSize: 25,
+    marginTop: 15,
   },
 })
 

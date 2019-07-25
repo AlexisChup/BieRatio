@@ -3,12 +3,13 @@
 .idea
 Access_Token
 Aides
+API
 assets
 node_modules
 reset-cache
+scripts
 .watchmanconfig
 app.json
-scripts
 babel.config.js
 package-lock.json
 package.json

@@ -1,13 +1,14 @@
 import React from 'react'
-import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, TextInput, Button, Text, FlatList, SafeAreaView } from 'react-native'
+import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, Text, FlatList, SafeAreaView, Dimensions } from 'react-native'
 import { getsBeersFromApiWithSearchedText } from '../API/UntappdApi'
-import DescriptionBeer from './DescriptionBeer'
 import BeerItem from './BeerItem'
-import Home from './Home'
+import { Madoka } from 'react-native-textinput-effects';
 
+
+var {width, height} = Dimensions.get('window');
 
 class NameSearchBeer extends React.Component {
-  static navigationOptions = ({ navigate, navigation }) => ({
+  static navigationOptions = ({ navigation }) => ({
     title: 'Recherche par nom',
     headerLeft: () => {
             return (
@@ -19,7 +20,8 @@ class NameSearchBeer extends React.Component {
                   style = { styles.icon }/>
               </TouchableOpacity>
             )
-    }
+    },
+    headerBackTitle: "Liste"
   })
 
 
@@ -30,22 +32,26 @@ class NameSearchBeer extends React.Component {
     super(props)
     this.state = {
       beers: [],
-      isLoading: false
+      isLoading: false,
+      nbBeers: 1,
     }
-    this.searchedText = ""
     this._displayDetailForBeer = this._displayDetailForBeer.bind(this)
+    this.inputColor = '#fcb900'
+    this.searchedText =  ""
 
   }
 
 
-  _searchTextInputChanged(text){    //On change la variable du text
-    this.searchedText = text     //Des que l'on écrit car c'est dans le state
+  _searchTextInputChanged(text){
+    this.searchedText = text
   }
 
   _searchBeers(){             //call when user look for an other beer
     this.setState(        //Re set var
       {
+      isLoading: true,
       beers: [],
+      nbBeers: 1,
       },
       () => {
         this._loadBeers()   //load beer in the array beers
@@ -55,14 +61,18 @@ class NameSearchBeer extends React.Component {
 
   _loadBeers(){
     if(this.searchedText.length > 0){
-      this.setState({ isLoading: true })
       getsBeersFromApiWithSearchedText(this.searchedText).then(data => {
           this.setState({
             beers: [...this.state.beers, ...data.response.beers.items],
-            isLoading: false
+            nbBeers: data.response.found,
+            isLoading: false,
           })
-      })
+      }), () => this._emptySearch()
 
+    }else {
+      this.setState({
+        isLoading: false
+      }, this._emptySearch())
     }
   }
 
@@ -81,24 +91,70 @@ class NameSearchBeer extends React.Component {
   }
 
   _displayDetailForBeer = (bid) => {
-    this.props.navigation.navigate('DescriptionBeer', {bid: bid})
+    let name = "name"
+    this.props.navigation.navigate('DescriptionBeer', {bid: bid, from : name})
   }
 
   _displayHome() {
     this.props.navigation.navigate('Home')
   }
 
+  _waitingSearch(){
+    if( this.searchedText.length === 0) {
+      return(
+        <View style = { styles.iconView } >
+          <Text style = { styles.iconText } >
+            Saisissez le nom d'une bière
+          </Text>
+          <Image 
+            style = { styles.iconImage }
+            source = { require('../Images/ic_sleeping_face.png') }
+          />
+        </View>
+      )
+    }
+  }
+
+  _emptySearch(){
+    const nbBeers = this.state.nbBeers
+    if(nbBeers ===0 ){
+      return(
+        <View style = {styles.iconView} >
+          <Text style = {styles.iconText} >
+            Aucunes bières ne correspond à votre recherche
+          </Text>
+          <Image
+            style = {styles.iconImage}
+            source = {require('../Images/emoji_man_shrugging.png')}
+          />
+        </View>
+      )
+    }
+  }
+
   render() {
     return (
       <SafeAreaView style = {styles.main_container}>
-        <TextInput
-          style ={styles.textinput}
-          placeholder='Saisissez le nom de la bière'
+        <Madoka
+          label={'Nom de la bière'}
+          // this is used as active and passive border color
+          borderColor={this.inputColor}
+          inputPadding={16}
+          labelHeight={24}
+          labelStyle={{ color: this.inputColor }}
+          inputStyle={{ color: this.inputColor }}
+          style = {styles.textInput}
+          clearButtonMode="always"
           onChangeText={(text) => this._searchTextInputChanged(text)}
           onSubmitEditing= {() => this._searchBeers()}
-          clearButtonMode="always"
+          autoCorrect = {false}
         />
-        <Button title='Rechercher' onPress={() => this._searchBeers()}/>
+        <View style = {styles.divider} ></View>
+
+        {this._waitingSearch()}
+        {this._emptySearch()}
+
+
         <FlatList
           style = {styles.list}
           data = {this.state.beers}
@@ -110,7 +166,7 @@ class NameSearchBeer extends React.Component {
             />
           )}
         />
-
+        
         {this._displayLoading()}
       </SafeAreaView>
     )
@@ -125,13 +181,6 @@ class NameSearchBeer extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-  },
-  textinput: {
-    margin: 5,
-    height: 50,
-    borderColor: '#000000',
-    borderWidth: 1,
-    paddingLeft: 5
   },
   list: {
     flex: 1,
@@ -149,6 +198,30 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginLeft: 8,
+  },
+  textInput: {
+    margin: 5,
+  },
+  divider: {
+    height: 5,
+    backgroundColor: '#fcb900',
+    width : width,
+  },
+  iconImage: {
+    height: 200,
+    width: 200,
+    marginTop: 25,
+    resizeMode: 'contain',
+    
+  },
+  iconView: {
+    margin: 15,
+    alignItems: 'center'
+  },
+  iconText: {
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold'
   }
 
 })

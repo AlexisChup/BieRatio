@@ -1,11 +1,9 @@
 //Components/Home.js PAGE D'ACCEUIL
 
 import React from 'react'
-import { Dimensions, Image, TouchableOpacity, StyleSheet, View, TextInput, Button, Text, FlatList, SafeAreaView } from 'react-native'
+import { Dimensions, Image, TouchableOpacity, StyleSheet, Text, SafeAreaView } from 'react-native'
 
-import RatioBeer from './RatioBeer'
-import NameSearchBeer from './NameSearchBeer'
-import FavoriteBeer from './FavoriteBeer'
+
 import {
   Card,
   Divider,
@@ -32,7 +30,7 @@ class Home extends React.Component {
 
         <Image
           style = {styles.image_logo}
-          source = {require('../Images/ic_logo_app.png')}
+          source = {require('../Images/ic_logo_app.jpg')}
         />
         <Divider style = {styles.divider} />
         <TouchableOpacity
@@ -74,16 +72,6 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-
-
-  },
-  split:{
-    borderColor: 'transparent',
-    borderBottomColor: 'black',
-    borderWidth: 4,
-  },
-  logo_app: {
-    flex: 2,
   },
   image_logo: {
     flex: 2,
