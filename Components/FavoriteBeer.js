@@ -1,9 +1,27 @@
 
 import React from 'react'
-import { StyleSheet, View,  Text, Animated, Easing } from 'react-native'
+import { TouchableOpacity,Image ,StyleSheet, View,  Text, Animated, Easing } from 'react-native'
 
 
 class FavoriteBeer extends React.Component {
+
+  static navigationOptions = ({ navigate, navigation }) => ({
+    title: 'Bières favorites',
+    headerLeft: () => {
+            return (
+              <TouchableOpacity
+                style = {styles.icon}
+                onPress={ ()=>{ navigation.navigate('Home') } }>
+                <Image
+                  source = { require('../Images/ic_home.png') }
+                  style = { styles.icon }/>
+              </TouchableOpacity>
+            )
+    },
+    // headerBackTitle: "Ratios"
+  })
+
+
   constructor(props){
     super(props)
     this.state = {
@@ -77,8 +95,9 @@ class FavoriteBeer extends React.Component {
   render() {
     return (
       <View style={styles.main_container}>
-        <Animated.View style={[styles.animation_view, { top : this.state.topPosition, left: this.state.leftPosition }]}>
-        </Animated.View>
+        {/* <Animated.View style={[styles.animation_view, { top : this.state.topPosition, left: this.state.leftPosition }]}>
+        </Animated.View> */}
+        <Text>Yo la squale</Text>
       </View>
     )
 
@@ -95,6 +114,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     width: 100,
     height: 100
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    marginLeft: 8,
   }
 })
 

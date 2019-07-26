@@ -4,6 +4,10 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, Image } from 'react-native'
 import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation'
 import { fromLeft, fromRight, zoomIn, zoomOut } from 'react-navigation-transitions'
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
+
+// import { Transition } from 'expo'
+import { Transition } from 'react-native-reanimated';
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { Icon } from 'react-native-elements'
 
@@ -109,7 +113,17 @@ const NameSearchStack = createStackNavigator(
   }
 )
 
+const FavoriteStack = createStackNavigator(
+  {
+    FavoriteBeer: {
+      screen : FavoriteBeer
+    }
 
+  },
+  {
+    initialRouteName: "FavoriteBeer"
+  }
+)
 
 const AppMenuNavigator = createMaterialBottomTabNavigator(
   {
@@ -138,7 +152,7 @@ const AppMenuNavigator = createMaterialBottomTabNavigator(
       }
     },
     Favoris: {
-      screen: FavoriteBeer,
+      screen: FavoriteStack,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => {
           return <Icon
@@ -153,7 +167,8 @@ const AppMenuNavigator = createMaterialBottomTabNavigator(
   {
     shifting: true,
     activeTintColor: colorBottomTabTintColor,
-    barStyle: { backgroundColor : colorBottomTabBackground }
+    barStyle: { backgroundColor : colorBottomTabBackground },
+    initialRouteName: "Ratio"
 
   }
 )
@@ -170,11 +185,14 @@ const styles = StyleSheet.create({
 
 
 export default createAppContainer(
-  createSwitchNavigator (
+  createAnimatedSwitchNavigator (
     {
-    HomeStack: HomeStack,
-    AppMenuNavigator: AppMenuNavigator
+      HomeStack: HomeStack,
+      AppMenuNavigator: AppMenuNavigator
+      ,
     },
+    {
 
+    }
   )
 );
