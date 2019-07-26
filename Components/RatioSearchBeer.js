@@ -9,6 +9,8 @@ import { getsBeersFromRatio } from '../API/BieRatioApi'
 import { colorAlcool, colorBackItem, colorIbu, colorPrice} from '../assets/colors'
 var {height, width } = Dimensions.get('window')
 
+import { colorDivider } from '../assets/colors'
+
 class RatioSearchBeer extends React.Component{
   static navigationOptions = () => ({
     title: "Recherche par ratio",
@@ -239,7 +241,7 @@ const styles = StyleSheet.create({
   divider:{
     width: width,
     height: 5,
-    backgroundColor: '#fcb900',
+    backgroundColor: colorDivider,
     marginTop: 5,
   },
 })

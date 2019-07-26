@@ -3,7 +3,9 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, Image } from 'react-native'
 import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation'
-
+import { fromLeft, fromRight, zoomIn, zoomOut } from 'react-navigation-transitions'
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+import { Icon } from 'react-native-elements'
 
 import Home from '../Components/Home'
 
@@ -17,6 +19,7 @@ import RatioSearchBeer from '../Components/RatioSearchBeer'
 
 import DescriptionBeer from '../Components/DescriptionBeer'
 
+import { colorBottomTabBackground, colorDivider, colorBottomTabTintColor } from '../assets/colors'
 
 
 const HomeStack = createStackNavigator({ //Permet d'assembler plusieurs vues
@@ -27,77 +30,131 @@ const HomeStack = createStackNavigator({ //Permet d'assembler plusieurs vues
     }
   },
 })
+const handleCustomTransitionRatio = ({ scenes }) => {
+  const prevScene = scenes[scenes.length - 2];
+  const nextScene = scenes[scenes.length - 1];
 
-const RatioSearchStack  = createStackNavigator ({
-  RatioBeer: {
-    screen : RatioBeer
-  },
-  RatioSearchBeer: {
-    screen : RatioSearchBeer
-  },
-  DescriptionBeer:{
-    screen: DescriptionBeer,
-    navigationOptions: {
-      title: 'Description',
-    },
+  // Custom transitions go there
+  if (prevScene
+    && prevScene.route.routeName === 'RatioBeer'
+    && nextScene.route.routeName === 'RatioSearchBeer') {
+    return fromRight(1000);
+  } else if (prevScene
+    && prevScene.route.routeName === 'RatioSearchBeer'
+    && nextScene.route.routeName === 'DescriptionBeer') {
+    return zoomIn(1000);
+  }else if (prevScene
+    && prevScene.route.routeName === 'DescriptionBeer'
+    && nextScene.route.routeName === 'RatioSearchBeer') {
+    return zoomOut(1000);
   }
-})
+  return fromLeft(1000);
+}
 
-const NameSearchStack = createStackNavigator({
-  NameSearchBeer:{
-    screen: NameSearchBeer,
-  },
-  DescriptionBeer:{
-    screen: DescriptionBeer,
-    navigationOptions: {
-      title: 'Description',
-    },
-  }
-})
-
-
-
-const AppMenuNavigator = createBottomTabNavigator(
+const RatioSearchStack  = createStackNavigator (
   {
-  SearchRatio: {      //Le nom en bas
-    screen: RatioSearchStack,   // On lui fournit la bonne vue
-    navigationOptions: {
-      tabBarIcon: () => {
-        return <Image
-          source = { require('../Images/ic_Ratio_Search_Beer.png') }
-          style = { styles.icon }/>
-      }
-    }
+    RatioBeer: {
+      screen : RatioBeer
+    },
+    RatioSearchBeer: {
+      screen : RatioSearchBeer
+    },
+    DescriptionBeer:{
+      screen: DescriptionBeer,
+      navigationOptions: {
+        title: 'Description',
+      },
+    },
   },
-  NameStack: {
-    screen: NameSearchStack,
-    navigationOptions: {
-      tabBarIcon: () => {
-        return <Image
-          source = { require('../Images/ic_find_beer.png') }
-          style = { styles.icon }/>
+  {
+    initialRouteName: 'RatioBeer',
+    transitionConfig: (nav) => handleCustomTransitionRatio(nav),
+    // transitionConfig: () => fromRight(500),
+  }
+)
+
+const handleCustomTransitionName = ({ scenes }) => {
+  const prevScene = scenes[scenes.length - 2];
+  const nextScene = scenes[scenes.length - 1];
+
+  // Custom transitions go there
+  if (prevScene
+    && prevScene.route.routeName === 'NameSearchBeer'
+    && nextScene.route.routeName === 'DescriptionBeer') {
+    return zoomIn(1000);
+  } else if (prevScene
+    && prevScene.route.routeName === 'DescriptionBeer'
+    && nextScene.route.routeName === 'NameSearchBeer') {
+    return zoomOut(1000);
+  }
+  return fromLeft(1000);
+}
+
+const NameSearchStack = createStackNavigator(
+  {
+    NameSearchBeer:{
+      screen: NameSearchBeer,
+    },
+    DescriptionBeer:{
+      screen: DescriptionBeer,
+      navigationOptions: {
+        title: 'Description',
       },
     }
   },
-  FavoriteBeer: {
-    screen: FavoriteBeer,
-    navigationOptions: {
-      tabBarIcon: () => {
-        return <Image
-          source = { require('../Images/ic_favorite_beer.png') }
-          style = { styles.icon }/>
-      }
-    }
-  },
+  {
+    initialRouteName: 'NameSearchBeer',
+    transitionConfig: (nav) => handleCustomTransitionName(nav),
+    // transitionConfig: () => fromRight(500),
+  }
+)
 
+
+
+const AppMenuNavigator = createMaterialBottomTabNavigator(
+  {
+    Ratio: {      //Le nom en bas
+      screen: RatioSearchStack,   // On lui fournit la bonne vue
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon
+                    name = "bar-chart-2"
+                    type = "feather"
+                    color = { tintColor }
+                  />
+        }
+      }
+    },
+    Nom: {
+      screen: NameSearchStack,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon
+                  name = "ios-search"
+                  type = "ionicon"
+                  color = { tintColor }
+                />
+        },
+      }
+    },
+    Favoris: {
+      screen: FavoriteBeer,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon
+                  name = "ios-heart"
+                  type = "ionicon"
+                  color = { tintColor }
+                />
+        }
+      }
+    },
   },
   {
-  tabBarOptions: {
-    showIcon: true,
-    showLabel: false,
-    activeBackgroundColor: '#DDDDDD',
-    inactiveBackgroundColor: '#FFFFFF',
-  }
+    shifting: true,
+    activeTintColor: colorBottomTabTintColor,
+    barStyle: { backgroundColor : colorBottomTabBackground }
+
   }
 )
 
