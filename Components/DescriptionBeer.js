@@ -1,5 +1,5 @@
 import React from 'react'
-import {  ScrollView, ActivityIndicator, Image, StyleSheet, View, TextInput, Button, Text, Platform, Alert } from 'react-native'
+import {  ScrollView, ActivityIndicator, Image, StyleSheet, View, TextInput, Button, Text, Platform, Alert, Animated } from 'react-native'
 import { getBeerDetailFromApi } from '../API/UntappdApi'
 import { getBeerByBid } from '../API/BieRatioApi'
 import VerticalSlider from 'rn-vertical-slider'
@@ -9,14 +9,17 @@ import Flag from 'react-native-flags';
 
 import ViewMoreText from 'react-native-view-more-text';
 
-import { Card, Icon } from 'react-native-elements'
+import { Card, Icon, ThemeProvider } from 'react-native-elements'
 
 import { ProviderTypes, TranslatorConfiguration, TranslatorFactory } from 'react-native-power-translator';
 
 
 import { colorAlcool, colorBackItem, colorIbu, colorPrice} from '../assets/colors'
 
+import EnlargeShrink from './Animations/EnlargeShrink'
+
 import { Ipv4 } from '../assets/Ip'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 TranslatorConfiguration.setConfig(ProviderTypes.Microsoft, '41c2d80ee5584c0c9ec9baa101f89371','fr');
 
@@ -41,6 +44,7 @@ class DescriptionBeer extends React.Component{
       selectedIndex: 0,
       description: "",
       existInAPI: false,
+      iconName : "ios-heart-empty",
     }
     this.ibu = this.props.navigation.state.params.ibu,
     this.price = this.props.navigation.state.params.price,
@@ -159,12 +163,16 @@ class DescriptionBeer extends React.Component{
           codeState = getCode("Russian Federation")
         }else if (beer.countryName === "England"){
           codeState = getCode("United Kingdom")
+        }else if (beer.countryName == "South Korea"){
+          codeState = getCode("Korea, Republic of")
         }
       }else{
         if(beer.brewery.country_name === "Russia"){
           codeState = getCode("Russian Federation")
         }else if (beer.brewery.country_name === "England"){
           codeState = getCode("United Kingdom")
+        }else if (beer.brewery.country_name == "South Korea"){
+          codeState = getCode("Korea, Republic of")
         }
       }
     }
@@ -469,9 +477,34 @@ class DescriptionBeer extends React.Component{
     })
   }
 
+  _displayFavoriteBeer(){
+    return(
+      <TouchableOpacity
+        onPress = {()=> this._updateFavorite() }
+      >
+        <Icon
+          type = "ionicon"
+          name = {this.state.iconName}
+          iconStyle = {{ marginLeft: 25 }}
+          size = {40}
+        />
+      </TouchableOpacity>
+      
+    )
+  }
+
+  _updateFavorite(){
+    this.setState({
+      iconName : this.state.iconName === "ios-heart-empty" ? "ios-heart" : "ios-heart-empty"
+    })
+  }
+  
+
   _displayBeer(){
 
     if(!this.state.isLoading){
+
+
       const beer = this.state.beer
       const title = this.state.existInAPI === true ? beer.name : beer.beer_name
       const ratingScore = this.state.existInAPI === true ? beer.ratingScore : beer.rating_score.toFixed(1)
@@ -482,7 +515,7 @@ class DescriptionBeer extends React.Component{
           <Card
             title = {title}
             titleStyle = {styles.beer_title}>
-            <View style = {{ flexDirection : 'row' }}>
+            <View style = {{ flexDirection : 'row', justifyContent: "space-evenly" }}>
               {this._displayImageHd()}
               <View style = { styles.header_description }>
                 <View style = { styles.iconContainer }>
@@ -493,18 +526,8 @@ class DescriptionBeer extends React.Component{
                   <Text style ={{ fontSize: 20 }} > : </Text>
                   { this._displayFlag() }
                 </View>
-                <View style = { styles.iconContainer }>
-                  <Icon
-                    type = "font-awesome"
-                    name = "thumbs-o-up"
-                    size = {30}
-                  />
-                  <Text style={{ fontSize : 20 }}> : {ratingScore}</Text>
-                </View>
-                <Image
-                  style = { styles.header_image }
-                  source = { require('../Images/ic_favorite_beer.png') }
-                />
+                
+                {this._displayFavoriteBeer()}
               </View>
             </View>
           </Card>
@@ -619,7 +642,8 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: 'contain',
-    flex: 5,
+    height: 100,
+    width: 100,
   },
   header_description: {
     flexDirection: 'column',

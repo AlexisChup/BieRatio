@@ -10,7 +10,45 @@ import Flag from 'react-native-flags';
 
 import FadeIn from './Animations/FadeIn'
 
+import { getBeerByBid } from '../API/BieRatioApi'
+
 class BeerItem extends React.Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      colorPastille : "red",
+      isLoading: true
+    }
+  }
+
+  componentDidMount(){
+    getBeerByBid(this.props.beer.beer.bid).then(data => {
+      if(data["hydra:totalItems"] === 1){
+        this.setState({
+          colorPastille: "green"
+        }
+        , ()=> this._updatePastille())
+      }else{
+        this.setState({
+          colorPastille: "red"
+        }, () => this._upateState())
+        
+      }
+    })
+  }
+
+  _upateState(){
+    this.setState({
+      isLoading: false
+    })
+  }
+
+  _updatePastille(){
+    this.setState({
+      isLoading: false
+    })
+  }
 
   _displayFlag(){
     const beer = this.props.beer
@@ -21,6 +59,8 @@ class BeerItem extends React.Component {
         codeState = getCode("Russian Federation")
       }else if (beer.brewery.country_name === "England"){
         codeState = getCode("United Kingdom")
+      }else if (beer.brewery.country_name == "South Korea"){
+        codeState = getCode("Korea, Republic of")
       }
     }
     if (codeState != undefined){
@@ -44,42 +84,53 @@ class BeerItem extends React.Component {
   }
 
     render(){
-      const { beer, displayDetailForBeer } = this.props
+      if(!this.state.isLoading){
+
+        const { beer, displayDetailForBeer } = this.props
 
 
-      return(
+        return(
 
-        <FadeIn>
-          <TouchableOpacity
-            onPress ={() => displayDetailForBeer(beer.beer.bid)}>
-            <View style = {styles.beer_item}>
-              <Image
-                style ={styles.image_item}
-                source={{uri: beer.beer.beer_label}}
-              />
-              <View style = {styles.description_item}>
-                <Text style = {styles.title_item} numberOfLines={1}>
-                  {beer.beer.beer_name}
-                </Text>
-                <View style = { styles.flag }>
-                  <Image
-                    style = { styles.image }
-                    source = {require('../Images/ic_brewery.png')}
-                  />
-                  <Text style = { styles.brewery }> : </Text>
-                  {this._displayFlag()}
+          <FadeIn>
+            <TouchableOpacity
+              onPress ={() => displayDetailForBeer(beer.beer.bid)}>
+              <View style = {styles.beer_item}>
+                <Image
+                  style ={styles.image_item}
+                  source={{uri: beer.beer.beer_label}}
+                />
+                <View style = {styles.description_item}>
+                  <Text style = {styles.title_item} numberOfLines={1}>
+                    {beer.beer.beer_name}
+                  </Text>
+                  <View style = {{ width: 20, height: 20, backgroundColor: this.state.colorPastille, borderRadius: 100/2 }} ></View>
+                  <View style = { styles.flag }>
+                    <Image
+                      style = { styles.image }
+                      source = {require('../Images/ic_brewery.png')}
+                    />
+                    <Text style = { styles.brewery }> : </Text>
+                    {this._displayFlag()}
+                  </View>
                 </View>
               </View>
-            </View>
-            <Divider style = { styles.divider }/>
+              <Divider style = { styles.divider }/>
 
-          </TouchableOpacity>
-        </FadeIn>
-
+            </TouchableOpacity>
+          </FadeIn>
 
 
 
-      )
+
+        )
+      }
+    
+      else{
+        return(
+          <View></View>
+        )
+      }
+      
     }
 
 
