@@ -88,16 +88,16 @@ class RatioSearchBeer extends React.Component{
     }
   }
 
-  _displayCriterion(){
-    return(
-      <View>
+  _sliderIbu(){
+    if(this.ibu !== 150){
+      return(
         <View style = { styles.slider_container }>
           <Image
             style = { styles.image_slider }
             source = {require ('../Images/ic_hop.png')}
           />
           <Text style = { styles.slider_text }>
-             : {this.ibu}
+            : {this.ibu}
           </Text>
           <Slider
             value = {this.ibu}
@@ -111,13 +111,21 @@ class RatioSearchBeer extends React.Component{
           />
         </View>
 
+      )
+    }else{
+      return(<View></View>)
+    }
+  }
+  _sliderPrice(){
+    if(this.price !== 150){
+      return(
         <View style = { styles.slider_container }>
           <Image
             style = { styles.image_slider }
             source = {require ('../Images/ic_euro.png')}
           />
           <Text style = { styles.slider_text }>
-             : {this.price}
+            : {this.price}
           </Text>
           <Slider
             value = {this.price}
@@ -130,14 +138,21 @@ class RatioSearchBeer extends React.Component{
             thumbTintColor = {"#000000"}
           />
         </View>
-
+      )
+    }else{
+      return(<View></View>)
+    }
+  }
+  _sliderAbv(){
+    if(this.abv !== 150){
+      return(
         <View style = { styles.slider_container }>
           <Image
               style = { styles.image_slider }
               source = {require ('../Images/ic_alcohol.png')}
           />
           <Text style = { styles.slider_text }>
-             : {this.abv}
+            : {this.abv}
           </Text>
           <Slider
             value = {this.abv}
@@ -150,6 +165,20 @@ class RatioSearchBeer extends React.Component{
             thumbTintColor = {"#000000"}
           />
         </View>
+      )
+    }else{
+      return(<View></View>)
+    }
+  }
+
+  _displayCriterion(){
+    return(
+      <View>
+        {this._sliderIbu()}
+
+        {this._sliderPrice()}
+
+        {this._sliderAbv()}
         <View style = {styles.divider} ></View>
       </View>
     )

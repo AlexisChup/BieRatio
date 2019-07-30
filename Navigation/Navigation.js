@@ -144,8 +144,8 @@ const AppMenuNavigator = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => {
           return <Icon
-                  name = "ios-search"
-                  type = "ionicon"
+                    name = "format-letter-case"
+                    type = "material-community"
                   color = { tintColor }
                 />
         },
@@ -192,6 +192,20 @@ export default createAppContainer(
       ,
     },
     {
+      transition: (
+        <Transition.Together>
+          <Transition.Out
+            type="fade"
+            durationMs={100}
+            // propagation = 'right'
+            // interpolation="easeIn"
+          />
+          {/* <Transition.In 
+            type="fade" 
+            durationMs={500} 
+          /> */}
+        </Transition.Together>
+      ),
 
     }
   )

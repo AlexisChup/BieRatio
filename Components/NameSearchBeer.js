@@ -4,6 +4,8 @@ import { getsBeersFromApiWithSearchedText } from '../API/UntappdApi'
 import BeerItem from './BeerItem'
 import { Madoka } from 'react-native-textinput-effects';
 
+import { Icon } from 'react-native-elements'
+
 
 var {width, height} = Dimensions.get('window');
 
@@ -15,9 +17,13 @@ class NameSearchBeer extends React.Component {
               <TouchableOpacity
                 style = {styles.icon}
                 onPress={ ()=>{ navigation.navigate('Home') } }>
-                <Image
-                  source = { require('../Images/ic_home.png') }
-                  style = { styles.icon }/>
+                <Icon
+                  name = "home"
+                  type = "octicon"
+                  color = "black"
+                  size = {30}
+                  iconStyle = {styles.icon}
+                />
               </TouchableOpacity>
             )
     },
@@ -106,9 +112,11 @@ class NameSearchBeer extends React.Component {
           <Text style = { styles.iconText } >
             Saisissez le nom d'une bière
           </Text>
-          <Image 
-            style = { styles.iconImage }
-            source = { require('../Images/ic_sleeping_face.png') }
+          <Icon
+            type = "ionicon"
+            name = "ios-search"
+            size = {200}
+
           />
         </View>
       )
@@ -195,8 +203,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   icon: {
-    width: 30,
-    height: 30,
     marginLeft: 8,
   },
   textInput: {

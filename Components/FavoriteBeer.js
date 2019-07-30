@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { TouchableOpacity,Image ,StyleSheet, View,  Text, Animated, Easing } from 'react-native'
-
+import { Icon } from 'react-native-elements'
 
 class FavoriteBeer extends React.Component {
 
@@ -12,9 +12,13 @@ class FavoriteBeer extends React.Component {
               <TouchableOpacity
                 style = {styles.icon}
                 onPress={ ()=>{ navigation.navigate('Home') } }>
-                <Image
-                  source = { require('../Images/ic_home.png') }
-                  style = { styles.icon }/>
+                <Icon
+                  name = "home"
+                  type = "octicon"
+                  color = "black"
+                  size = {30}
+                  iconStyle = {styles.icon}
+                />
               </TouchableOpacity>
             )
     },
@@ -116,8 +120,6 @@ const styles = StyleSheet.create({
     height: 100
   },
   icon: {
-    width: 30,
-    height: 30,
     marginLeft: 8,
   }
 })

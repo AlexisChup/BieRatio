@@ -7,7 +7,12 @@ import { Dimensions, Image, TouchableOpacity, StyleSheet, Text, SafeAreaView } f
 import {
   Card,
   Divider,
+  Icon,
 } from 'react-native-elements'
+
+import * as color from '../assets/colors'
+
+const { height, width } = Dimensions.get("screen");
 
 class Home extends React.Component {
 
@@ -15,7 +20,9 @@ class Home extends React.Component {
     super(props)
     this.differentMenu = {
       menu: ["La bière de la semaine","Bars à proximités","Mon compte"]
-    }
+    },
+    this.sizeIcon = height/10
+    this.iconColor = color.colorBottomTabTintColor
 
   }
 
@@ -36,9 +43,12 @@ class Home extends React.Component {
         <TouchableOpacity
           style = {styles.item}
           onPress = {() => this.props.navigation.navigate('RatioBeer')}>
-          <Image
-            style = {styles.image}
-            source = {require('../Images/ic_Ratio_Search_Beer.png')}
+          <Icon
+            name = "bar-chart-2"
+            type = "feather"
+            color = {this.iconColor}
+            size = {this.sizeIcon}
+            iconStyle = { styles.icon }
           />
           <Text style = {styles.description_item}>Ratio</Text>
         </TouchableOpacity>
@@ -46,9 +56,12 @@ class Home extends React.Component {
         <TouchableOpacity
           style = {styles.item}
           onPress = {() => this.props.navigation.navigate('NameSearchBeer')}>
-          <Image
-            style = {styles.image}
-            source = {require('../Images/ic_sort_alphabet.png')}
+          <Icon
+            name = "format-letter-case"
+            type = "material-community"
+            color = {this.iconColor}
+            size = {this.sizeIcon}
+            iconStyle = { styles.icon }
           />
           <Text style = {styles.description_item}>Prénom</Text>
         </TouchableOpacity>
@@ -56,11 +69,14 @@ class Home extends React.Component {
         <TouchableOpacity
           style = {styles.item}
           onPress = {() => this.props.navigation.navigate('FavoriteBeer')}>
-          <Image
-            style = {styles.image}
-            source = {require('../Images/ic_favorite_beer.png')}
+          <Icon
+            name = "ios-heart"
+            type = "ionicon"
+            color = {this.iconColor}
+            size = {this.sizeIcon}
+            iconStyle = { styles.icon, {marginLeft: 25} }
           />
-          <Text style = {styles.description_item}>Favoris</Text>
+          <Text style = { styles.description_item }>Favoris</Text>
         </TouchableOpacity>
       </SafeAreaView>
     )
@@ -72,30 +88,30 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
+    backgroundColor: color.colorBottomTabBackground
   },
   image_logo: {
     flex: 2,
-    width: Dimensions.get('window').width,
-  },
-  image: {
-    resizeMode: 'contain',
-    flex: 1,
+    width: width,
   },
   description_item: {
     fontSize: 30,
-    flex: 5,
-    paddingLeft: 10,
     fontWeight: '600',
-    alignSelf: 'center',
-
+    textAlign: 'center',
+    marginRight: 20,
+    flex: 1,
+  },
+  icon: {
+    marginLeft: 20,
   },
   item: {
     flex: 1,
     margin: 3,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   divider: {
-    backgroundColor: 'black',
+    backgroundColor: color.colorBottomTabTintColor,
     height: 5,
   },
 

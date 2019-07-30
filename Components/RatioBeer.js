@@ -4,8 +4,10 @@ import { Image, TouchableOpacity, StyleSheet, View, Text, Dimensions} from 'reac
 import VerticalSlider from 'rn-vertical-slider'
 import { Icon, Tooltip } from 'react-native-elements'
 
+import { Switch } from 'react-native-switch';
 
-import { colorAlcool, colorBackItem, colorIbu, colorPrice} from '../assets/colors'
+
+import * as color from '../assets/colors'
 
 import Button from 'apsl-react-native-button'
 
@@ -15,16 +17,69 @@ class RatioBeer extends React.Component{
   static navigationOptions = ({ navigate, navigation }) => ({
     title: 'Recherche par ratio',
     headerLeft: () => {
-            return (
-              <TouchableOpacity
-                style = {styles.icon}
-                onPress={ ()=>{ navigation.navigate('Home') } }>
-                <Image
-                  source = { require('../Images/ic_home.png') }
-                  style = { styles.icon }/>
-              </TouchableOpacity>
-            )
+      return (
+        <TouchableOpacity
+          style = {styles.icon}
+          onPress={ ()=>{ navigation.navigate('Home') } }>
+          <Icon
+            name = "home"
+            type = "octicon"
+            color = "black"
+            size = {30}
+            iconStyle = {styles.icon}
+          />
+        </TouchableOpacity>
+      )
     },
+    headerRight: (
+        <Tooltip popover = {
+          <View>
+            <View style = {{ marginTop: 10 }}>
+              <View style = { styles.tooltipHeader }>
+                <Image
+                  style = { styles.imageTooltip }
+                  source = {require ('../Images/ic_hop.png')}
+                />
+                <Text style = {{ fontWeight: 'bold' }} > : IBU{'\n'}</Text>
+              </View>
+              <Text style = {{  }}>International bitterness unit (symbole IBU) est une unité utilisée par les brasseurs pour mesurer l'amertume de leurs bières.{'\n'}Plus cette valeur est élevée plus la bière est amère. {'\n'}</Text>
+              <Text style = {{ textAlign : 'right', marginRight: 25, }} >source : Wikipédia</Text>
+            </View>
+            <View style = {{ marginTop: 10 }}>
+              <View style = { styles.tooltipHeader }>
+                <Image
+                  style = { styles.imageTooltip }
+                  source = {require ('../Images/ic_euro.png')}
+                />
+                <Text style = {{ fontWeight: 'bold' }} > : Argent{'\n'}</Text>
+              </View>
+              <Text >Unité arbitraire sur 5.{'\n'}Même si le prix de la bière peut varier d'un bar à l'autre.{'\n'}Plus cette valeur est élevée plus la bière est chère.</Text>
+            </View>
+            <View style = {{ marginTop: 10 }}>
+              <View style = { styles.tooltipHeader }>
+                <Image
+                  style = { styles.imageTooltip }
+                  source = {require ('../Images/ic_alcohol.png')}
+                />
+                <Text style = {{ fontWeight: 'bold' }} > : TAV{'\n'}</Text>
+              </View>
+              <Text style = {{  }}>Le titre alcoométrique volumique (TAV), aussi appelé degré alcoolique, est la proportion d'alcool dans une boisson.{'\n'}Plus cette valeur est élevée plus la bière contient de l'alcool{'\n'}</Text>
+              <Text style = {{ textAlign : 'right', marginRight: 25, }} >source : Wikipédia</Text>
+            </View>           
+          </View>
+        }
+        width = {width - 10}
+        height = {height-200}
+        containerStyle = {{ marginRight: 150, }}>
+          <Icon
+            name = "info"
+            type = "octicon"
+            color = "black"
+            size = {30}
+            iconStyle = {{ marginRight: 15 }}
+          />
+        </Tooltip>
+    ),
     headerBackTitle: "Ratios"
   })
 
@@ -37,7 +92,16 @@ class RatioBeer extends React.Component{
       ibu: 0,
       price: 0,
       alcool: 0,
-      disabledSliders: false,
+      
+      enabledSlidersIBU: true,
+      colorIbu: color.colorIbu,
+
+      enabledSlidersPRICE: true,
+      colorPrice: color.colorPrice,
+
+      enabledSlidersABV: true,
+      colorAbv: color.colorAlcool,
+
       beers :[],
       isLoading: false,
     }
@@ -68,11 +132,54 @@ class RatioBeer extends React.Component{
   }
 
 
-
+  _disableSliderIBU(val){
+    const colorSlider = val === false ? color.colorDisabled : color.colorIbu
+    this.setState(
+      {
+      enabledSlidersIBU : val,
+      colorIbu: colorSlider,
+      })
+  }
+  _disableSliderPrice(val){
+    const colorSlider = val === false ? color.colorDisabled : color.colorPrice
+    this.setState(
+      {
+      enabledSlidersPRICE : val,
+      colorPrice: colorSlider,
+      })
+  }
+  _disableSliderABV(val){
+    const colorSlider = val === false ? color.colorDisabled : color.colorAlcool
+    this.setState(
+      {
+      enabledSlidersABV : val,
+      colorAbv: colorSlider,
+      })
+  }
 
   _displayRatioSearchBeer(){
-    this.props.navigation.navigate('RatioSearchBeer', {ibu: this.state.ibu, price: this.state.price, abv: this.state.alcool})
-
+    var ibu =0
+    if( this.state.enabledSlidersIBU ){
+      ibu = this.state.ibu
+    }else if( !this.state.enabledSlidersIBU ){
+      console.log("Ibu = 150");
+      
+      ibu = 150
+    }
+    var price =0
+    if( this.state.enabledSlidersPRICE ){
+      price = this.state.price
+    }else if( !this.state.enabledSlidersPRICE ){
+      price = 150
+    }
+    var abv =0
+    if( this.state.enabledSlidersABV){
+      abv = this.state.alcool
+    }else if( !this.state.enabledSlidersABV ) {
+      abv = 150
+    }
+    this.props.navigation.navigate('RatioSearchBeer', {ibu: ibu, price: price, abv: abv})
+    
   }
 
 
@@ -88,7 +195,7 @@ class RatioBeer extends React.Component{
           <View style = {styles.container}>
             <VerticalSlider
               value={this.state.ibu}
-              disabled={this.state.disabledSliders}
+              disabled={! this.state.enabledSlidersIBU}
               min={0}
               max={120}
               onChange={(value) => {
@@ -101,10 +208,10 @@ class RatioBeer extends React.Component{
               height={300}
               step={20}
               borderRadius={150}
-              minimumTrackTintColor={colorIbu}
-              maximumTrackTintColor={colorBackItem}
+              minimumTrackTintColor={this.state.colorIbu}
+              maximumTrackTintColor={color.colorBackItem}
               showBallIndicator = {true}
-              ballIndicatorColor={colorIbu}
+              ballIndicatorColor={this.state.colorIbu}
               ballIndicatorTextColor={'white'}
             />
           </View>
@@ -112,7 +219,7 @@ class RatioBeer extends React.Component{
           <View style = {styles.container}>
             <VerticalSlider
               value={this.state.price}
-              disabled={this.state.disabledSliders}
+              disabled={! this.state.enabledSlidersPRICE}
               min={0}
               max={5}
               onChange={(value) => {
@@ -125,17 +232,17 @@ class RatioBeer extends React.Component{
               height={300}
               step={1}
               borderRadius={150}
-              minimumTrackTintColor={colorPrice}
-              maximumTrackTintColor={colorBackItem}
+              minimumTrackTintColor={this.state.colorPrice}
+              maximumTrackTintColor={color.colorBackItem}
               showBallIndicator
-              ballIndicatorColor={colorPrice}
-              ballIndicatorTextColor={colorBackItem}
+              ballIndicatorColor={this.state.colorPrice}
+              ballIndicatorTextColor={color.colorBackItem}
             />
           </View>
           <View style = {styles.container}>
             <VerticalSlider
               value={this.state.alcool}
-              disabled={this.state.disabledSliders}
+              disabled={! this.state.enabledSlidersABV}
               min={0}
               max={13}
               onChange={(value) => {
@@ -148,74 +255,75 @@ class RatioBeer extends React.Component{
               height={300}
               step={1}
               borderRadius={150}
-              minimumTrackTintColor={colorAlcool}
-              maximumTrackTintColor={colorBackItem}
+              minimumTrackTintColor={this.state.colorAbv}
+              maximumTrackTintColor={color.colorBackItem}
               showBallIndicator
-              ballIndicatorColor={colorAlcool}
-              ballIndicatorTextColor={colorBackItem}
+              ballIndicatorColor={this.state.colorAbv}
+              ballIndicatorTextColor={color.colorBackItem}
             />
           </View>
         </View>
         <View style = {styles.description_slider}>
-          <Tooltip popover = {
-            <View >
-              <View style = { styles.tooltipHeader }>
-                <Image
-                  style = { styles.imageTooltip }
-                  source = {require ('../Images/ic_hop.png')}
-                />
-                <Text style = {{ fontWeight: 'bold' }} > : IBU{'\n'}</Text>
-              </View>
-              <Text style = {{ width : width -25, marginLeft: 15 }}>International bitterness unit (symbole IBU) est une unité utilisée par les brasseurs pour mesurer l'amertume de leurs bières.{'\n'}Plus cette valeur est élevée plus la bière est amère. {'\n'}</Text>
-              <Text style = {{ textAlign : 'right', marginRight: 25, }} >source : Wikipédia</Text>
-            </View>
-          }
-          width = {width - 20}
-          height = {160}>
-            <Image
-              style = { styles.image }
+        <Switch
+          value={ this.state.enabledSlidersIBU }
+          onValueChange={(val) => this._disableSliderIBU(val)}
+          circleSize={40}
+          barHeight={10}
+          circleBorderWidth={0}
+          backgroundActive={color.colorIbu}
+          backgroundInactive={'gray'}
+          circleActiveColor={color.colorIbu}
+          circleInActiveColor={color.colorDisabled}
+          renderInsideCircle={() => 
+            <Image 
               source = {require ('../Images/ic_hop.png')}
+              style = {{ resizeMode: "contain", width: 30, height: 30 }}
+
             />
-          </Tooltip>
-          <Tooltip popover = {
-            <View >
-              <View style = { styles.tooltipHeader }>
-                <Image
-                  style = { styles.imageTooltip }
-                  source = {require ('../Images/ic_euro.png')}
-                />
-                <Text style = {{ fontWeight: 'bold' }} > : Argent{'\n'}</Text>
-              </View>
-              <Text style = {{ width : width -25, marginLeft: 15 }}>Unité arbitraire sur 5.{'\n'}Même si le prix de la bière peut varier d'un bar à l'autre.{'\n'}Plus cette valeur est élevée plus la bière est chère.</Text>
-            </View>
           }
-          width = {width - 20}
-          height = {130}>
-            <Image
-              style = { styles.image }
+          changeValueImmediately={true}
+
+        />
+        <Switch
+          value={ this.state.enabledSlidersPRICE}
+          onValueChange={(val) => this._disableSliderPrice(val)}
+          circleSize={40}
+          barHeight={10}
+          circleBorderWidth={0}
+          backgroundActive={color.colorPrice}
+          backgroundInactive={'gray'}
+          circleActiveColor={color.colorPrice}
+          circleInActiveColor={color.colorDisabled}
+          renderInsideCircle={() => 
+            <Image 
               source = {require ('../Images/ic_euro.png')}
+              style = {{ resizeMode: "contain", width: 30, height: 30 }}
+
             />
-          </Tooltip>
-          <Tooltip popover = {
-            <View >
-              <View style = { styles.tooltipHeader }>
-                <Image
-                  style = { styles.imageTooltip }
-                  source = {require ('../Images/ic_alcohol.png')}
-                />
-                <Text style = {{ fontWeight: 'bold' }} > : TAV{'\n'}</Text>
-              </View>
-              <Text style = {{ width : width -25, marginLeft: 15 }}>Le titre alcoométrique volumique (TAV), aussi appelé degré alcoolique, est la proportion d'alcool dans une boisson.{'\n'}Plus cette valeur est élevée plus la bière contient de l'alcool{'\n'}</Text>
-              <Text style = {{ textAlign : 'right', marginRight: 25, }} >source : Wikipédia</Text>
-            </View>
           }
-          width = {width - 20}
-          height = {180}>
-            <Image
-              style = { styles.image }
+          changeValueImmediately={true}
+
+        />
+        <Switch
+          value={ this.state.enabledSlidersABV}
+          onValueChange={(val) => this._disableSliderABV(val)}
+          circleSize={40}
+          barHeight={10}
+          circleBorderWidth={0}
+          backgroundActive={color.colorAlcool}
+          backgroundInactive={'gray'}
+          circleActiveColor={color.colorAlcool}
+          circleInActiveColor={color.colorDisabled}
+          renderInsideCircle={() => 
+            <Image 
               source = {require ('../Images/ic_alcohol.png')}
+              style = {{ resizeMode: "contain", width: 30, height: 30 }}
+
             />
-          </Tooltip>
+          }
+          changeValueImmediately={true}
+
+        />
 
         </View>
         <View style = {styles.button}>
@@ -260,7 +368,6 @@ const styles = StyleSheet.create({
     margin: 60,
   },
   description_slider: {
-    marginTop : 10,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -285,7 +392,8 @@ const styles = StyleSheet.create({
   },
   tooltipHeader: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: 10
   },
   imageTooltip: {
     width: 30,
@@ -293,8 +401,6 @@ const styles = StyleSheet.create({
     marginTop: -5,
   },
   icon: {
-    width: 30,
-    height: 30,
     marginLeft: 8,
   },
   image: {
