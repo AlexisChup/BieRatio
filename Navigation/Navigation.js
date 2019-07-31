@@ -23,17 +23,26 @@ import RatioSearchBeer from '../Components/RatioSearchBeer'
 
 import DescriptionBeer from '../Components/DescriptionBeer'
 
-import { colorBottomTabBackground, colorDivider, colorBottomTabTintColor } from '../assets/colors'
+import * as color from '../assets/colors'
 
 
-const HomeStack = createStackNavigator({ //Permet d'assembler plusieurs vues
-  Home: {
-    screen: Home,   //Page d'accueil de l'application
-    navigationOptions: {
-      title: 'ACCEUIL'
-    }
+const HomeStack = createStackNavigator(
+  { //Permet d'assembler plusieurs vues
+    Home: {
+      screen: Home,   //Page d'accueil de l'application
+      navigationOptions: {
+        title: 'ACCEUIL'
+      }
+    },
   },
-})
+  {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: color.colorBottomTabBackground
+      }
+    },
+  }
+)
 const handleCustomTransitionRatio = ({ scenes }) => {
   const prevScene = scenes[scenes.length - 2];
   const nextScene = scenes[scenes.length - 1];
@@ -73,6 +82,12 @@ const RatioSearchStack  = createStackNavigator (
   {
     initialRouteName: 'RatioBeer',
     transitionConfig: (nav) => handleCustomTransitionRatio(nav),
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: color.colorBottomTabBackground
+      }
+    },
+
     // transitionConfig: () => fromRight(500),
   }
 )
@@ -109,6 +124,13 @@ const NameSearchStack = createStackNavigator(
   {
     initialRouteName: 'NameSearchBeer',
     transitionConfig: (nav) => handleCustomTransitionName(nav),
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: color.colorBottomTabBackground
+      }
+    },
+
+    
     // transitionConfig: () => fromRight(500),
   }
 )
@@ -121,7 +143,12 @@ const FavoriteStack = createStackNavigator(
 
   },
   {
-    initialRouteName: "FavoriteBeer"
+    initialRouteName: "FavoriteBeer",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: color.colorBottomTabBackground
+      }
+    },
   }
 )
 
@@ -146,7 +173,7 @@ const AppMenuNavigator = createMaterialBottomTabNavigator(
           return <Icon
                     name = "format-letter-case"
                     type = "material-community"
-                  color = { tintColor }
+                    color = { tintColor }
                 />
         },
       }
@@ -166,9 +193,11 @@ const AppMenuNavigator = createMaterialBottomTabNavigator(
   },
   {
     shifting: true,
-    activeTintColor: colorBottomTabTintColor,
-    barStyle: { backgroundColor : colorBottomTabBackground },
-    initialRouteName: "Ratio"
+    activeTintColor: color.colorDivider,
+    barStyle: { backgroundColor : color.colorBottomTabBackground },
+    initialRouteName: "Ratio",
+
+
 
   }
 )
@@ -206,6 +235,7 @@ export default createAppContainer(
           /> */}
         </Transition.Together>
       ),
+
 
     }
   )

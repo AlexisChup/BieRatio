@@ -5,7 +5,7 @@ import BeerItem from './BeerItem'
 import { Madoka } from 'react-native-textinput-effects';
 
 import { Icon } from 'react-native-elements'
-
+import * as color from '../assets/colors'
 
 var {width, height} = Dimensions.get('window');
 
@@ -20,7 +20,7 @@ class NameSearchBeer extends React.Component {
                 <Icon
                   name = "home"
                   type = "octicon"
-                  color = "black"
+                  color = {color.colorDivider}
                   size = {30}
                   iconStyle = {styles.icon}
                 />
@@ -189,6 +189,7 @@ class NameSearchBeer extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
+    backgroundColor: color.colorBackground
   },
   list: {
     flex: 1,

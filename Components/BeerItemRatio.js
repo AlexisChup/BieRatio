@@ -5,7 +5,9 @@ import {
 } from 'react-native-elements'
 
 import FadeIn from './Animations/FadeIn'
+import { colorAlcool } from '../assets/colors';
 
+import * as color from '../assets/colors'
 
 class BeerItemRatio extends React.Component {
 
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 5,
-    backgroundColor: '#fcb900',
+    backgroundColor: color.colorDivider,
   },
 })
 

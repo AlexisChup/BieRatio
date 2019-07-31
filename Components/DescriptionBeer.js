@@ -14,7 +14,7 @@ import { Card, Icon, ThemeProvider } from 'react-native-elements'
 import { ProviderTypes, TranslatorConfiguration, TranslatorFactory } from 'react-native-power-translator';
 
 
-import { colorAlcool, colorBackItem, colorIbu, colorPrice} from '../assets/colors'
+import * as color  from '../assets/colors'
 
 import EnlargeShrink from './Animations/EnlargeShrink'
 
@@ -210,7 +210,8 @@ class DescriptionBeer extends React.Component{
     const description = this.state.existInAPI === true ? beer.description : beer.beer_description
     if(description.length > 2){
       return(
-        <Card title = "Description">
+        <Card title = "Description"
+            containerStyle = {{ backgroundColor: color.colorCard }}>
           <ViewMoreText
             numberOfLines={3}
             renderViewMore={this._renderViewMore}
@@ -232,7 +233,8 @@ class DescriptionBeer extends React.Component{
     const beer = this.state.beer
     if (existInAPI){
       return(
-        <Card title = "Ratio">
+        <Card title = "Ratio"
+              containerStyle = {{ backgroundColor: color.colorCard }}>
           <View
               style = {styles.container_slider}
             >
@@ -246,10 +248,10 @@ class DescriptionBeer extends React.Component{
                   height={this.sliderHeight}
                   step={6}
                   borderRadius={150}
-                  minimumTrackTintColor={colorIbu}
-                  maximumTrackTintColor={colorBackItem}
+                  minimumTrackTintColor={color.colorIbu}
+                  maximumTrackTintColor={color.colorBackItem}
                   showBallIndicator = {true}
-                  ballIndicatorColor={colorIbu}
+                  ballIndicatorColor={color.colorIbu}
                   ballIndicatorTextColor={'white'}
                   ballIndicatorWidth = {this.sliderBallIndicatorWidth}
                   ballIndicatorPosition = {this.sliderBallIndicatorPosition}
@@ -267,11 +269,11 @@ class DescriptionBeer extends React.Component{
                   height={this.sliderHeight}
                   step={0.2}
                   borderRadius={150}
-                  minimumTrackTintColor={colorPrice}
-                  maximumTrackTintColor={colorBackItem}
+                  minimumTrackTintColor={color.colorPrice}
+                  maximumTrackTintColor={color.colorBackItem}
                   showBallIndicator
-                  ballIndicatorColor={colorPrice}
-                  ballIndicatorTextColor={colorBackItem}
+                  ballIndicatorColor={color.colorPrice}
+                  ballIndicatorTextColor={color.colorBackItem}
                   ballIndicatorWidth = {this.sliderBallIndicatorWidth}
                   ballIndicatorPosition = {this.sliderBallIndicatorPosition}
                 />
@@ -286,11 +288,11 @@ class DescriptionBeer extends React.Component{
                   height={this.sliderHeight}
                   step={0.6}
                   borderRadius={150}
-                  minimumTrackTintColor={colorAlcool}
-                  maximumTrackTintColor={colorBackItem}
+                  minimumTrackTintColor={color.colorAlcool}
+                  maximumTrackTintColor={color.colorBackItem}
                   showBallIndicator
-                  ballIndicatorColor={colorAlcool}
-                  ballIndicatorTextColor={colorBackItem}
+                  ballIndicatorColor={color.colorAlcool}
+                  ballIndicatorTextColor={color.colorBackItem}
                   ballIndicatorWidth = {this.sliderBallIndicatorWidth}
                   ballIndicatorPosition = {this.sliderBallIndicatorPosition}
                 />
@@ -329,10 +331,10 @@ class DescriptionBeer extends React.Component{
                 height={this.sliderHeight}
                 step={6}
                 borderRadius={150}
-                minimumTrackTintColor={colorIbu}
-                maximumTrackTintColor={colorBackItem}
+                minimumTrackTintColor={color.colorIbu}
+                maximumTrackTintColor={color.colorBackItem}
                 showBallIndicator = {true}
-                ballIndicatorColor={colorIbu}
+                ballIndicatorColor={color.colorIbu}
                 ballIndicatorTextColor={'white'}
                 ballIndicatorWidth = {this.sliderBallIndicatorWidth}
                 ballIndicatorPosition = {this.sliderBallIndicatorPosition}
@@ -350,11 +352,11 @@ class DescriptionBeer extends React.Component{
                 height={this.sliderHeight}
                 step={0.2}
                 borderRadius={150}
-                minimumTrackTintColor={colorPrice}
-                maximumTrackTintColor={colorBackItem}
+                minimumTrackTintColor={color.colorPrice}
+                maximumTrackTintColor={color.colorBackItem}
                 showBallIndicator
-                ballIndicatorColor={colorPrice}
-                ballIndicatorTextColor={colorBackItem}
+                ballIndicatorColor={color.colorPrice}
+                ballIndicatorTextColor={color.colorBackItem}
                 ballIndicatorWidth = {this.sliderBallIndicatorWidth}
                 ballIndicatorPosition = {this.sliderBallIndicatorPosition}
               />
@@ -369,11 +371,11 @@ class DescriptionBeer extends React.Component{
                 height={this.sliderHeight}
                 step={0.6}
                 borderRadius={150}
-                minimumTrackTintColor={colorAlcool}
-                maximumTrackTintColor={colorBackItem}
+                minimumTrackTintColor={color.colorAlcool}
+                maximumTrackTintColor={color.colorBackItem}
                 showBallIndicator
-                ballIndicatorColor={colorAlcool}
-                ballIndicatorTextColor={colorBackItem}
+                ballIndicatorColor={color.colorAlcool}
+                ballIndicatorTextColor={color.colorBackItem}
                 ballIndicatorWidth = {this.sliderBallIndicatorWidth}
                 ballIndicatorPosition = {this.sliderBallIndicatorPosition}
               />
@@ -514,7 +516,8 @@ class DescriptionBeer extends React.Component{
           <ScrollView style = {styles.main_container}>
           <Card
             title = {title}
-            titleStyle = {styles.beer_title}>
+            titleStyle = {styles.beer_title}
+            containerStyle = {{ backgroundColor: color.colorCard }}>
             <View style = {{ flexDirection : 'row', justifyContent: "space-evenly" }}>
               {this._displayImageHd()}
               <View style = { styles.header_description }>
@@ -600,6 +603,7 @@ class DescriptionBeer extends React.Component{
 const styles = StyleSheet.create({
   main_container : {
     flex: 1,
+    backgroundColor: color.colorBackground
   },
   view_slider_icon: {
     marginTop: -20,

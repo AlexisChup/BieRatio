@@ -22,7 +22,7 @@ class Home extends React.Component {
       menu: ["La bière de la semaine","Bars à proximités","Mon compte"]
     },
     this.sizeIcon = height/10
-    this.iconColor = color.colorBottomTabTintColor
+    this.iconColor = color.colorDivider
 
   }
 
@@ -88,7 +88,7 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-    backgroundColor: color.colorBottomTabBackground
+    backgroundColor: color.colorBackground
   },
   image_logo: {
     flex: 2,
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginRight: 20,
     flex: 1,
+    color: color.colorDivider
   },
   icon: {
     marginLeft: 20,
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   divider: {
-    backgroundColor: color.colorBottomTabTintColor,
+    backgroundColor: color.colorDivider,
     height: 5,
   },
 

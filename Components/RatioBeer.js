@@ -24,7 +24,7 @@ class RatioBeer extends React.Component{
           <Icon
             name = "home"
             type = "octicon"
-            color = "black"
+            color = {color.colorDivider}
             size = {30}
             iconStyle = {styles.icon}
           />
@@ -74,7 +74,7 @@ class RatioBeer extends React.Component{
           <Icon
             name = "info"
             type = "octicon"
-            color = "black"
+            color = {color.colorDivider}
             size = {30}
             iconStyle = {{ marginRight: 15 }}
           />
@@ -186,7 +186,7 @@ class RatioBeer extends React.Component{
 
 
   render() {
-    
+    const colorBackground = color.colorBackground
     return(
       <View style = {styles.main_container}>
         <View
@@ -274,13 +274,13 @@ class RatioBeer extends React.Component{
           backgroundInactive={'gray'}
           circleActiveColor={color.colorIbu}
           circleInActiveColor={color.colorDisabled}
-          renderInsideCircle={() => 
-            <Image 
-              source = {require ('../Images/ic_hop.png')}
-              style = {{ resizeMode: "contain", width: 30, height: 30 }}
+          // renderInsideCircle={() => 
+          //   <Image 
+          //     source = {require ('../Images/ic_hop.png')}
+          //     style = {{ resizeMode: "contain", width: 30, height: 30 }}
 
-            />
-          }
+          //   />
+          // }
           changeValueImmediately={true}
 
         />
@@ -294,13 +294,13 @@ class RatioBeer extends React.Component{
           backgroundInactive={'gray'}
           circleActiveColor={color.colorPrice}
           circleInActiveColor={color.colorDisabled}
-          renderInsideCircle={() => 
-            <Image 
-              source = {require ('../Images/ic_euro.png')}
-              style = {{ resizeMode: "contain", width: 30, height: 30 }}
+          // renderInsideCircle={() => 
+          //   <Image 
+          //     source = {require ('../Images/ic_euro.png')}
+          //     style = {{ resizeMode: "contain", width: 30, height: 30 }}
 
-            />
-          }
+          //   />
+          // }
           changeValueImmediately={true}
 
         />
@@ -314,13 +314,13 @@ class RatioBeer extends React.Component{
           backgroundInactive={'gray'}
           circleActiveColor={color.colorAlcool}
           circleInActiveColor={color.colorDisabled}
-          renderInsideCircle={() => 
-            <Image 
-              source = {require ('../Images/ic_alcohol.png')}
-              style = {{ resizeMode: "contain", width: 30, height: 30 }}
+          // renderInsideCircle={() => 
+          //   <Image 
+          //     source = {require ('../Images/ic_alcohol.png')}
+          //     style = {{ resizeMode: "contain", width: 30, height: 30 }}
 
-            />
-          }
+          //   />
+          // }
           changeValueImmediately={true}
 
         />
@@ -335,10 +335,11 @@ class RatioBeer extends React.Component{
             onPress = {() => this._displayRatioSearchBeer()}
             
           >
-            Rechercher<Icon
+            Rechercher
+            <Icon
               name = 'search'
               size = {30}
-              color = 'navy'
+              color = {color.colorDivider}
               iconStyle = {{ marginLeft : -25 , marginRight: 20,}}
             />
           </Button>
@@ -354,7 +355,8 @@ class RatioBeer extends React.Component{
 
 const styles = StyleSheet.create({
   main_container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: color.colorBackground
   },
   container_slider: {
     justifyContent: "center",
@@ -379,14 +381,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   buttonSearch: {
-    borderColor: 'navy',
+    borderColor: color.colorDivider,
     borderWidth: 3,
     borderRadius: 20,
     width: width/2,
     justifyContent: 'center',
   },
   buttonSearchText: {
-    color : 'navy',
+    color : color.colorDivider,
     fontSize: 20,
     fontWeight: 'bold'
   },

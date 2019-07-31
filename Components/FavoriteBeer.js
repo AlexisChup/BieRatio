@@ -3,6 +3,7 @@ import React from 'react'
 import { TouchableOpacity,Image ,StyleSheet, View,  Text, Animated, Easing } from 'react-native'
 import { Icon } from 'react-native-elements'
 
+import * as color from '../assets/colors'
 class FavoriteBeer extends React.Component {
 
   static navigationOptions = ({ navigate, navigation }) => ({
@@ -112,7 +113,8 @@ const styles = StyleSheet.create({
   main_container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: color.colorBackground,
   },
   animation_view: {
     backgroundColor: 'red',
