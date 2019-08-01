@@ -2,14 +2,13 @@ import React from 'react'
 
 import { Image, TouchableOpacity, StyleSheet, View, Text, Dimensions} from 'react-native'
 import VerticalSlider from 'rn-vertical-slider'
-import { Icon, Tooltip } from 'react-native-elements'
+import { Icon, Tooltip, Button } from 'react-native-elements'
 
 import { Switch } from 'react-native-switch';
 
 
 import * as color from '../assets/colors'
 
-import Button from 'apsl-react-native-button'
 
 var {height, width} = Dimensions.get('window');
 
@@ -40,10 +39,10 @@ class RatioBeer extends React.Component{
                   style = { styles.imageTooltip }
                   source = {require ('../Images/ic_hop.png')}
                 />
-                <Text style = {{ fontWeight: 'bold' }} > : IBU{'\n'}</Text>
+                <Text style = {{ fontWeight: 'bold', color: color.colorDivider, }} > : IBU{'\n'}</Text>
               </View>
-              <Text style = {{  }}>International bitterness unit (symbole IBU) est une unité utilisée par les brasseurs pour mesurer l'amertume de leurs bières.{'\n'}Plus cette valeur est élevée plus la bière est amère. {'\n'}</Text>
-              <Text style = {{ textAlign : 'right', marginRight: 25, }} >source : Wikipédia</Text>
+              <Text style = {{ color: color.colorDivider, }}>International bitterness unit (symbole IBU) est une unité utilisée par les brasseurs pour mesurer l'amertume de leurs bières.{'\n'}Plus cette valeur est élevée plus la bière est amère. {'\n'}</Text>
+              <Text style = {{ color: color.colorDivider,textAlign : 'right', marginRight: 25, }} >source : Wikipédia</Text>
             </View>
             <View style = {{ marginTop: 10 }}>
               <View style = { styles.tooltipHeader }>
@@ -51,9 +50,9 @@ class RatioBeer extends React.Component{
                   style = { styles.imageTooltip }
                   source = {require ('../Images/ic_euro.png')}
                 />
-                <Text style = {{ fontWeight: 'bold' }} > : Argent{'\n'}</Text>
+                <Text style = {{ color: color.colorDivider,fontWeight: 'bold' }} > : Argent{'\n'}</Text>
               </View>
-              <Text >Unité arbitraire sur 5.{'\n'}Même si le prix de la bière peut varier d'un bar à l'autre.{'\n'}Plus cette valeur est élevée plus la bière est chère.</Text>
+              <Text style = {{color: color.colorDivider, }}>Unité arbitraire sur 5.{'\n'}Même si le prix de la bière peut varier d'un bar à l'autre.{'\n'}Plus cette valeur est élevée plus la bière est chère.</Text>
             </View>
             <View style = {{ marginTop: 10 }}>
               <View style = { styles.tooltipHeader }>
@@ -61,16 +60,16 @@ class RatioBeer extends React.Component{
                   style = { styles.imageTooltip }
                   source = {require ('../Images/ic_alcohol.png')}
                 />
-                <Text style = {{ fontWeight: 'bold' }} > : TAV{'\n'}</Text>
+                <Text style = {{color: color.colorDivider, fontWeight: 'bold' }} > : TAV{'\n'}</Text>
               </View>
-              <Text style = {{  }}>Le titre alcoométrique volumique (TAV), aussi appelé degré alcoolique, est la proportion d'alcool dans une boisson.{'\n'}Plus cette valeur est élevée plus la bière contient de l'alcool{'\n'}</Text>
-              <Text style = {{ textAlign : 'right', marginRight: 25, }} >source : Wikipédia</Text>
+              <Text style = {{color: color.colorDivider,  }}>Le titre alcoométrique volumique (TAV), aussi appelé degré alcoolique, est la proportion d'alcool dans une boisson.{'\n'}Plus cette valeur est élevée plus la bière contient de l'alcool{'\n'}</Text>
+              <Text style = {{color: color.colorDivider, textAlign : 'right', marginRight: 25, }} >source : Wikipédia</Text>
             </View>           
           </View>
         }
         width = {width - 10}
         height = {height-200}
-        containerStyle = {{ marginRight: 150, }}>
+        containerStyle = {{ marginRight: 150, backgroundColor: color.colorBottomTabBackground }}>
           <Icon
             name = "info"
             type = "octicon"
@@ -162,8 +161,6 @@ class RatioBeer extends React.Component{
     if( this.state.enabledSlidersIBU ){
       ibu = this.state.ibu
     }else if( !this.state.enabledSlidersIBU ){
-      console.log("Ibu = 150");
-      
       ibu = 150
     }
     var price =0
@@ -274,13 +271,13 @@ class RatioBeer extends React.Component{
           backgroundInactive={'gray'}
           circleActiveColor={color.colorIbu}
           circleInActiveColor={color.colorDisabled}
-          // renderInsideCircle={() => 
-          //   <Image 
-          //     source = {require ('../Images/ic_hop.png')}
-          //     style = {{ resizeMode: "contain", width: 30, height: 30 }}
+          renderInsideCircle={() => 
+            <Image 
+              source = {require ('../Images/ic_hop.png')}
+              style = {{ resizeMode: "contain", width: 30, height: 30 }}
 
-          //   />
-          // }
+            />
+          }
           changeValueImmediately={true}
 
         />
@@ -294,13 +291,13 @@ class RatioBeer extends React.Component{
           backgroundInactive={'gray'}
           circleActiveColor={color.colorPrice}
           circleInActiveColor={color.colorDisabled}
-          // renderInsideCircle={() => 
-          //   <Image 
-          //     source = {require ('../Images/ic_euro.png')}
-          //     style = {{ resizeMode: "contain", width: 30, height: 30 }}
+          renderInsideCircle={() => 
+            <Image 
+              source = {require ('../Images/ic_euro.png')}
+              style = {{ resizeMode: "contain", width: 30, height: 30 }}
 
-          //   />
-          // }
+            />
+          }
           changeValueImmediately={true}
 
         />
@@ -314,36 +311,36 @@ class RatioBeer extends React.Component{
           backgroundInactive={'gray'}
           circleActiveColor={color.colorAlcool}
           circleInActiveColor={color.colorDisabled}
-          // renderInsideCircle={() => 
-          //   <Image 
-          //     source = {require ('../Images/ic_alcohol.png')}
-          //     style = {{ resizeMode: "contain", width: 30, height: 30 }}
+          renderInsideCircle={() => 
+            <Image 
+              source = {require ('../Images/ic_alcohol.png')}
+              style = {{ resizeMode: "contain", width: 30, height: 30 }}
 
-          //   />
-          // }
+            />
+          }
           changeValueImmediately={true}
 
         />
 
         </View>
-        <View style = {styles.button}>
+        <View style = { styles.buttonBuyView }>
           <Button
-            style = { styles.buttonSearch }
-            textStyle = { styles.buttonSearchText }
-            type = 'outline'
-            buttonStyle = { styles.buttonSearch }
+            titleStyle = { styles.buttonBuyText }
+            buttonStyle = { styles.buttonBuyStyle }
             onPress = {() => this._displayRatioSearchBeer()}
+            iconRight = {true}
+            title = "Rechercher"
+            icon = {
+              <Icon
+                name = 'search'
+                size = {30}
+                color = {color.colorBackground}
+              />
+            }
             
-          >
-            Rechercher
-            <Icon
-              name = 'search'
-              size = {30}
-              color = {color.colorDivider}
-              iconStyle = {{ marginLeft : -25 , marginRight: 20,}}
-            />
-          </Button>
+          />
         </View>
+
       </View>
 
     )
@@ -376,22 +373,22 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  button: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
+  buttonBuyView: {
+    marginBottom: 10
+  },  
+  buttonBuyStyle: {
+    borderRadius: 100,
+    width: 250,
+    alignSelf: "center",
+    backgroundColor: color.colorDivider
   },
-  buttonSearch: {
-    borderColor: color.colorDivider,
-    borderWidth: 3,
-    borderRadius: 20,
-    width: width/2,
-    justifyContent: 'center',
+  buttonBuyText: {
+    color: color.colorBackground,
+    marginRight: 10,
   },
-  buttonSearchText: {
-    color : color.colorDivider,
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
+  buttonBuyIon: {
+
+  }, 
   tooltipHeader: {
     flexDirection: 'row',
     justifyContent: 'center',

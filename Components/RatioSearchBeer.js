@@ -9,7 +9,6 @@ import { getsBeersFromRatio, loadPages } from '../API/BieRatioApi'
 import * as color from '../assets/colors'
 var {height, width } = Dimensions.get('window')
 
-import { colorDivider } from '../assets/colors'
 
 import * as Font from 'expo-font'
 
@@ -33,6 +32,7 @@ class RatioSearchBeer extends React.Component{
       totalPage: 1,
       fontLoaded: false,
     },
+    this.colorSlider = color.colorDivider
     this.ibu = parseFloat(this.props.navigation.state.params.ibu),
     this.price = parseFloat(this.props.navigation.state.params.price),
     this.abv = parseFloat(this.props.navigation.state.params.abv); 
@@ -135,7 +135,7 @@ class RatioSearchBeer extends React.Component{
             maximumTrackTintColor = {color.colorBackItem}
             disabled = {true}
             style = { styles.slider }
-            thumbTintColor = {"#000000"}
+            thumbTintColor = {this.colorSlider}
           />
         </View>
 
@@ -163,7 +163,7 @@ class RatioSearchBeer extends React.Component{
             maximumTrackTintColor = {color.colorBackItem}
             disabled = {true}
             style = { styles.slider }
-            thumbTintColor = {"#000000"}
+            thumbTintColor = {this.colorSlider}
           />
         </View>
       )
@@ -190,7 +190,7 @@ class RatioSearchBeer extends React.Component{
             maximumTrackTintColor = {color.colorBackItem}
             disabled = {true}
             style = { styles.slider }
-            thumbTintColor = {"#000000"}
+            thumbTintColor = {this.colorSlider}
           />
         </View>
       )

@@ -1,15 +1,14 @@
 import React from 'react'
-import {  ScrollView, ActivityIndicator, Image, StyleSheet, View, TextInput, Button, Text, Platform, Alert, Animated } from 'react-native'
+import {  ScrollView, ActivityIndicator, Image, StyleSheet, View, TextInput, Text, Platform, Alert, Animated, Linking, Dimensions } from 'react-native'
 import { getBeerDetailFromApi } from '../API/UntappdApi'
 import { getBeerByBid } from '../API/BieRatioApi'
 import VerticalSlider from 'rn-vertical-slider'
-
 
 import Flag from 'react-native-flags';
 
 import ViewMoreText from 'react-native-view-more-text';
 
-import { Card, Icon, ThemeProvider } from 'react-native-elements'
+import { Card, Icon, ThemeProvider ,Button, } from 'react-native-elements'
 
 import { ProviderTypes, TranslatorConfiguration, TranslatorFactory } from 'react-native-power-translator';
 
@@ -20,6 +19,7 @@ import EnlargeShrink from './Animations/EnlargeShrink'
 
 import { Ipv4 } from '../assets/Ip'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+var {height, width} = Dimensions.get('window');
 
 TranslatorConfiguration.setConfig(ProviderTypes.Microsoft, '41c2d80ee5584c0c9ec9baa101f89371','fr');
 
@@ -46,6 +46,7 @@ class DescriptionBeer extends React.Component{
       existInAPI: false,
       iconName : "ios-heart-empty",
     }
+    this.colorCard = color.colorBackground,
     this.ibu = this.props.navigation.state.params.ibu,
     this.price = this.props.navigation.state.params.price,
     this.abv = this.props.navigation.state.params.abv,
@@ -211,14 +212,16 @@ class DescriptionBeer extends React.Component{
     if(description.length > 2){
       return(
         <Card title = "Description"
-            containerStyle = {{ backgroundColor: color.colorCard }}>
+            containerStyle = { styles.card }
+            dividerStyle = {styles.cardDivider}
+            titleStyle = {styles.cardSubTitle}>
           <ViewMoreText
             numberOfLines={3}
             renderViewMore={this._renderViewMore}
             renderViewLess={this._renderViewLess}
             textStyle={{textAlign: 'center'}}
           >
-            <Text style = {{ fontSize: 15 }}>
+            <Text style = {styles.textDescription}>
               {description}
             </Text>
           </ViewMoreText>
@@ -234,7 +237,9 @@ class DescriptionBeer extends React.Component{
     if (existInAPI){
       return(
         <Card title = "Ratio"
-              containerStyle = {{ backgroundColor: color.colorCard }}>
+              containerStyle = { styles.card }
+              dividerStyle = {styles.cardDivider}
+              titleStyle = {styles.cardSubTitle}>
           <View
               style = {styles.container_slider}
             >
@@ -317,7 +322,10 @@ class DescriptionBeer extends React.Component{
     }
     else{
       return(
-        <Card title = "Ratio">
+        <Card title = "Ratio"
+              containerStyle = {styles.card}
+              dividerStyle = {styles.cardDivider}
+              titleStyle = {styles.cardSubTitle}>
           <View
             style = {styles.container_slider}
           >
@@ -489,6 +497,7 @@ class DescriptionBeer extends React.Component{
           name = {this.state.iconName}
           iconStyle = {{ marginLeft: 25 }}
           size = {40}
+          color = {color.colorDivider}
         />
       </TouchableOpacity>
       
@@ -501,6 +510,15 @@ class DescriptionBeer extends React.Component{
     })
   }
   
+  // handleClick = () => {
+  //   Linking.canOpenURL(this.props.url).then(supported => {
+  //     if (supported) {
+  //       Linking.openURL(this.props.url);
+  //     } else {
+  //       console.log("Don't know how to open URI: " + this.props.url);
+  //     }
+  //   });
+  // }
 
   _displayBeer(){
 
@@ -514,71 +532,92 @@ class DescriptionBeer extends React.Component{
         const { selectedIndex } = this.state
         return(
           <ScrollView style = {styles.main_container}>
-          <Card
-            title = {title}
-            titleStyle = {styles.beer_title}
-            containerStyle = {{ backgroundColor: color.colorCard }}>
-            <View style = {{ flexDirection : 'row', justifyContent: "space-evenly" }}>
-              {this._displayImageHd()}
-              <View style = { styles.header_description }>
-                <View style = { styles.iconContainer }>
-                  <Image
-                    style = { styles.icon }
-                    source = {require('../Images/ic_brewery.png')}
-                  />
-                  <Text style ={{ fontSize: 20 }} > : </Text>
-                  { this._displayFlag() }
+            <Card
+              title = {title}
+              titleStyle = {styles.beer_title}
+              containerStyle = {styles.card}
+              dividerStyle = {styles.cardDivider}>
+              <View style = {{ flexDirection : 'row', justifyContent: "space-evenly" }}>
+                {this._displayImageHd()}
+                <View style = { styles.header_description }>
+                  <View style = { styles.iconContainer }>
+                    <Image
+                      style = { styles.icon }
+                      source = {require('../Images/ic_brewery.png')}
+                    />
+                    <Text style ={{ fontSize: 20 }} > : </Text>
+                    { this._displayFlag() }
+                  </View>
+                  
+                  {this._displayFavoriteBeer()}
                 </View>
-                
-                {this._displayFavoriteBeer()}
               </View>
+            </Card>
+
+            <View style = {{ flexDirection: 'row', justifyContent: "space-evenly" }} >
+              <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >Saisir Prix : </Text>
+              <TextInput
+                editable = {this.state.editable}
+                value = {this.state.priceText}
+                onChangeText ={(text) => this.setState({ priceText: text }) }
+                style = {{ textAlign: 'center', fontSize: 20, height: 30, color: '#D9D9D9', width: 150, color: this.state.backgroundColor }}
+                placeholder = "Veuillez saisir le prix/ 5"
+                placeholderTextColor = '#D9D9D9'
+                onSubmitEditing = {() => this._addToAPI()}
+              />
             </View>
-          </Card>
-
-          <View style = {{ flexDirection: 'row', justifyContent: "space-evenly" }} >
-            <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >Saisir Prix : </Text>
-            <TextInput
-              editable = {this.state.editable}
-              value = {this.state.priceText}
-              onChangeText ={(text) => this.setState({ priceText: text }) }
-              style = {{ textAlign: 'center', fontSize: 20, height: 30, color: '#D9D9D9', width: 150, color: this.state.backgroundColor }}
-              placeholder = "Veuillez saisir le prix/ 5"
-              placeholderTextColor = '#D9D9D9'
-              onSubmitEditing = {() => this._addToAPI()}
-            />
-          </View>
 
 
-          <View style = {{flexDirection: "row", justifyContent : "space-evenly"}} >
-            <Text style = {{ fontSize: 20, fontWeight: 'bold' }}>Random Prix :</Text>
-            <Button 
-              title = {this.state.priceText}
-              disabled = {this.state.randomDisabled}
-              onPress = {() => this._randomPrice() }
+            <View style = {{flexDirection: "row", justifyContent : "space-evenly"}} >
+              <Text style = {{ fontSize: 20, fontWeight: 'bold' }}>Random Prix :</Text>
+              <Button 
+                title = {this.state.priceText}
+                disabled = {this.state.randomDisabled}
+                onPress = {() => this._randomPrice() }
+                color = {this.state.backgroundColor}
+                style = {{margin : 10, height: 50, fontSize: 20, width: 150}}
+              />
+            </View>
+
+            <Button
+              title = {this.state.addButon}
+              disabled = {this.state.disabled}
+              onPress = {() => this._updateDescription()}
               color = {this.state.backgroundColor}
-              style = {{margin : 10, height: 50, fontSize: 20, width: 150}}
+              style = {{margin: 10, height: 50 }}
             />
-          </View>
-
-          <Button
-            title = {this.state.addButon}
-            disabled = {this.state.disabled}
-            onPress = {() => this._updateDescription()}
-            color = {this.state.backgroundColor}
-            style = {{margin: 10, height: 50 }}
-          />
 
 
 
-          {this._displaySlider()}
+            {this._displaySlider()}
 
-          
+            
 
-          {this._displayTextDescription()}
+            {this._displayTextDescription()}
+
+            <View style = {styles.viewButton} > 
+              <Button
+                title = "Acheter"
+                onPress={ ()=>{ Linking.openURL('https://google.com/search?q=buy+' + title+'+beer')}}
+                iconRight = {true}
+                icon = { 
+                  <Icon
+                    type = "material-community"
+                    name = "cash-register"
+                    size = {30}
+                    color = {color.colorBackground}
+                  
+                  />
+                }
+                buttonStyle = { styles.buttonBuyStyle }
+                titleStyle = { styles.buttonBuyText }
+              />
+            </View>
 
 
 
 
+            <View style = {{ marginBottom: 10 }} ></View>
 
           </ScrollView>
         )
@@ -610,6 +649,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  viewButton: {
+    marginTop: 10,
+  },
+  buttonBuyStyle: {
+    borderRadius: 100,
+    width: 250,
+    alignSelf: "center",
+    backgroundColor: color.colorDivider
+  },
+  buttonBuyText: {
+    color: color.colorBackground,
+    marginRight: 10,
+  },
+  buttonBuyIon: {
+
+  }, 
   image_slider: {
     height: 30,
     width: 30,
@@ -628,6 +683,23 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
+  card: {
+    backgroundColor: this.colorCard,
+    borderColor: color.colorDivider
+  },
+  cardDivider:{
+    backgroundColor: color.colorDivider,
+    opacity: 100,
+    height: 3,
+  },
+  cardSubTitle: {
+    color: color.colorDivider
+
+  },
+  textDescription:{
+    fontSize: 15,
+    color: color.colorDivider
+  },
   view_slider_icon:{
     flexDirection:'row',
     justifyContent: 'space-around',
@@ -642,6 +714,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15,
     textAlign: 'center',
+    color: color.colorDivider
 
   },
   image: {
@@ -662,7 +735,7 @@ const styles = StyleSheet.create({
   },
   show_More: {
     textAlign: 'right',
-    color: 'blue',
+    color: color.colorAlcool,
     fontSize: 17,
   },
 

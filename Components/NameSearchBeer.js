@@ -42,7 +42,7 @@ class NameSearchBeer extends React.Component {
       nbBeers: 1,
     }
     this._displayDetailForBeer = this._displayDetailForBeer.bind(this)
-    this.inputColor = '#fcb900'
+    this.inputColor = color.colorDivider
     this.searchedText =  ""
 
   }
@@ -116,6 +116,7 @@ class NameSearchBeer extends React.Component {
             type = "ionicon"
             name = "ios-search"
             size = {200}
+            color = {color.colorDivider}
 
           />
         </View>
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 5,
-    backgroundColor: '#fcb900',
+    backgroundColor: color.colorDivider,
     width : width,
   },
   iconImage: {
@@ -228,7 +229,8 @@ const styles = StyleSheet.create({
   iconText: {
     textAlign: 'center',
     fontSize: 25,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: color.colorDivider
   }
 
 })

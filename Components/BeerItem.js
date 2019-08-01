@@ -11,6 +11,7 @@ import Flag from 'react-native-flags';
 import FadeIn from './Animations/FadeIn'
 
 import { getBeerByBid } from '../API/BieRatioApi'
+import * as color from '../assets/colors'
 
 class BeerItem extends React.Component {
 
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 5,
-    backgroundColor: '#fcb900',
+    backgroundColor: color.colorDivider,
   },
   image: {
     marginTop: 10,
