@@ -12,6 +12,7 @@ import { Card, Icon, ThemeProvider ,Button, } from 'react-native-elements'
 
 import { ProviderTypes, TranslatorConfiguration, TranslatorFactory } from 'react-native-power-translator';
 
+import { keyMicrosftAzure } from '../Access_Token/keyMicrosoftAzure'
 
 import * as color  from '../assets/colors'
 
@@ -21,7 +22,7 @@ import { Ipv4 } from '../assets/Ip'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 var {height, width} = Dimensions.get('window');
 
-TranslatorConfiguration.setConfig(ProviderTypes.Microsoft, '41c2d80ee5584c0c9ec9baa101f89371','fr');
+TranslatorConfiguration.setConfig(ProviderTypes.Microsoft, keyMicrosftAzure,'fr');
 
 class DescriptionBeer extends React.Component{
 
@@ -568,14 +569,14 @@ class DescriptionBeer extends React.Component{
             </View>
 
 
-            <View style = {{flexDirection: "row", justifyContent : "space-evenly"}} >
+            <View style = {{flexDirection: "row", justifyContent : "space-evenly", alignItems: 'center'}} >
               <Text style = {{ fontSize: 20, fontWeight: 'bold' }}>Random Prix :</Text>
               <Button 
                 title = {this.state.priceText}
                 disabled = {this.state.randomDisabled}
                 onPress = {() => this._randomPrice() }
-                color = {this.state.backgroundColor}
-                style = {{margin : 10, height: 50, fontSize: 20, width: 150}}
+                buttonStyle = {{margin : 10, height: 40, width: 150, backgroundColor:this.state.backgroundColor }}
+                titleStyle = {{ fontSize:20 }}
               />
             </View>
 
@@ -583,8 +584,7 @@ class DescriptionBeer extends React.Component{
               title = {this.state.addButon}
               disabled = {this.state.disabled}
               onPress = {() => this._updateDescription()}
-              color = {this.state.backgroundColor}
-              style = {{margin: 10, height: 50 }}
+              buttonStyle = {{margin: 10, height: 40, backgroundColor: this.state.backgroundColor }}
             />
 
 
