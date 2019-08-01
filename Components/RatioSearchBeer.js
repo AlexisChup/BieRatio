@@ -213,6 +213,9 @@ class RatioSearchBeer extends React.Component{
   }
 
   _displayFlatList(){
+    const showIBU = this.ibu  === 150 ? false : true
+    const showPRICE = this.price  === 150 ? false : true
+    const showABV = this.abv  === 150 ? false : true
     return(
       <SafeAreaView style = {{ flex: 1 }} >
         <FlatList
@@ -222,6 +225,9 @@ class RatioSearchBeer extends React.Component{
           renderItem = {({item}) => (
             <BeerItemRatio
               beer = { item }
+              showIBU = {showIBU}
+              showPRICE = {showPRICE}
+              showABV = {showABV}
               displayDetailForBeer = {this._displayDetailForBeer}
             />
           )} 

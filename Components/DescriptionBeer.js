@@ -269,7 +269,7 @@ class DescriptionBeer extends React.Component{
                 <VerticalSlider
                   value={beer.price}
                   disabled={true}
-                  min={1}
+                  min={0}
                   max={5}
                   width={this.sliderWidth}
                   height={this.sliderHeight}
@@ -355,7 +355,7 @@ class DescriptionBeer extends React.Component{
               <VerticalSlider
                 value={parseFloat(this.state.priceText)}
                 disabled={true}
-                min={1}
+                min={0}
                 max={5}
                 width={this.sliderWidth}
                 height={this.sliderHeight}
@@ -564,7 +564,7 @@ class DescriptionBeer extends React.Component{
                 style = {{ textAlign: 'center', fontSize: 20, height: 30, color: '#D9D9D9', width: 150, color: this.state.backgroundColor }}
                 placeholder = "Veuillez saisir le prix/ 5"
                 placeholderTextColor = '#D9D9D9'
-                onSubmitEditing = {() => this._addToAPI()}
+                onSubmitEditing = {() => this._updateDescription()}
               />
             </View>
 

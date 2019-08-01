@@ -11,6 +11,66 @@ import * as color from '../assets/colors'
 
 class BeerItemRatio extends React.Component {
 
+  _showAbuCriterion(){
+    const  beer = this.props.beer
+    if(this.props.showIBU){
+      return(
+        <View style = {{ flexDirection: "row" }}>
+          <Image
+            style = { styles.image_slider }
+            source = {require ('../Images/ic_hop.png')}
+          />
+          <Text style = { styles.description_texte }>: {beer.ibu}</Text>
+        </View>
+      )
+    }
+  }
+  _showPriceCriterion(){
+    const  beer = this.props.beer
+    if(this.props.showPRICE){
+      return(
+        <View style = {{ flexDirection: "row" }}>
+          <Image
+            style = { styles.image_slider }
+            source = {require ('../Images/ic_euro.png')}
+          />
+          <Text style = { styles.description_texte }> : {beer.price.toFixed(1)}</Text>
+        </View>
+      )
+    }
+  }
+  _showAbvCriterion(){
+    const  beer = this.props.beer
+    if(this.props.showABV){
+      return(
+        <View style = {{ flexDirection: "row" }}>
+          <Image
+            style = { styles.image_slider }
+            source = {require ('../Images/ic_alcohol.png')}
+          />
+          <Text style = { styles.description_texte }> : {beer.abv.toFixed(1)}</Text>
+        </View>
+      )
+    }
+  }
+
+  _showFirstDivider(){
+    if((this.props.showIBU & this.props.showPRICE) || (this.props.showIBU & this.props.showABV & !this.props.showPRICE) ){
+      return(
+        <View style = {styles.separate}></View>
+      )
+    }
+  }
+  _showSecondDivider(){
+    if(this.props.showPRICE & this.props.showABV){
+      return(
+        <View style = {styles.separate}></View>
+      )
+    }
+  }
+
+  
+
   render(){
     const { beer, displayDetailForBeer } = this.props
     return(
@@ -27,26 +87,14 @@ class BeerItemRatio extends React.Component {
               <Text style = {styles.title_item} numberOfLines={1}>{beer.name}</Text>
 
               <View style = {styles.texte_item}>
-                <Image
-                  style = { styles.image_slider }
-                  source = {require ('../Images/ic_hop.png')}
-                />
-                <Text style = { styles.description_texte }>: {beer.ibu}</Text>
+                {this._showAbuCriterion()}
                 
-                <View style = {styles.separate}></View>
-                <Image
-                  style = { styles.image_slider }
-                  source = {require ('../Images/ic_euro.png')}
-                />
-                <Text style = { styles.description_texte }> : {beer.price.toFixed(1)}</Text>
+                {this._showFirstDivider()}
+                {this._showPriceCriterion()}
 
+                {this._showSecondDivider()}
 
-                <View style = {styles.separate}></View>
-                <Image
-                  style = { styles.image_slider }
-                  source = {require ('../Images/ic_alcohol.png')}
-                />
-                <Text style = { styles.description_texte }> : {beer.abv.toFixed(1)}</Text>
+                {this._showAbvCriterion()}
 
 
               </View>
@@ -75,7 +123,6 @@ const styles = StyleSheet.create({
   image_slider: {
     height: 30,
     width: 30,
-    marginRight: -15,
   },
   image_item: {
     height: 100,
@@ -97,7 +144,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   texte_item:{
-    justifyContent: 'space-around',
+    justifyContent: "space-evenly",
     alignItems: 'center',
     marginLeft: 5,
     flexDirection: 'row',

@@ -108,10 +108,9 @@ class NameSearchBeer extends React.Component {
   _waitingSearch(){
     if( this.searchedText.length === 0) {
       return(
-        <View style = { styles.iconView } >
-          <Text style = { styles.iconText } >
-            Saisissez le nom d'une bière
-          </Text>
+        <TouchableOpacity 
+          style = { styles.iconView }
+          onPress = {() => this._searchBeers()} >
           <Icon
             type = "ionicon"
             name = "ios-search"
@@ -119,7 +118,7 @@ class NameSearchBeer extends React.Component {
             color = {color.colorDivider}
 
           />
-        </View>
+        </TouchableOpacity>
       )
     }
   }
@@ -145,7 +144,7 @@ class NameSearchBeer extends React.Component {
     return (
       <SafeAreaView style = {styles.main_container}>
         <Madoka
-          label={'Nom de la bière'}
+          label={'Saisir le nom de la bière'}
           // this is used as active and passive border color
           borderColor={this.inputColor}
           inputPadding={16}
