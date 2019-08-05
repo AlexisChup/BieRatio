@@ -46,6 +46,7 @@ class DescriptionBeer extends React.Component{
       description: "",
       existInAPI: false,
       iconName : "ios-heart-empty",
+      callRemaining: true,
     }
     this.colorCard = color.colorBackground,
     this.ibu = this.props.navigation.state.params.ibu,
@@ -90,11 +91,19 @@ class DescriptionBeer extends React.Component{
 
   _getDetailFromUntappd(){
     getBeerDetailFromApi(this.props.navigation.state.params.bid).then(data => {
-      this.setState({
-        beer: data.response.beer,
-        isLoading: false,
-      }, () => { this._updateNavigationParams() })
-    }) 
+      if(data.meta.code !== 429){
+        this.setState({
+          beer: data.response.beer,
+          isLoading: false,
+        }, () => { this._updateNavigationParams() })
+      }else {
+        this.setState({
+          callRemaining: false,
+          isLoading: false
+        })
+      }
+    })
+    .catch((error) =>    console.log("error : "  + error))
   }
 
 
@@ -626,12 +635,26 @@ class DescriptionBeer extends React.Component{
   }
 
   render(){
-    return(
-      <View style={styles.main_container}>
-        {this._displayLoading()}
-        {this._displayBeer()}
-      </View>
-    )
+    if(this.state.callRemaining){
+      return(
+        <View style={styles.main_container}>
+          {this._displayLoading()}
+          {this._displayBeer()}
+        </View>
+      )
+    }else{
+      return(
+        <View style = {styles.iconView} >
+          <Text style = {styles.iconText} >
+            Limite de recherches atteintes pour cette heure. Veuillez attendre la prochaine heure pour en rechercher de nouvelles.
+          </Text>
+          <Image
+            style = {styles.iconImage}
+            source = {require('../Images/emoji_man_shrugging.png')}
+          />
+        </View>
+      )
+    }
   }
 }
 
@@ -737,7 +760,23 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: color.colorAlcool,
     fontSize: 17,
+  },  iconImage: {
+    height: 200,
+    width: 200,
+    marginTop: 25,
+    resizeMode: 'contain',
+    
   },
+  iconView: {
+    margin: 15,
+    alignItems: 'center'
+  },
+  iconText: {
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: color.colorDivider
+  }
 
 })
 

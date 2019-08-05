@@ -68,11 +68,21 @@ class NameSearchBeer extends React.Component {
   _loadBeers(){
     if(this.searchedText.length > 0){
       getsBeersFromApiWithSearchedText(this.searchedText).then(data => {
-          this.setState({
-            beers: [...this.state.beers, ...data.response.beers.items],
-            nbBeers: data.response.found,
-            isLoading: false,
-          })
+          if(data.meta.code !== 429){
+            this.setState({
+              beers: [...this.state.beers, ...data.response.beers.items],
+              nbBeers: data.response.found,
+              isLoading: false,
+            })
+          }else{
+            console.log('====================================');
+            console.log("Limite d'appels atteint");
+            console.log('====================================');
+            this.setState({
+              nbBeers: -1,
+              isLoading: false,
+            })
+          }
       }), () => this._emptySearch()
 
     }else {
@@ -137,6 +147,19 @@ class NameSearchBeer extends React.Component {
           />
         </View>
       )
+    }else if (nbBeers === -1){
+        return(
+          <View style = {styles.iconView} >
+            <Text style = {styles.iconText} >
+              Limite de recherches atteintes pour cette heure. Veuillez attendre la prochaine heure pour en rechercher de nouvelles.
+            </Text>
+            <Image
+              style = {styles.iconImage}
+              source = {require('../Images/emoji_man_shrugging.png')}
+            />
+          </View>
+        )
+
     }
   }
 
