@@ -290,8 +290,8 @@ class RatioSearchBeer extends React.Component{
         <View>
           <Button
             title = "+1"
-            titleStyle = { styles.descPagination }
-            buttonStyle = {{ backgroundColor: color.colorBottomTabTintColor}}
+            titleStyle = { styles.descPaginationButton }
+            buttonStyle = { styles.buttonPagination }
             onPress = {() => this._loadNewPages(10) }
           />
         </View>
@@ -309,8 +309,8 @@ class RatioSearchBeer extends React.Component{
         <View>
           <Button
             title = "-1"
-            titleStyle = { styles.descPagination }
-            buttonStyle = {{ backgroundColor: color.colorBottomTabTintColor}}
+            titleStyle = { styles.descPaginationButton }
+            buttonStyle = { styles.buttonPagination }
             onPress = {() => this._loadNewPages(-10) }
           />
         </View>
@@ -329,8 +329,8 @@ class RatioSearchBeer extends React.Component{
         <View>
           <Button
             title = "Première"
-            titleStyle = { styles.descPagination }
-            buttonStyle = {{ backgroundColor: color.colorBottomTabTintColor}}
+            titleStyle = { styles.descPaginationButton }
+            buttonStyle = { styles.buttonPagination }
             onPress = {() => this._loadNewPages(1) }
           />
         </View>
@@ -348,8 +348,8 @@ class RatioSearchBeer extends React.Component{
         <View>
           <Button
             title = "Dernière"
-            titleStyle = { styles.descPagination }
-            buttonStyle = {{ backgroundColor: color.colorBottomTabTintColor}}
+            titleStyle = { styles.descPaginationButton }
+            buttonStyle = { styles.buttonPagination }
             onPress = {() => this._loadNewPages(this.state.totalPage) }
           />
         </View>
@@ -428,7 +428,16 @@ const styles = StyleSheet.create({
   },
   descPagination: {
     fontSize: 15,
-    fontFamily: 'Lobster-Regular'
+    fontFamily: 'Lobster-Regular',
+    color: color.colorDivider
+  },
+  descPaginationButton: {
+    color: color.colorBackground,
+    fontSize: 15,
+    fontFamily: 'Lobster-Regular',
+  },
+  buttonPagination: {
+    backgroundColor: color.colorDivider
   },
   slider: {
     flex :1,

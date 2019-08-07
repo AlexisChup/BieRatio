@@ -3,12 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 //import Store from './Store/configureStore' à faire après avoir initialiser des reducers dans le Store
 import { Provider } from 'react-redux'
 import Navigation from './Navigation/Navigation'
+import Store from './Store/configureStore'
 
 
 export default class App extends React.Component {
   render() {
     return (
-      <Navigation/>
+      <Provider store = {Store} >
+        <Navigation/>
+      </Provider>
     )
   }
 }

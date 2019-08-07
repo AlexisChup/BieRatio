@@ -1,7 +1,8 @@
-
 import React from 'react'
-import { TouchableOpacity,Image ,StyleSheet, View,  Text, Animated, Easing } from 'react-native'
+import { TouchableOpacity,Image ,StyleSheet, View,  Text, Animated, Easing, FlatList } from 'react-native'
 import { Icon } from 'react-native-elements'
+import { connect } from 'react-redux'
+import BeerItemRatio from './BeerItemRatio'
 
 import * as color from '../assets/colors'
 class FavoriteBeer extends React.Component {
@@ -23,7 +24,7 @@ class FavoriteBeer extends React.Component {
               </TouchableOpacity>
             )
     },
-    // headerBackTitle: "Ratios"
+    headerBackTitle: "Favoris"
   })
 
 
@@ -96,6 +97,10 @@ class FavoriteBeer extends React.Component {
     //   topPosition: 0,
     // })
   }
+  _displayDetailForBeer = (bid, description, ibu, price, abv) => {
+    let ratio = "ratio"
+    this.props.navigation.navigate('DescriptionBeer', {bid: bid, from: ratio, description: description, ibu: ibu, price: price, abv: abv})
+  }
 
   render() {
     return (
@@ -103,6 +108,20 @@ class FavoriteBeer extends React.Component {
         {/* <Animated.View style={[styles.animation_view, { top : this.state.topPosition, left: this.state.leftPosition }]}>
         </Animated.View> */}
         <Text>Yo la squale</Text>
+        <FlatList
+          data = {this.props.favoritesBeers}
+          keyExtractor={(item) => item.bid.toString()}
+          ListFooterComponent = {<View><Text>Fin de la liste</Text></View>}
+          renderItem = {({item}) => (
+            <BeerItemRatio
+              beer = { item }
+              showIBU = {true}
+              showPRICE = {true}
+              showABV = {true}
+              displayDetailForBeer = {this._displayDetailForBeer}
+            />
+          )} 
+        />  
       </View>
     )
 
@@ -112,8 +131,6 @@ class FavoriteBeer extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: color.colorBackground,
   },
   animation_view: {
@@ -126,6 +143,13 @@ const styles = StyleSheet.create({
   }
 })
 
+const mapStateToProps = (state) => {
+  return { 
+    favoritesBeers : state.favoritesBeers
+  }
+}
 
 
-export default FavoriteBeer
+
+
+export default connect(mapStateToProps)(FavoriteBeer)

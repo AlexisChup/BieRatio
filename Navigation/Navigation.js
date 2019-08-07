@@ -109,6 +109,23 @@ const handleCustomTransitionName = ({ scenes }) => {
   return fromLeft(1000);
 }
 
+const handleCustomTransitionFavorite = ({ scenes }) => {
+  const prevScene = scenes[scenes.length - 2];
+  const nextScene = scenes[scenes.length - 1];
+
+  // Custom transitions go there
+  if (prevScene
+    && prevScene.route.routeName === 'FavoriteBeer'
+    && nextScene.route.routeName === 'DescriptionBeer') {
+    return zoomIn(1000);
+  } else if (prevScene
+    && prevScene.route.routeName === 'DescriptionBeer'
+    && nextScene.route.routeName === 'FavoriteBeer') {
+    return zoomOut(1000);
+  }
+  return fromLeft(1000);
+}
+
 const NameSearchStack = createStackNavigator(
   {
     NameSearchBeer:{
@@ -139,11 +156,18 @@ const FavoriteStack = createStackNavigator(
   {
     FavoriteBeer: {
       screen : FavoriteBeer
+    },
+    DescriptionBeer:{
+      screen: DescriptionBeer,
+      navigationOptions: {
+        title: 'Description',
+      },
     }
 
   },
   {
     initialRouteName: "FavoriteBeer",
+    transitionConfig: (nav) => handleCustomTransitionFavorite(nav),
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: color.colorBottomTabBackground

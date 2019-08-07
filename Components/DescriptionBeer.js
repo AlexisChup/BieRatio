@@ -3,6 +3,7 @@ import {  ScrollView, ActivityIndicator, Image, StyleSheet, View, TextInput, Tex
 import { getBeerDetailFromApi } from '../API/UntappdApi'
 import { getBeerByBid } from '../API/BieRatioApi'
 import VerticalSlider from 'rn-vertical-slider'
+import { connect } from 'react-redux'
 
 import Flag from 'react-native-flags';
 
@@ -45,7 +46,6 @@ class DescriptionBeer extends React.Component{
       selectedIndex: 0,
       description: "",
       existInAPI: false,
-      iconName : "ios-heart-empty",
       callRemaining: true,
     }
     this.colorCard = color.colorBackground,
@@ -82,11 +82,22 @@ class DescriptionBeer extends React.Component{
     })
   }
 
+  componentDidUpdate(){
+    // console.log("Component update ? : "+ JSON.stringify(this.props.favoritesBeers,null, 4));
+    
+  }
+
   _checkProps(){
     this.setState({
       priceText: this.state.beer.price.toFixed(1),
       isLoading: false,
     })
+  }
+  _checkPropsAfterAdd(){
+    this.setState({
+      priceText: this.state.beer.price.toFixed(1),
+      isLoading: false,
+    }, this._toggleFavorite())
   }
 
   _getDetailFromUntappd(){
@@ -108,12 +119,89 @@ class DescriptionBeer extends React.Component{
 
 
 
-  _updateDescription(){
+  _updateDescriptionAfterToggleFavorite(){
     const beer = this.state.beer
     var description = beer.beer_description
-    console.log('====================================');
-    console.log("Traduction va etre faite: " + description);
-    console.log('====================================');
+    this.setState({
+      isLoading: true,
+    })
+    const translator = TranslatorFactory.createTranslator();
+    translator.translate(description, 'fr').then(translated => {
+    //Do something with the translated text which would be in French
+      description = translated
+      this.setState({
+        description: description
+      }, () => this._addToAPIAfterToggleFavorite())
+
+    })
+
+  }
+  _addToAPIAfterToggleFavorite(){
+    const beer = this.state.beer
+    const imageHD =  beer.beer_label_hd.length > 0 ? beer.beer_label_hd : beer.beer_label
+    const url = Platform.OS === 'android' ? 'http://10.0.2.2:8000/api/beers' : 'http://' + Ipv4 + ':8000/api/beers'
+    
+    if(this.state.priceText.length === 3 && parseFloat(this.state.priceText)>= 0 && parseFloat(this.state.priceText)<= 5  ){
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bid: beer.bid,
+          name: beer.beer_name,
+          abv: beer.beer_abv,
+          ibu: beer.beer_ibu,
+          price: parseFloat(this.state.priceText),
+          ratingScore :parseFloat(beer.rating_score.toFixed(1)),
+          ratingCount :1,
+          description: this.state.description,
+          label: imageHD,
+          countryName : beer.brewery.country_name
+        }),
+      }).then(response => {
+        const price = parseFloat(this.state.text)
+        if(response.status === 201){
+          this.setState({
+            disabled: true,
+            addButon: "Bière envoyé !",
+            price : price,
+            editable: false,
+            text: "Prix envoyé !",
+            backgroundColor: '#D9D9D9',
+            randomDisabled: true,
+            
+          }, () => this._reloadBeerAfterAdToToggleFavorite())
+        }
+      });
+    }
+    else{
+      Alert.alert('Le prix doit être compris entre 0.0 et 5.0')
+    }
+  }
+
+  _reloadBeerAfterAdToToggleFavorite(){
+    getBeerByBid(this.props.navigation.state.params.bid).then(data => {  
+      this.setState({
+        beer: data["hydra:member"][0],
+        existInAPI: true,
+      }, () => {this._checkPropsAfterAdd()}  )
+    })
+  }
+  _reloadBeerAfterAd(){
+    getBeerByBid(this.props.navigation.state.params.bid).then(data => {  
+      this.setState({
+        beer: data["hydra:member"][0],
+        existInAPI: true,
+      }, () => {this._checkProps()}  )
+    })
+  }
+
+  _updateDescription(){
+    
+    const beer = this.state.beer
+    var description = beer.beer_description
     this.setState({
       isLoading: true,
     })
@@ -127,6 +215,52 @@ class DescriptionBeer extends React.Component{
 
     })
 
+  }
+  _addToAPI(){
+    const beer = this.state.beer
+    const imageHD =  beer.beer_label_hd.length > 0 ? beer.beer_label_hd : beer.beer_label
+    const url = Platform.OS === 'android' ? 'http://10.0.2.2:8000/api/beers' : 'http://' + Ipv4 + ':8000/api/beers'
+    
+    if(this.state.priceText.length === 3 && parseFloat(this.state.priceText)>= 0 && parseFloat(this.state.priceText)<= 5  ){
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bid: beer.bid,
+          name: beer.beer_name,
+          abv: beer.beer_abv,
+          ibu: beer.beer_ibu,
+          price: parseFloat(this.state.priceText),
+          ratingScore :parseFloat(beer.rating_score.toFixed(1)),
+          ratingCount :1,
+          description: this.state.description,
+          label: imageHD,
+          countryName : beer.brewery.country_name
+        }),
+      }).then(response => {
+        const price = parseFloat(this.state.text)
+        if(response.status === 201){
+          this.setState({
+            disabled: true,
+            addButon: "Bière envoyé !",
+            price : price,
+            editable: false,
+            text: "Prix envoyé !",
+            backgroundColor: '#D9D9D9',
+            randomDisabled: true,
+
+            
+            
+          }, () => this._reloadBeerAfterAd() )
+        }
+      });
+    }
+    else{
+      Alert.alert('Le prix doit être compris entre 0.0 et 5.0')
+    }
   }
 
   _updateNavigationParams() {
@@ -418,59 +552,7 @@ class DescriptionBeer extends React.Component{
     }
   }
 
-  _addToAPI(){
-    const beer = this.state.beer
-    const imageHD =  beer.beer_label_hd.length > 0 ? beer.beer_label_hd : beer.beer_label
-    const url = Platform.OS === 'android' ? 'http://10.0.2.2:8000/api/beers' : 'http://' + Ipv4 + ':8000/api/beers'
 
-    console.log('====================================');
-    console.log("Before the post Request description : " + this.state.description);
-    console.log('====================================');
-    
-    if(this.state.priceText.length === 3 && parseFloat(this.state.priceText)>= 0 && parseFloat(this.state.priceText)<= 5  ){
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          bid: beer.bid,
-          name: beer.beer_name,
-          abv: beer.beer_abv,
-          ibu: beer.beer_ibu,
-          price: parseFloat(this.state.priceText),
-          ratingScore :parseFloat(beer.rating_score.toFixed(1)),
-          ratingCount :1,
-          description: this.state.description,
-          label: imageHD,
-          countryName : beer.brewery.country_name
-        }),
-      }).then(response => {
-        const price = parseFloat(this.state.text)
-        if(response.status === 201){
-          this.setState({
-            disabled: true,
-            addButon: "Bière envoyé !",
-            price : price,
-            editable: false,
-            text: "Prix envoyé !",
-            backgroundColor: '#D9D9D9',
-            isLoading: false,
-            randomDisabled: true
-            
-            
-          })
-        }
-      });
-    }
-    else{
-      Alert.alert('Le prix doit être compris entre 0.0 et 5.0')
-    }
-    
-    
-
-  }
 
 
 
@@ -498,26 +580,48 @@ class DescriptionBeer extends React.Component{
   }
 
   _displayFavoriteBeer(){
+    if(!this.state.existInAPI){
+      return(
+        <TouchableOpacity
+          onPress = {()=> this._updateDescriptionAfterToggleFavorite() }
+        >
+          {this._displayFavoriteIcon()}
+        </TouchableOpacity>
+        
+      )
+    }else if ( this.state.existInAPI ){
+      return(
+        <TouchableOpacity
+          onPress = {()=> this._toggleFavorite() }
+        >
+          {this._displayFavoriteIcon()}
+        </TouchableOpacity>
+        
+      )
+
+    }
+  }
+
+  _displayFavoriteIcon(){
+    var nameIcon = "ios-heart-empty"
+    if(this.props.favoritesBeers.findIndex(item => item.bid === this.state.beer.bid) !== -1){
+      nameIcon = "ios-heart" 
+    }
     return(
-      <TouchableOpacity
-        onPress = {()=> this._updateFavorite() }
-      >
-        <Icon
-          type = "ionicon"
-          name = {this.state.iconName}
-          iconStyle = {{ marginLeft: 25 }}
-          size = {40}
-          color = {color.colorDivider}
-        />
-      </TouchableOpacity>
-      
+      <Icon
+        type = "ionicon"
+        name = {nameIcon}
+        iconStyle = {{ marginLeft: 25 }}
+        size = {40}
+        color = {color.colorDivider}
+      />
     )
   }
 
-  _updateFavorite(){
-    this.setState({
-      iconName : this.state.iconName === "ios-heart-empty" ? "ios-heart" : "ios-heart-empty"
-    })
+  _toggleFavorite(){
+    const action = { type: "TOGGLE_FAVORITE", value: this.state.beer }
+    this.props.dispatch(action)
+
   }
   
   // handleClick = () => {
@@ -635,6 +739,8 @@ class DescriptionBeer extends React.Component{
   }
 
   render(){
+    // console.log("Props : " + JSON.stringify(this.props, null, 4));
+    
     if(this.state.callRemaining){
       return(
         <View style={styles.main_container}>
@@ -780,8 +886,11 @@ const styles = StyleSheet.create({
 
 })
 
+const mapStateToProps = (state) => {
+  return { 
+    favoritesBeers : state.favoritesBeers
+  }
+}
 
 
-
-
-export default DescriptionBeer
+export default connect(mapStateToProps)(DescriptionBeer)
