@@ -1,5 +1,5 @@
 import React from 'react'
-import {  ScrollView, ActivityIndicator, Image, StyleSheet, View, TextInput, Text, Platform, Alert, Animated, Linking, Dimensions } from 'react-native'
+import {  ScrollView, ActivityIndicator, Image, StyleSheet, View, TextInput, Text, Platform, Alert, Animated, Linking, Dimensions, TouchableOpacity } from 'react-native'
 import { getBeerDetailFromApi } from '../API/UntappdApi'
 import { getBeerByBid } from '../API/BieRatioApi'
 import VerticalSlider from 'rn-vertical-slider'
@@ -20,13 +20,19 @@ import * as color  from '../assets/colors'
 import EnlargeShrink from './Animations/EnlargeShrink'
 
 import { Ipv4 } from '../assets/Ip'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import ToolTipRatios from './ToolTipRatios'
+
 var {height, width} = Dimensions.get('window');
+
 
 TranslatorConfiguration.setConfig(ProviderTypes.Microsoft, keyMicrosftAzure,'fr');
 
 class DescriptionBeer extends React.Component{
-
+  static navigationOptions = ({}) => ({
+    headerRight: (
+      <ToolTipRatios/>
+    ),
+  })
 
   constructor(props){
     super(props)

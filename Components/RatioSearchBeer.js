@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { SafeAreaView ,ActivityIndicator, Image, StyleSheet, View, FlatList, Text, Dimensions } from 'react-native'
-import { Slider, Button } from 'react-native-elements'
+import { Slider, Button, Tooltip, Icon } from 'react-native-elements'
 
 import BeerItemRatio from './BeerItemRatio'
-
+import ToolTipRatios from './ToolTipRatios'
 import { getsBeersFromRatio, loadPages } from '../API/BieRatioApi'
 import * as color from '../assets/colors'
 var {height, width } = Dimensions.get('window')
@@ -15,7 +15,10 @@ import * as Font from 'expo-font'
 class RatioSearchBeer extends React.Component{
   static navigationOptions = () => ({
     title: "Recherche par ratio",
-    headerBackTitle: "Liste"
+    headerBackTitle: "Liste",
+    headerRight: (
+        <ToolTipRatios/>
+    ),
   })
 
 
@@ -198,6 +201,7 @@ class RatioSearchBeer extends React.Component{
       return(<View></View>)
     }
   }
+
 
   _displayCriterion(){
     return(
@@ -482,6 +486,16 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: color.colorDivider,
     marginTop: 5,
+  },
+  tooltipHeader: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10
+  },
+  imageTooltip: {
+    width: 30,
+    height: 30,
+    marginTop: -5,
   },
 })
 export default RatioSearchBeer
