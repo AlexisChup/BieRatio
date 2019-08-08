@@ -62,6 +62,8 @@ class BeerItem extends React.Component {
         codeState = getCode("United Kingdom")
       }else if (beer.brewery.country_name == "South Korea"){
         codeState = getCode("Korea, Republic of")
+      }else if (beer.brewery.country_name == "Scotland"){
+        codeState = getCode("United Kingdom")
       }
     }
     if (codeState != undefined){

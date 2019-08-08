@@ -183,6 +183,9 @@ class DescriptionBeer extends React.Component{
       });
     }
     else{
+      this.setState({
+        isLoading: false
+      })
       Alert.alert('Le prix doit être compris entre 0.0 et 5.0')
     }
   }
@@ -265,6 +268,9 @@ class DescriptionBeer extends React.Component{
       });
     }
     else{
+      this.setState({
+        isLoading: false
+      })
       Alert.alert('Le prix doit être compris entre 0.0 et 5.0')
     }
   }
@@ -316,6 +322,8 @@ class DescriptionBeer extends React.Component{
           codeState = getCode("United Kingdom")
         }else if (beer.countryName == "South Korea"){
           codeState = getCode("Korea, Republic of")
+        }else if (beer.countryName == "Scotland"){
+          codeState = getCode("United Kingdom")
         }
       }else{
         if(beer.brewery.country_name === "Russia"){
@@ -324,6 +332,8 @@ class DescriptionBeer extends React.Component{
           codeState = getCode("United Kingdom")
         }else if (beer.brewery.country_name == "South Korea"){
           codeState = getCode("Korea, Republic of")
+        }else if (beer.brewery.country_name == "Scotland"){
+          codeState = getCode("United Kingdom")
         }
       }
     }

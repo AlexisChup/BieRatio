@@ -5,7 +5,8 @@ import {
 } from 'react-native-elements'
 
 import FadeIn from './Animations/FadeIn'
-import { colorAlcool } from '../assets/colors';
+
+import Flag from 'react-native-flags';
 
 import * as color from '../assets/colors'
 
@@ -68,6 +69,57 @@ class BeerItemRatio extends React.Component {
       )
     }
   }
+  _displayFlag(){
+    const beer = this.props.beer
+    const { getCode, getName } = require('country-list');
+    var codeState = getCode( beer.countryName );
+    if(codeState === undefined){
+      if(beer.countryName === "Russia"){
+        codeState = getCode("Russian Federation")
+      }else if (beer.countryName === "England"){
+        codeState = getCode("United Kingdom")
+      }else if (beer.countryName == "South Korea"){
+        codeState = getCode("Korea, Republic of")
+      }else if (beer.countryName == "Scotland"){
+        codeState = getCode("United Kingdom")
+      }
+    }
+    if (codeState != undefined){
+      return (
+        <Flag
+          code = {codeState}
+          size = { 64 }
+          type = 'shiny'
+        />
+      )
+    }
+    else{
+      return(
+        <Icon
+          type = "material-community"
+          name = "flag-remove"
+          size = {64}
+        />
+      )
+    }
+  }
+
+  _showAnyCriterion(){
+    
+    if((!this.props.showIBU) && (!this.props.showPRICE) && (!this.props.showABV)){
+      return(
+        <View style = { styles.flag }>
+          <Image
+            style = { styles.image }
+            source = {require('../Images/ic_brewery.png')}
+          />
+          <Text style = { styles.brewery }> : </Text>
+          {this._displayFlag()}
+        </View>
+      )
+    }
+    
+  }
 
   
 
@@ -95,6 +147,8 @@ class BeerItemRatio extends React.Component {
                 {this._showSecondDivider()}
 
                 {this._showAbvCriterion()}
+
+                {this._showAnyCriterion()}
 
 
               </View>
@@ -162,6 +216,19 @@ const styles = StyleSheet.create({
   divider: {
     height: 5,
     backgroundColor: color.colorDivider,
+  },
+  image: {
+    marginTop: 10,
+    height: 45,
+    width: 45,
+  },
+  brewery: {
+    fontSize: 25,
+    marginTop: 15,
+  },
+  flag:{
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
 })
 
