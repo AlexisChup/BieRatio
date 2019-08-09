@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import BeerItemRatio from './BeerItemRatio'
 
 var { width } = Dimensions.get('window');
+import * as Font from 'expo-font'
 import * as color from '../assets/colors'
 class FavoriteBeer extends React.Component {
 
@@ -34,65 +35,74 @@ class FavoriteBeer extends React.Component {
     this.state = {
       topPosition: new Animated.Value(0),
       leftPosition: new Animated.Value(0),
-      nbFavoriteBeers: this.props.favoritesBeers.length
+      nbFavoriteBeers: this.props.favoritesBeers.length,
+      fontLoaded: false
     }
     this.test = 1
   }
+  async componentDidMount(){
+    await Font.loadAsync({
+      'MPLUSRounded1c-Regular' : require('../assets/fonts/MPLUSRounded1c-Regular.ttf'),
+      'MPLUSRounded1c-Bold' : require('../assets/fonts/MPLUSRounded1c-Bold.ttf'),
 
-  componentDidMount(){
-    console.log(this.state.nbFavoriteBeers);
-    
-    // Animated.spring(
-    //   this.state.topPosition, {
-    //     toValue: 100,
-    //     speed: 4,
-    //     bounciness: 15
-    //   }
-    // ).start()
-    // Animated.decay(
-    //   this.state.topPosition,
-    //   {
-    //     velocity: 0.8,
-    //     deceleration: 0.997,
-    //   }
-    // ).start()
-    // Animated.sequence([
-    //   Animated.spring(
-    //     this.state.topPosition,
-    //     {
-    //       toValue: 100,
-    //       tension: 8,
-    //       friction: 3
-    //     }
-    //   ),
-    //   Animated.timing(
-    //     this.state.topPosition,
-    //     {
-    //       toValue: 0,
-    //       duration: 1000,
-    //       easing: Easing.elastic(2)
-    //     }
-    //   )
-    // ]).start()
-    Animated.parallel([
-      Animated.spring(
-        this.state.topPosition,
-        {
-          toValue: 100,
-          tension: 8,
-          friction: 3
-        }
-      ),
-      Animated.timing(
-        this.state.leftPosition,
-        {
-          toValue: 100,
-          duration: 1000,
-          easing: Easing.elastic(2)
-        }
-      )
-    ]).start()
+    });
+    this.setState({fontLoaded: true})
   }
+
+  // componentDidMount(){
+  //   console.log(this.state.nbFavoriteBeers);
+    
+  //   // Animated.spring(
+  //   //   this.state.topPosition, {
+  //   //     toValue: 100,
+  //   //     speed: 4,
+  //   //     bounciness: 15
+  //   //   }
+  //   // ).start()
+  //   // Animated.decay(
+  //   //   this.state.topPosition,
+  //   //   {
+  //   //     velocity: 0.8,
+  //   //     deceleration: 0.997,
+  //   //   }
+  //   // ).start()
+  //   // Animated.sequence([
+  //   //   Animated.spring(
+  //   //     this.state.topPosition,
+  //   //     {
+  //   //       toValue: 100,
+  //   //       tension: 8,
+  //   //       friction: 3
+  //   //     }
+  //   //   ),
+  //   //   Animated.timing(
+  //   //     this.state.topPosition,
+  //   //     {
+  //   //       toValue: 0,
+  //   //       duration: 1000,
+  //   //       easing: Easing.elastic(2)
+  //   //     }
+  //   //   )
+  //   // ]).start()
+  //   Animated.parallel([
+  //     Animated.spring(
+  //       this.state.topPosition,
+  //       {
+  //         toValue: 100,
+  //         tension: 8,
+  //         friction: 3
+  //       }
+  //     ),
+  //     Animated.timing(
+  //       this.state.leftPosition,
+  //       {
+  //         toValue: 100,
+  //         duration: 1000,
+  //         easing: Easing.elastic(2)
+  //       }
+  //     )
+  //   ]).start()
+  // }
 
   componentWillUnmount(){
     // console.log('====================================');
@@ -125,7 +135,7 @@ class FavoriteBeer extends React.Component {
             <Icon
               name = "bar-chart-2"
               type = "feather"
-              color = {color.colorAlcool}
+              color = {color.colorIbu}
               size = {60}
             />
           </TouchableOpacity>
@@ -138,7 +148,7 @@ class FavoriteBeer extends React.Component {
             <Icon
               name = "format-letter-case"
               type = "material-community"
-              color = {color.colorAlcool}
+              color = {color.colorIbu}
               size = {60}
             />
           </TouchableOpacity>
@@ -149,34 +159,37 @@ class FavoriteBeer extends React.Component {
   }
 
   render() {
-
+    if(this.state.fontLoaded){
     var nbFavoriteText = this.props.favoritesBeers.length > 1 ? "favorites" : "favorite"    
     var nbBiereText = this.props.favoritesBeers.length > 1 ? "bières" : "bière"
-    return (
-      <View style={styles.main_container}>
-        {/* <Animated.View style={[styles.animation_view, { top : this.state.topPosition, left: this.state.leftPosition }]}>
-        </Animated.View> */}
-        {this.props.favoritesBeers.length ===0 ? this._anyFavorite() : 
-        <View>
-          <Text style = { styles.textHeader } > {this.props.favoritesBeers.length} {nbBiereText} {nbFavoriteText}</Text>
-          <View style = {{ backgroundColor: color.colorDivider, height: 5, width: width }} ></View>
-          <FlatList
-            data = {this.props.favoritesBeers}
-            keyExtractor={(item) => item.bid.toString()}
-            ListFooterComponent = {<View></View>}
-            renderItem = {({item}) => (
-              <BeerItemRatio
-                beer = { item }
-                showIBU = {true}
-                showPRICE = {true}
-                showABV = {true}
-                displayDetailForBeer = {this._displayDetailForBeer}
-              />
-            )} 
-          /> 
-        </View>}
-      </View>
-    )
+      return (
+        <View style={styles.main_container}>
+          {/* <Animated.View style={[styles.animation_view, { top : this.state.topPosition, left: this.state.leftPosition }]}>
+          </Animated.View> */}
+          {this.props.favoritesBeers.length ===0 ? this._anyFavorite() : 
+          <View>
+            <Text style = { styles.textHeader } > {this.props.favoritesBeers.length} {nbBiereText} {nbFavoriteText}</Text>
+            <View style = {{ backgroundColor: color.colorDivider, height: 5, width: width }} ></View>
+            <FlatList
+              data = {this.props.favoritesBeers}
+              keyExtractor={(item) => item.bid.toString()}
+              ListFooterComponent = {<View></View>}
+              renderItem = {({item}) => (
+                <BeerItemRatio
+                  beer = { item }
+                  showIBU = {true}
+                  showPRICE = {true}
+                  showABV = {true}
+                  displayDetailForBeer = {this._displayDetailForBeer}
+                />
+              )} 
+            /> 
+          </View>}
+        </View>
+      )
+    } else {
+      return null
+    }
 
   }
 }
@@ -199,7 +212,7 @@ const styles = StyleSheet.create({
     color: color.colorDivider,
     fontSize: 25,
     textAlign: "center",
-    fontWeight: 'bold'
+    fontFamily: "MPLUSRounded1c-Regular",
   },
   imgAnyFavorite: {
     alignSelf: 'center',
@@ -214,7 +227,7 @@ const styles = StyleSheet.create({
   },
   dspSearchCard: {
     flexDirection: "column",
-    borderWidth: 3,
+    borderWidth: 2,
     borderRadius: width/8,
     borderColor : color.colorDivider,
     flex: 1,
@@ -224,10 +237,10 @@ const styles = StyleSheet.create({
     
   },
   textCard: {
-    fontSize: 25,
+    fontSize: 30,
     textAlign: 'center',
-    fontWeight: "bold",
-    color: color.colorIbu
+    fontFamily: "MPLUSRounded1c-Bold",
+    color: color.colorAlcool
   },
   dividerCard: {
     backgroundColor: color.colorPrice,

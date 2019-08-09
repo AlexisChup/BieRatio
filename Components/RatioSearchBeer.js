@@ -15,6 +15,9 @@ import * as Font from 'expo-font'
 class RatioSearchBeer extends React.Component{
   static navigationOptions = () => ({
     title: "Recherche par ratio",
+    // headerTitleStyle : {
+    //   fonts: 10,
+    // },
     headerBackTitle: "Liste",
     headerRight: (
         <ToolTipRatios/>

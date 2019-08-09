@@ -185,7 +185,7 @@ class NameSearchBeer extends React.Component {
         {this._waitingSearch()}
         {this._emptySearch()}
 
-
+        {this.searchedText.length === 0 ? null : 
         <FlatList
           style = {styles.list}
           data = {this.state.beers}
@@ -196,7 +196,7 @@ class NameSearchBeer extends React.Component {
               displayDetailForBeer = {this._displayDetailForBeer}
             />
           )}
-        />
+        />}
         
         {this._displayLoading()}
       </SafeAreaView>
@@ -246,7 +246,9 @@ const styles = StyleSheet.create({
   },
   iconView: {
     margin: 15,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   iconText: {
     textAlign: 'center',
