@@ -751,6 +751,8 @@ class DescriptionBeer extends React.Component{
           </ScrollView>
         )
       }
+    }else {
+      return null
     }
   }
 
@@ -793,6 +795,11 @@ const styles = StyleSheet.create({
     marginTop: -20,
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  loading_container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   viewButton: {
     marginTop: 10,

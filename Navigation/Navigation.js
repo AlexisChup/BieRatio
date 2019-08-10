@@ -1,7 +1,7 @@
 //Navigation/Navigation.js
 
 import React from 'react'
-import { TouchableOpacity, StyleSheet, Image } from 'react-native'
+import { Text, StyleSheet, } from 'react-native'
 import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation'
 import { fromLeft, fromRight, zoomIn, zoomOut } from 'react-navigation-transitions'
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
@@ -31,8 +31,9 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: Home,   //Page d'accueil de l'application
       navigationOptions: {
-        title: 'ACCEUIL'
-      }
+        headerTitle: <Text style = {{ flex: 1,textAlign: 'center', fontFamily: "Pacifico-Regular", fontSize: 23,color: color.colorDivider }} >Accueil</Text>,
+        
+      },
     },
   },
   {
@@ -67,15 +68,24 @@ const handleCustomTransitionRatio = ({ scenes }) => {
 const RatioSearchStack  = createStackNavigator (
   {
     RatioBeer: {
-      screen : RatioBeer
+      screen : RatioBeer,
+      navigationOptions: {
+        headerTitle: <Text style = {{ flex: 1,textAlign: 'center', fontFamily: "Pacifico-Regular", fontSize: 23,color: color.colorDivider }} >Recherche par Ratio</Text>,
+        headerBackTitle: <Text style = {{  }}>Ratios</Text>,
+        
+      },
     },
     RatioSearchBeer: {
-      screen : RatioSearchBeer
+      screen : RatioSearchBeer,
+      navigationOptions: {
+        headerTitle: <Text style = {{ flex: 1,textAlign: 'center', fontFamily: "Pacifico-Regular", fontSize: 23,color: color.colorDivider }} >Recherche par Ratio</Text>,
+        headerBackTitle: "Liste",
+      },
     },
     DescriptionBeer:{
       screen: DescriptionBeer,
       navigationOptions: {
-        title: 'Description',
+        headerTitle: <Text style = {{ flex: 1,textAlign: 'center', fontFamily: "Pacifico-Regular", fontSize: 23,color: color.colorDivider }} >Description</Text>,
       },
     },
   },
@@ -130,11 +140,15 @@ const NameSearchStack = createStackNavigator(
   {
     NameSearchBeer:{
       screen: NameSearchBeer,
+      navigationOptions: {
+        headerTitle: <Text style = {{ flex: 1,textAlign: 'center', fontFamily: "Pacifico-Regular", fontSize: 23,color: color.colorDivider }} >Recherche par Nom</Text>,
+        headerBackTitle: "Liste",
+      },
     },
     DescriptionBeer:{
       screen: DescriptionBeer,
       navigationOptions: {
-        title: 'Description',
+        headerTitle: <Text style = {{ flex: 1,textAlign: 'center', fontFamily: "Pacifico-Regular", fontSize: 23,color: color.colorDivider }} >Description</Text>,
       },
     }
   },
@@ -155,7 +169,10 @@ const NameSearchStack = createStackNavigator(
 const FavoriteStack = createStackNavigator(
   {
     FavoriteBeer: {
-      screen : FavoriteBeer
+      screen : FavoriteBeer,
+      navigationOptions: {
+        headerTitle: <Text style = {{ flex: 1,textAlign: 'center', fontFamily: "Pacifico-Regular", fontSize: 23,color: color.colorDivider, alignSelf: 'center' }} >Bières Favorites</Text>,
+      },
     },
     DescriptionBeer:{
       screen: DescriptionBeer,

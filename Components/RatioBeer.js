@@ -15,7 +15,6 @@ var {height, width} = Dimensions.get('window');
 
 class RatioBeer extends React.Component{
   static navigationOptions = ({ navigate, navigation }) => ({
-    title: 'Recherche par ratio',
     headerLeft: () => {
       return (
         <TouchableOpacity
@@ -33,8 +32,7 @@ class RatioBeer extends React.Component{
     },
     headerRight: (
         <ToolTipRatios/>
-    ),
-    headerBackTitle: "Ratios"
+    )
   })
 
 

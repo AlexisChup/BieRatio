@@ -34,7 +34,6 @@ class Home extends React.Component {
     this.state = {
       isFirstLaunch: false,
       hasCheckedAsyncStorage: false,
-      fontLoaded: false,
     };
 
   }

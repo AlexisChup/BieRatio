@@ -12,6 +12,7 @@ var {width, height} = Dimensions.get('window');
 class NameSearchBeer extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Recherche par nom',
+    headerRight: <View></View>,
     headerLeft: () => {
             return (
               <TouchableOpacity
@@ -27,7 +28,7 @@ class NameSearchBeer extends React.Component {
               </TouchableOpacity>
             )
     },
-    headerBackTitle: "Liste"
+    
   })
 
 
@@ -172,13 +173,14 @@ class NameSearchBeer extends React.Component {
           borderColor={this.inputColor}
           inputPadding={16}
           labelHeight={24}
-          labelStyle={{ color: this.inputColor }}
-          inputStyle={{ color: this.inputColor }}
+          labelStyle={{ color: this.inputColor,fontFamily: "MPLUSRounded1c-Regular",fontWeight: "400",}}
+          inputStyle={{ color: this.inputColor,  fontSize: 20, fontFamily: "MPLUSRounded1c-Regular", fontWeight: "100", }}
           style = {styles.textInput}
           clearButtonMode="always"
           onChangeText={(text) => this._searchTextInputChanged(text)}
           onSubmitEditing= {() => this._searchBeers()}
           autoCorrect = {false}
+          style = {{ margin: 10, }}
         />
         <View style = {styles.divider} ></View>
 

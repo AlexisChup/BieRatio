@@ -190,7 +190,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title_item:{
-    fontWeight: 'bold',
+    fontFamily: 'MPLUSRounded1c-Bold',
+    color: color.colorDivider,
     fontSize: 20,
     flexWrap: 'wrap',
     margin: 5,
@@ -206,6 +207,8 @@ const styles = StyleSheet.create({
   },
   description_texte:{
     fontSize: 15,
+    color: color.colorDivider,
+    fontFamily: 'MPLUSRounded1c-Regular'
   },
   separate: {
     height: 21,

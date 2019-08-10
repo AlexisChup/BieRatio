@@ -14,11 +14,9 @@ import * as Font from 'expo-font'
 
 class RatioSearchBeer extends React.Component{
   static navigationOptions = () => ({
-    title: "Recherche par ratio",
     // headerTitleStyle : {
     //   fonts: 10,
     // },
-    headerBackTitle: "Liste",
     headerRight: (
         <ToolTipRatios/>
     ),
@@ -36,7 +34,6 @@ class RatioSearchBeer extends React.Component{
       infoPage: "",
       currentPage: 1,
       totalPage: 1,
-      fontLoaded: false,
     },
     this.colorSlider = color.colorDivider
     this.ibu = parseFloat(this.props.navigation.state.params.ibu),
@@ -49,12 +46,6 @@ class RatioSearchBeer extends React.Component{
 
   componentDidMount(){
     this._searchBeersFromRatio()
-
-    Font.loadAsync({
-      'Lobster-Regular' : require('../assets/fonts/Lobster-Regular.ttf')
-    }, ()=>  this.setState({ fontLoaded: true }));
-
-
   }
 
   _displayLoading() {
@@ -451,6 +442,8 @@ const styles = StyleSheet.create({
     paddingRight: 30,
   },
   slider_text: {
+    fontFamily: 'MPLUSRounded1c-Bold',
+    color: color.colorDivider,
     paddingRight: 15,
     fontSize: 30,
     fontWeight: 'bold',

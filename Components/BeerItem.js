@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title_item:{
-    fontWeight: 'bold',
+    fontFamily: 'MPLUSRounded1c-Bold',
+    color: color.colorDivider,
     fontSize: 20,
   },
   flag:{

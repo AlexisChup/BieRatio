@@ -10,7 +10,6 @@ import * as color from '../assets/colors'
 class FavoriteBeer extends React.Component {
 
   static navigationOptions = ({ navigate, navigation }) => ({
-    title: 'Bières favorites',
     headerLeft: () => {
             return (
               <TouchableOpacity
@@ -26,7 +25,9 @@ class FavoriteBeer extends React.Component {
               </TouchableOpacity>
             )
     },
-    headerBackTitle: "Favoris"
+    headerBackTitle: "Favoris",
+    headerRight: <View></View>
+    
   })
 
 
@@ -36,18 +37,18 @@ class FavoriteBeer extends React.Component {
       topPosition: new Animated.Value(0),
       leftPosition: new Animated.Value(0),
       nbFavoriteBeers: this.props.favoritesBeers.length,
-      fontLoaded: false
     }
     this.test = 1
   }
-  async componentDidMount(){
-    await Font.loadAsync({
-      'MPLUSRounded1c-Regular' : require('../assets/fonts/MPLUSRounded1c-Regular.ttf'),
-      'MPLUSRounded1c-Bold' : require('../assets/fonts/MPLUSRounded1c-Bold.ttf'),
+  // async componentDidMount(){
+  //   await Font.loadAsync({
+  //     'Pacifico-Regular' : require('../assets/fonts/Pacifico-Regular.ttf'),
+  //     'MPLUSRounded1c-Regular' : require('../assets/fonts/MPLUSRounded1c-Regular.ttf'),
+  //     'MPLUSRounded1c-Bold' : require('../assets/fonts/MPLUSRounded1c-Bold.ttf'),
 
-    });
-    this.setState({fontLoaded: true})
-  }
+  //   });
+  //   this.setState({fontLoaded: true})
+  // }
 
   // componentDidMount(){
   //   console.log(this.state.nbFavoriteBeers);
@@ -159,37 +160,35 @@ class FavoriteBeer extends React.Component {
   }
 
   render() {
-    if(this.state.fontLoaded){
-    var nbFavoriteText = this.props.favoritesBeers.length > 1 ? "favorites" : "favorite"    
-    var nbBiereText = this.props.favoritesBeers.length > 1 ? "bières" : "bière"
-      return (
-        <View style={styles.main_container}>
-          {/* <Animated.View style={[styles.animation_view, { top : this.state.topPosition, left: this.state.leftPosition }]}>
-          </Animated.View> */}
-          {this.props.favoritesBeers.length ===0 ? this._anyFavorite() : 
-          <View>
-            <Text style = { styles.textHeader } > {this.props.favoritesBeers.length} {nbBiereText} {nbFavoriteText}</Text>
-            <View style = {{ backgroundColor: color.colorDivider, height: 5, width: width }} ></View>
-            <FlatList
-              data = {this.props.favoritesBeers}
-              keyExtractor={(item) => item.bid.toString()}
-              ListFooterComponent = {<View></View>}
-              renderItem = {({item}) => (
-                <BeerItemRatio
-                  beer = { item }
-                  showIBU = {true}
-                  showPRICE = {true}
-                  showABV = {true}
-                  displayDetailForBeer = {this._displayDetailForBeer}
-                />
-              )} 
-            /> 
-          </View>}
-        </View>
-      )
-    } else {
-      return null
-    }
+
+  var nbFavoriteText = this.props.favoritesBeers.length > 1 ? "favorites" : "favorite"    
+  var nbBiereText = this.props.favoritesBeers.length > 1 ? "bières" : "bière"
+    return (
+      <View style={styles.main_container}>
+        {/* <Animated.View style={[styles.animation_view, { top : this.state.topPosition, left: this.state.leftPosition }]}>
+        </Animated.View> */}
+        {this.props.favoritesBeers.length ===0 ? this._anyFavorite() : 
+        <View>
+          <Text style = { styles.textHeader } > {this.props.favoritesBeers.length} {nbBiereText} {nbFavoriteText}</Text>
+          <View style = {{ backgroundColor: color.colorDivider, height: 5, width: width }} ></View>
+          <FlatList
+            data = {this.props.favoritesBeers}
+            keyExtractor={(item) => item.bid.toString()}
+            ListFooterComponent = {<View></View>}
+            renderItem = {({item}) => (
+              <BeerItemRatio
+                beer = { item }
+                showIBU = {true}
+                showPRICE = {true}
+                showABV = {true}
+                displayDetailForBeer = {this._displayDetailForBeer}
+              />
+            )} 
+          /> 
+        </View>}
+      </View>
+    )
+
 
   }
 }
