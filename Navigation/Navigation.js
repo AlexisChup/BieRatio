@@ -177,7 +177,7 @@ const FavoriteStack = createStackNavigator(
     DescriptionBeer:{
       screen: DescriptionBeer,
       navigationOptions: {
-        title: 'Description',
+        headerTitle: <Text style = {{ flex: 1,textAlign: 'center', fontFamily: "Pacifico-Regular", fontSize: 23,color: color.colorDivider }} >Description</Text>,
       },
     }
 

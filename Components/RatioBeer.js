@@ -31,7 +31,8 @@ class RatioBeer extends React.Component{
       )
     },
     headerRight: (
-        <ToolTipRatios/>
+        <ToolTipRatios
+        />
     )
   })
 
@@ -56,9 +57,20 @@ class RatioBeer extends React.Component{
 
       beers :[],
       isLoading: false,
+
     }
+    
+    
 
   }
+  // componentDidMount(){
+  //   console.log("toolTip " + this.toolTipVisible);
+  //   if{this.toolTipVisible !== undefined}{
+  //     this.setState({
+
+  //     })
+  //   }
+  // }
 
 
   _updateSliderIbu (value){
@@ -136,6 +148,7 @@ class RatioBeer extends React.Component{
 
 
   render() {
+        
     const colorBackground = color.colorBackground
     return(
       <View style = {styles.main_container}>
@@ -338,6 +351,7 @@ const styles = StyleSheet.create({
   buttonBuyText: {
     color: color.colorBackground,
     marginRight: 10,
+    fontFamily: 'MPLUSRounded1c-Bold',
   },
   buttonBuyIon: {
 

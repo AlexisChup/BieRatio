@@ -27,24 +27,15 @@ class Home extends React.Component {
       menu: ["La bière de la semaine","Bars à proximités","Mon compte"]
     },
     this.sizeIcon = height/10
-    this.iconColor = color.colorDivider
-    this.state ={
-      firstLaunch: null
-    }
+    this.iconColor = color.colorIbu
     this.state = {
       isFirstLaunch: false,
       hasCheckedAsyncStorage: false,
+      firstLaunch: null
     };
 
   }
 
-  async componentDidMount(){
-    await Font.loadAsync({
-      'Pacifico-Regular' : require('../assets/fonts/Pacifico-Regular.ttf'),
-      'MPLUSRounded1c-Bold' : require('../assets/fonts/MPLUSRounded1c-Bold.ttf')
-    });
-    this.setState({fontLoaded: true})
-  }
 
   async componentWillMount() {
     const isFirstLaunch = await checkIfFirstLaunch();
@@ -97,7 +88,7 @@ class Home extends React.Component {
 
   render() {
     const { hasCheckedAsyncStorage, isFirstLaunch } = this.state;
-    if(hasCheckedAsyncStorage & this.state.fontLoaded) {
+    if(hasCheckedAsyncStorage ) {
 
       return(
 
@@ -109,7 +100,7 @@ class Home extends React.Component {
           /> */}
           {this._dspLogo()}
 
-          <Divider style = {styles.divider} />
+          <Divider style = {{ backgroundColor: color.colorDivider, height:5 }} />
           {/* <TouchableOpacity
             style = {styles.item}
             onPress = {() => this.props.navigation.navigate('RatioBeer')}>
@@ -148,43 +139,45 @@ class Home extends React.Component {
             />
             <Text style = { styles.description_item }>Favoris</Text>
           </TouchableOpacity> */}
+          <Text style = {styles.presentation} >
+            TYPE DE RECHERCHE 
+          </Text>
           <View  style = { styles.dspSearch } >
             <TouchableOpacity
-            style = { [styles.dspSearchCard, {marginLeft: 20, marginRight: 10,}] }
+            style = { [styles.dspSearchCard, {marginLeft: 30, marginRight: 15,}] }
             onPress = {() => this.props.navigation.navigate('RatioBeer')} >
               <Text style = { styles.textCard } > Ratio </Text>
-              <View style = { styles.dividerCard } ></View>
               <Icon
                 name = "bar-chart-2"
                 type = "feather"
-                color = {color.colorIbu}
+                color = {this.iconColor}
                 size = {60}
               />
             </TouchableOpacity>
 
             <TouchableOpacity 
-              style = { [styles.dspSearchCard, {marginRight: 20, marginLeft: 10}] }
+              style = { [styles.dspSearchCard, {marginRight: 30, marginLeft: 15}] }
               onPress = {() => this.props.navigation.navigate('NameSearchBeer')} >
               <Text style = { styles.textCard }>  Nom </Text>
-              <View style = { styles.dividerCard } ></View>
               <Icon
                 name = "format-letter-case"
                 type = "material-community"
-                color = {color.colorIbu}
+                color = {this.iconColor}
                 size = {60}
               />
             </TouchableOpacity>
+            
           </View>
+          <View style = {styles.divider} ></View>
           <TouchableOpacity 
             style = { styles.dspSearchCardFavorite }
             onPress = {() => this.props.navigation.navigate('FavoriteBeer')} >
-            <Text style = { styles.textCard }>  Favoris </Text>
-            <View style = { styles.dividerCardFavorite } ></View>
+            <Text style = { styles.textCard }>Bières Favorites </Text>
             <Icon
               name = "ios-heart"
               type = "ionicon"
-              color = {color.colorIbu}
-              size = {60}
+              color = {this.iconColor}
+              size = {50}
             />
           </TouchableOpacity>
             
@@ -217,7 +210,7 @@ const styles = StyleSheet.create({
   main_container: {
     flex: 1,
     backgroundColor: color.colorBackground,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   image_logo: {
     flex: 2,
@@ -257,7 +250,12 @@ const styles = StyleSheet.create({
   },
   divider: {
     backgroundColor: color.colorDivider,
-    height: 5,
+    height: 3,
+    marginVertical: 30,
+    borderRadius: 50,
+    width: width -60,
+    alignSelf: "center"
+
   },
   loading_container: {
     position: 'absolute',
@@ -271,7 +269,7 @@ const styles = StyleSheet.create({
   dspSearch: {
     flexDirection: "row",
     flex: 4,
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   dspSearchCard: {
     flexDirection: "column",
@@ -280,7 +278,12 @@ const styles = StyleSheet.create({
     borderColor : color.colorDivider,
     flex: 1,
     justifyContent: "space-evenly",
-    marginTop: 20, 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    backgroundColor: color.colorBottomTabBackground,
+    alignItems: 'center',
+    elevation: 20,
   },
   dspSearchCardFavorite: {
     borderWidth: 2,
@@ -288,14 +291,19 @@ const styles = StyleSheet.create({
     borderColor : color.colorDivider,
     flex: 2,
     justifyContent: "space-evenly",
-    marginHorizontal: 20,
-    marginTop: 20, 
+    marginHorizontal: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    backgroundColor: color.colorBottomTabBackground,
+    elevation: 20,
+    alignItems: 'center', 
   },
   textCard: {
     fontSize: 30,
-    textAlign: 'center',
     color: color.colorAlcool,
     fontFamily: 'MPLUSRounded1c-Bold',
+
   },
   dividerCard: {
     backgroundColor: color.colorPrice,
@@ -309,6 +317,13 @@ const styles = StyleSheet.create({
     height: 5,
     borderRadius: width/16,
     marginHorizontal: width/20,
+  },
+  presentation: {
+    textAlign: "center",
+    fontFamily: "MPLUSRounded1c-Bold",
+    marginVertical: 15,
+    fontSize: 25,
+    color: color.colorDivider
   },
 
 })

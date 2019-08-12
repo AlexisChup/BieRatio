@@ -121,18 +121,21 @@ class FavoriteBeer extends React.Component {
   _anyFavorite(){
     return(
       <View style = {{ flex: 1 }}>
-        <Text style = { styles.textHeader } > Aucunes bières favorites</Text>
+        <Text style = { styles.textHeaderAny } > Aucunes bières favorites</Text>
         <Image
           style = { styles.imgAnyFavorite }
           source = {require("../Images/emoji_man_shrugging.png")}
         />
-        <Text style = { styles.textHeader } >Allez en découvrir ci-dessous</Text>        
+        <View style = {styles.divider} ></View>
+        <Text style = {[ styles.textHeader, {fontSize: 20, marginHorizontal: 15,}]} >Allez en découvrir ci-dessous</Text>
+        <View style = {styles.divider} ></View>
+
+        <Text style = {styles.presentation} >TYPE DE RECHERCHE</Text>        
         <View  style = { styles.dspSearch } >
           <TouchableOpacity
-           style = { styles.dspSearchCard }
+           style = { [styles.dspSearchCard, {marginLeft: 30, marginRight: 15,}] }
            onPress = {() => this.props.navigation.navigate('RatioBeer')} >
             <Text style = { styles.textCard } > Ratio </Text>
-            <View style = { styles.dividerCard } ></View>
             <Icon
               name = "bar-chart-2"
               type = "feather"
@@ -142,10 +145,9 @@ class FavoriteBeer extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            style = { styles.dspSearchCard }
+            style = { [styles.dspSearchCard, {marginRight: 30, marginLeft: 15}] }
             onPress = {() => this.props.navigation.navigate('NameSearchBeer')} >
             <Text style = { styles.textCard }>  Nom </Text>
-            <View style = { styles.dividerCard } ></View>
             <Icon
               name = "format-letter-case"
               type = "material-community"
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
   main_container: {
     flex: 1,
     backgroundColor: color.colorBackground,
-    marginVertical: 10,
+    marginVertical: 20,
   },
   animation_view: {
     backgroundColor: 'red',
@@ -213,11 +215,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "MPLUSRounded1c-Regular",
   },
+textHeaderAny: {
+    color: color.colorDivider,
+    fontSize: 25,
+    textAlign: "center",
+    fontFamily: "MPLUSRounded1c-Bold",
+  },
   imgAnyFavorite: {
     alignSelf: 'center',
     width: width/2,
     height: width /2,
-    marginBottom: 20,
   },
   dspSearch: {
     flexDirection: "row",
@@ -231,15 +238,18 @@ const styles = StyleSheet.create({
     borderColor : color.colorDivider,
     flex: 1,
     justifyContent: "space-evenly",
-    marginHorizontal: 10,
-    marginTop: 10,
-    
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    backgroundColor: color.colorBottomTabBackground,
+    alignItems: 'center',
+    elevation: 20,
   },
   textCard: {
     fontSize: 30,
-    textAlign: 'center',
-    fontFamily: "MPLUSRounded1c-Bold",
-    color: color.colorAlcool
+    color: color.colorAlcool,
+    fontFamily: 'MPLUSRounded1c-Bold',
+
   },
   dividerCard: {
     backgroundColor: color.colorPrice,
@@ -250,7 +260,23 @@ const styles = StyleSheet.create({
   },
   iconAnyFavorite: {
 
-  }
+  },
+  divider: {
+    backgroundColor: color.colorDivider,
+    height: 3,
+    marginVertical: 10,
+    borderRadius: 50,
+    width: width -60,
+    alignSelf: "center"
+
+  },  
+  presentation: {
+    textAlign: "center",
+    fontFamily: "MPLUSRounded1c-Bold",
+    marginVertical: 10,
+    fontSize: 20,
+    color: color.colorDivider
+  },
 })
 
 const mapStateToProps = (state) => {

@@ -20,6 +20,7 @@ export default class App extends React.Component {
       'Lobster-Regular' : require('./assets/fonts/Lobster-Regular.ttf'),
       'Pacifico-Regular' : require('./assets/fonts/Pacifico-Regular.ttf'),
       'MPLUSRounded1c-Regular' : require('./assets/fonts/MPLUSRounded1c-Regular.ttf'),
+      'MPLUSRounded1c-Thin' : require('./assets/fonts/MPLUSRounded1c-Thin.ttf'),
       'MPLUSRounded1c-Bold' : require('./assets/fonts/MPLUSRounded1c-Bold.ttf')
     });
     this.setState({fontLoaded: true})

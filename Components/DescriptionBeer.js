@@ -30,7 +30,8 @@ TranslatorConfiguration.setConfig(ProviderTypes.Microsoft, keyMicrosftAzure,'fr'
 class DescriptionBeer extends React.Component{
   static navigationOptions = ({}) => ({
     headerRight: (
-      <ToolTipRatios/>
+      <ToolTipRatios
+      />
     ),
   })
 
@@ -813,6 +814,8 @@ const styles = StyleSheet.create({
   buttonBuyText: {
     color: color.colorBackground,
     marginRight: 10,
+    fontFamily: 'MPLUSRounded1c-Bold',
+    fontWeight: "300",
   },
   buttonBuyIon: {
 
@@ -845,12 +848,15 @@ const styles = StyleSheet.create({
     height: 3,
   },
   cardSubTitle: {
-    color: color.colorDivider
+    color: color.colorDivider,
+    fontFamily: 'MPLUSRounded1c-Bold',
+    fontWeight: "300"
 
   },
   textDescription:{
     fontSize: 15,
-    color: color.colorDivider
+    color: color.colorDivider,
+    fontFamily: 'MPLUSRounded1c-Regular'
   },
   view_slider_icon:{
     flexDirection:'row',
@@ -863,10 +869,11 @@ const styles = StyleSheet.create({
   },
   beer_title : {
     fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 15,
     textAlign: 'center',
-    color: color.colorDivider
+    color: color.colorDivider,
+    fontFamily: 'MPLUSRounded1c-Bold',
+    fontWeight: "400"
 
   },
   image: {
@@ -889,7 +896,9 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: color.colorAlcool,
     fontSize: 17,
-  },  iconImage: {
+    fontFamily: 'Pacifico-Regular',
+  },  
+  iconImage: {
     height: 200,
     width: 200,
     marginTop: 25,

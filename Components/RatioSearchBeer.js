@@ -18,7 +18,8 @@ class RatioSearchBeer extends React.Component{
     //   fonts: 10,
     // },
     headerRight: (
-        <ToolTipRatios/>
+      <ToolTipRatios
+      />
     ),
   })
 
@@ -426,13 +427,13 @@ const styles = StyleSheet.create({
   },
   descPagination: {
     fontSize: 15,
-    fontFamily: 'Lobster-Regular',
+    fontFamily: 'Pacifico-Regular',
     color: color.colorDivider
   },
   descPaginationButton: {
     color: color.colorBackground,
     fontSize: 15,
-    fontFamily: 'Lobster-Regular',
+    fontFamily: 'Pacifico-Regular',
   },
   buttonPagination: {
     backgroundColor: color.colorDivider
