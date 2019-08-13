@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Image, TouchableOpacity, StyleSheet, View, Text, Dimensions} from 'react-native'
 import VerticalSlider from 'rn-vertical-slider'
-import { Icon, Tooltip, Button } from 'react-native-elements'
+import { Icon, Tooltip, Button, Card } from 'react-native-elements'
 import ToolTipRatios from './ToolTipRatios'
 
 import { Switch } from 'react-native-switch';
@@ -58,8 +58,11 @@ class RatioBeer extends React.Component{
       beers :[],
       isLoading: false,
 
-    }
-    
+    },
+    this.sliderWidth = 35,
+    this.sliderHeight = height/3,
+    this.sliderBallIndicatorWidth = 35,
+    this.sliderBallIndicatorPosition = -40    
     
 
   }
@@ -152,161 +155,173 @@ class RatioBeer extends React.Component{
     const colorBackground = color.colorBackground
     return(
       <View style = {styles.main_container}>
-        <View
-          style = {styles.container_slider}
+        <Card
+          title = " AJUSTEZ VOS RATIOS "
+          containerStyle = { styles.card }
+          dividerStyle = {styles.cardDivider}
+          titleStyle = {styles.cardTitle}
         >
-          <View style = {styles.container}>
-            <VerticalSlider
-              value={this.state.ibu}
-              disabled={! this.state.enabledSlidersIBU}
-              min={0}
-              max={120}
-              onChange={(value) => {
-                this._updateSliderIbu(value)
-              }}
-              onComplete={(value) => {
+          <View
+            style = {styles.container_slider}
+          >
+            <View style = {styles.container}>
+              <VerticalSlider
+                value={this.state.ibu}
+                disabled={! this.state.enabledSlidersIBU}
+                min={0}
+                max={120}
+                onChange={(value) => {
+                  this._updateSliderIbu(value)
+                }}
+                onComplete={(value) => {
 
-              }}
-              width={45}
-              height={300}
-              step={20}
-              borderRadius={150}
-              minimumTrackTintColor={this.state.colorIbu}
-              maximumTrackTintColor={color.colorBackItem}
-              showBallIndicator = {true}
-              ballIndicatorColor={this.state.colorIbu}
-              ballIndicatorTextColor={'white'}
-            />
-          </View>
-
-          <View style = {styles.container}>
-            <VerticalSlider
-              value={this.state.price}
-              disabled={! this.state.enabledSlidersPRICE}
-              min={0}
-              max={5}
-              onChange={(value) => {
-                this._updateSliderPrice (value)
-              }}
-              onComplete={(value) => {
-                //console.log("COMPLETE", value);
-              }}
-              width={45}
-              height={300}
-              step={1}
-              borderRadius={150}
-              minimumTrackTintColor={this.state.colorPrice}
-              maximumTrackTintColor={color.colorBackItem}
-              showBallIndicator
-              ballIndicatorColor={this.state.colorPrice}
-              ballIndicatorTextColor={color.colorBackItem}
-            />
-          </View>
-          <View style = {styles.container}>
-            <VerticalSlider
-              value={this.state.alcool}
-              disabled={! this.state.enabledSlidersABV}
-              min={0}
-              max={13}
-              onChange={(value) => {
-                this._updateSliderAlcool(value)
-              }}
-              onComplete={(value) => {
-
-              }}
-              width={45}
-              height={300}
-              step={1}
-              borderRadius={150}
-              minimumTrackTintColor={this.state.colorAbv}
-              maximumTrackTintColor={color.colorBackItem}
-              showBallIndicator
-              ballIndicatorColor={this.state.colorAbv}
-              ballIndicatorTextColor={color.colorBackItem}
-            />
-          </View>
-        </View>
-        <View style = {styles.description_slider}>
-        <Switch
-          value={ this.state.enabledSlidersIBU }
-          onValueChange={(val) => this._disableSliderIBU(val)}
-          circleSize={40}
-          barHeight={10}
-          circleBorderWidth={0}
-          backgroundActive={color.colorIbu}
-          backgroundInactive={'gray'}
-          circleActiveColor={color.colorIbu}
-          circleInActiveColor={color.colorDisabled}
-          renderInsideCircle={() => 
-            <Image 
-              source = {require ('../Images/ic_hop.png')}
-              style = {{ resizeMode: "contain", width: 30, height: 30 }}
-
-            />
-          }
-          changeValueImmediately={true}
-
-        />
-        <Switch
-          value={ this.state.enabledSlidersPRICE}
-          onValueChange={(val) => this._disableSliderPrice(val)}
-          circleSize={40}
-          barHeight={10}
-          circleBorderWidth={0}
-          backgroundActive={color.colorPrice}
-          backgroundInactive={'gray'}
-          circleActiveColor={color.colorPrice}
-          circleInActiveColor={color.colorDisabled}
-          renderInsideCircle={() => 
-            <Image 
-              source = {require ('../Images/ic_euro.png')}
-              style = {{ resizeMode: "contain", width: 30, height: 30 }}
-
-            />
-          }
-          changeValueImmediately={true}
-
-        />
-        <Switch
-          value={ this.state.enabledSlidersABV}
-          onValueChange={(val) => this._disableSliderABV(val)}
-          circleSize={40}
-          barHeight={10}
-          circleBorderWidth={0}
-          backgroundActive={color.colorAlcool}
-          backgroundInactive={'gray'}
-          circleActiveColor={color.colorAlcool}
-          circleInActiveColor={color.colorDisabled}
-          renderInsideCircle={() => 
-            <Image 
-              source = {require ('../Images/ic_alcohol.png')}
-              style = {{ resizeMode: "contain", width: 30, height: 30 }}
-
-            />
-          }
-          changeValueImmediately={true}
-
-        />
-
-        </View>
-        <View style = { styles.buttonBuyView }>
-          <Button
-            titleStyle = { styles.buttonBuyText }
-            buttonStyle = { styles.buttonBuyStyle }
-            onPress = {() => this._displayRatioSearchBeer()}
-            iconRight = {true}
-            title = "Rechercher"
-            icon = {
-              <Icon
-                name = 'search'
-                size = {30}
-                color = {color.colorBackground}
+                }}
+                width={ this.sliderWidth}
+                height={ this.sliderHeight}
+                step={20}
+                borderRadius={150}
+                minimumTrackTintColor={this.state.colorIbu}
+                maximumTrackTintColor={color.colorBackItem}
+                showBallIndicator = {true}
+                ballIndicatorColor={this.state.colorIbu}
+                ballIndicatorTextColor={'white'}
+                ballIndicatorWidth = {this.sliderBallIndicatorWidth}
+                ballIndicatorPosition = {this.sliderBallIndicatorPosition}
               />
-            }
-            
-          />
-        </View>
+            </View>
 
+            <View style = {styles.container}>
+              <VerticalSlider
+                value={this.state.price}
+                disabled={! this.state.enabledSlidersPRICE}
+                min={0}
+                max={5}
+                onChange={(value) => {
+                  this._updateSliderPrice (value)
+                }}
+                onComplete={(value) => {
+                  //console.log("COMPLETE", value);
+                }}
+                width={ this.sliderWidth}
+                height={ this.sliderHeight}
+                step={1}
+                borderRadius={150}
+                minimumTrackTintColor={this.state.colorPrice}
+                maximumTrackTintColor={color.colorBackItem}
+                showBallIndicator
+                ballIndicatorColor={this.state.colorPrice}
+                ballIndicatorTextColor={color.colorBackItem}
+                ballIndicatorWidth = {this.sliderBallIndicatorWidth}
+                ballIndicatorPosition = {this.sliderBallIndicatorPosition}
+              />
+            </View>
+            <View style = {styles.container}>
+              <VerticalSlider
+                value={this.state.alcool}
+                disabled={! this.state.enabledSlidersABV}
+                min={0}
+                max={13}
+                onChange={(value) => {
+                  this._updateSliderAlcool(value)
+                }}
+                onComplete={(value) => {
+
+                }}
+                width={ this.sliderWidth}
+                height={ this.sliderHeight}
+                step={1}
+                borderRadius={150}
+                minimumTrackTintColor={this.state.colorAbv}
+                maximumTrackTintColor={color.colorBackItem}
+                showBallIndicator
+                ballIndicatorColor={this.state.colorAbv}
+                ballIndicatorTextColor={color.colorBackItem}
+                ballIndicatorWidth = {this.sliderBallIndicatorWidth}
+                ballIndicatorPosition = {this.sliderBallIndicatorPosition}
+              />
+            </View>
+          </View>
+          <View style = {styles.description_slider}>
+            <Switch
+              value={ this.state.enabledSlidersIBU }
+              onValueChange={(val) => this._disableSliderIBU(val)}
+              circleSize={40}
+              barHeight={10}
+              circleBorderWidth={0}
+              backgroundActive={color.colorIbu}
+              backgroundInactive={'gray'}
+              circleActiveColor={color.colorIbu}
+              circleInActiveColor={color.colorDisabled}
+              renderInsideCircle={() => 
+                <Image 
+                  source = {require ('../Images/ic_hop.png')}
+                  style = {{ resizeMode: "contain", width: 30, height: 30 }}
+
+                />
+              }
+              changeValueImmediately={true}
+
+            />
+            <Switch
+              value={ this.state.enabledSlidersPRICE}
+              onValueChange={(val) => this._disableSliderPrice(val)}
+              circleSize={40}
+              barHeight={10}
+              circleBorderWidth={0}
+              backgroundActive={color.colorPrice}
+              backgroundInactive={'gray'}
+              circleActiveColor={color.colorPrice}
+              circleInActiveColor={color.colorDisabled}
+              renderInsideCircle={() => 
+                <Image 
+                  source = {require ('../Images/ic_euro.png')}
+                  style = {{ resizeMode: "contain", width: 30, height: 30 }}
+
+                />
+              }
+              changeValueImmediately={true}
+
+            />
+            <Switch
+              value={ this.state.enabledSlidersABV}
+              onValueChange={(val) => this._disableSliderABV(val)}
+              circleSize={40}
+              barHeight={10}
+              circleBorderWidth={0}
+              backgroundActive={color.colorAlcool}
+              backgroundInactive={'gray'}
+              circleActiveColor={color.colorAlcool}
+              circleInActiveColor={color.colorDisabled}
+              renderInsideCircle={() => 
+                <Image 
+                  source = {require ('../Images/ic_alcohol.png')}
+                  style = {{ resizeMode: "contain", width: 30, height: 30 }}
+
+                />
+              }
+              changeValueImmediately={true}
+
+            />
+
+          </View>
+          <View style = { styles.buttonBuyView }>
+            <Button
+              titleStyle = { styles.buttonBuyText }
+              buttonStyle = { styles.buttonBuyStyle }
+              onPress = {() => this._displayRatioSearchBeer()}
+              iconRight = {true}
+              title = "Rechercher"
+              icon = {
+                <Icon
+                  name = 'search'
+                  size = {30}
+                  color = {color.colorBackground}
+                />
+              }
+              
+            />
+          </View>
+        </Card>
       </View>
 
     )
@@ -319,12 +334,11 @@ class RatioBeer extends React.Component{
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-    backgroundColor: color.colorBackground
+    backgroundColor: color.colorBottomTabBackground
   },
   container_slider: {
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     flexDirection: 'row',
-    alignContent : 'space-around',
     marginLeft: 5,
     marginRight: 5,
   },
@@ -335,12 +349,13 @@ const styles = StyleSheet.create({
   description_slider: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
     marginLeft: 5,
     marginRight: 5,
+    marginBottom: 40,
   },
   buttonBuyView: {
-    marginBottom: 10
+
   },  
   buttonBuyStyle: {
     borderRadius: 100,
@@ -372,6 +387,27 @@ const styles = StyleSheet.create({
   image: {
     width: 40,
     height: 40,
+  },
+  card: {
+    backgroundColor: color.colorBackground,
+    borderColor: color.colorDivider,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    elevation: 20,
+    marginBottom: 10,
+  },
+  cardDivider:{
+    backgroundColor: color.colorDivider,
+    opacity: 100,
+    height: 3,
+  },
+  cardTitle: {
+    color: color.colorDivider,
+    fontFamily: 'MPLUSRounded1c-Bold',
+    fontWeight: "300"
+
   },
 })
 export default RatioBeer

@@ -129,6 +129,7 @@ class BeerItemRatio extends React.Component {
       <FadeIn>
         <TouchableOpacity
           onPress ={() => displayDetailForBeer(beer.bid, beer.description, beer.ibu, beer.price, beer.abv)}
+          style = {styles.mainContainer}
         >
           <View style = {styles.beer_item}>
             <Image
@@ -155,7 +156,7 @@ class BeerItemRatio extends React.Component {
 
             </View>
           </View>
-          <Divider style = { styles.divider }/>
+          {/* <Divider style = { styles.divider }/> */}
 
         </TouchableOpacity>
       </FadeIn>
@@ -170,6 +171,17 @@ class BeerItemRatio extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    backgroundColor: color.colorBackground,
+    borderColor: color.colorDivider,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    elevation: 20,
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
   beer_item: {
     flexDirection: 'row',
     padding: 3,

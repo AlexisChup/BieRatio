@@ -343,7 +343,7 @@ class DescriptionBeer extends React.Component{
       return (
         <Flag
           code = {codeState}
-          size = { 32 }
+          size = { 64 }
           type = 'shiny'
         />
       )
@@ -397,7 +397,7 @@ class DescriptionBeer extends React.Component{
     const beer = this.state.beer
     if (existInAPI){
       return(
-        <Card title = "Ratio"
+        <Card title = "Ratios"
               containerStyle = { styles.card }
               dividerStyle = {styles.cardDivider}
               titleStyle = {styles.cardSubTitle}>
@@ -483,7 +483,7 @@ class DescriptionBeer extends React.Component{
     }
     else{
       return(
-        <Card title = "Ratio"
+        <Card title = "Ratios"
               containerStyle = {styles.card}
               dividerStyle = {styles.cardDivider}
               titleStyle = {styles.cardSubTitle}>
@@ -598,21 +598,65 @@ class DescriptionBeer extends React.Component{
 
   _displayFavoriteBeer(){
     if(!this.state.existInAPI){
+      var nameIcon = "ios-heart-empty"
+      var nameButton = " Ajouter aux Favoris "
+      if(this.props.favoritesBeers.findIndex(item => item.bid === this.state.beer.bid) !== -1){
+        nameIcon = "ios-heart"
+        nameButton = " Favoris " 
+      }
       return(
-        <TouchableOpacity
+        // <TouchableOpacity
+        //   onPress = {()=> this._updateDescriptionAfterToggleFavorite() }
+        // >
+        //   {this._displayFavoriteIcon()}
+        // </TouchableOpacity>
+        <Button
+          title = {nameButton}
           onPress = {()=> this._updateDescriptionAfterToggleFavorite() }
-        >
-          {this._displayFavoriteIcon()}
-        </TouchableOpacity>
+          iconRight = {true}
+          icon = { 
+            <Icon
+              type = "ionicon"
+              name = {nameIcon}
+              size = {30}
+              color = {color.colorBackground}
+            
+            />
+          }
+          buttonStyle = { styles.buttonBuyStyle }
+          titleStyle = { styles.buttonBuyText }
+        />
         
       )
     }else if ( this.state.existInAPI ){
+      var nameIcon = "ios-heart-empty"
+      var nameButton = " Ajouter aux Favoris "
+      if(this.props.favoritesBeers.findIndex(item => item.bid === this.state.beer.bid) !== -1){
+        nameIcon = "ios-heart"
+        nameButton = " Favoris " 
+      }
       return(
-        <TouchableOpacity
+        // <TouchableOpacity
+        //   onPress = {()=> this._toggleFavorite() }
+        // >
+        //   {this._displayFavoriteIcon()}
+        // </TouchableOpacity>
+        <Button
+          title = {nameButton}
           onPress = {()=> this._toggleFavorite() }
-        >
-          {this._displayFavoriteIcon()}
-        </TouchableOpacity>
+          iconRight = {true}
+          icon = { 
+            <Icon
+              type = "ionicon"
+              name = {nameIcon}
+              size = {30}
+              color = {color.colorBackground}
+            
+            />
+          }
+          buttonStyle = { styles.buttonBuyStyle }
+          titleStyle = { styles.buttonBuyText }
+        />
         
       )
 
@@ -676,11 +720,10 @@ class DescriptionBeer extends React.Component{
                       style = { styles.icon }
                       source = {require('../Images/ic_brewery.png')}
                     />
-                    <Text style ={{ fontSize: 20 }} > : </Text>
+                    <Text style ={{ fontSize: 30 }} > : </Text>
                     { this._displayFlag() }
                   </View>
                   
-                  {this._displayFavoriteBeer()}
                 </View>
               </View>
             </Card>
@@ -727,7 +770,7 @@ class DescriptionBeer extends React.Component{
 
             <View style = {styles.viewButton} > 
               <Button
-                title = "Acheter"
+                title = " Acheter "
                 onPress={ ()=>{ Linking.openURL('https://google.com/search?q=buy+' + title+'+beer')}}
                 iconRight = {true}
                 icon = { 
@@ -742,6 +785,8 @@ class DescriptionBeer extends React.Component{
                 buttonStyle = { styles.buttonBuyStyle }
                 titleStyle = { styles.buttonBuyText }
               />
+              {this._displayFavoriteBeer()}
+
             </View>
 
 
@@ -790,7 +835,7 @@ class DescriptionBeer extends React.Component{
 const styles = StyleSheet.create({
   main_container : {
     flex: 1,
-    backgroundColor: color.colorBackground
+    backgroundColor: color.colorBottomTabBackground
   },
   view_slider_icon: {
     marginTop: -20,
@@ -804,16 +849,18 @@ const styles = StyleSheet.create({
   },
   viewButton: {
     marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   buttonBuyStyle: {
     borderRadius: 100,
-    width: 250,
-    alignSelf: "center",
+
     backgroundColor: color.colorDivider
   },
   buttonBuyText: {
     color: color.colorBackground,
     marginRight: 10,
+    fontSize: 14,
     fontFamily: 'MPLUSRounded1c-Bold',
     fontWeight: "300",
   },
@@ -835,12 +882,17 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   icon:{
-    height: 30,
-    width: 30,
+    height: 60,
+    width: 60,
   },
   card: {
-    backgroundColor: this.colorCard,
-    borderColor: color.colorDivider
+    backgroundColor: color.colorBackground,
+    borderColor: color.colorDivider,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    elevation: 20,
   },
   cardDivider:{
     backgroundColor: color.colorDivider,

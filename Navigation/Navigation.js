@@ -229,7 +229,8 @@ const AppMenuNavigator = createMaterialBottomTabNavigator(
                   color = { tintColor }
                 />
         }
-      }
+      },
+
     },
   },
   {
@@ -237,6 +238,9 @@ const AppMenuNavigator = createMaterialBottomTabNavigator(
     activeTintColor: color.colorDivider,
     barStyle: { backgroundColor : color.colorBottomTabBackground },
     initialRouteName: "Ratio",
+    cardStyle   : {
+      backgroundColor: color.colorBottomTabBackground
+    }
 
 
 

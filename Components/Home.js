@@ -209,8 +209,7 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-    backgroundColor: color.colorBackground,
-    marginBottom: 30,
+    backgroundColor: color.colorBottomTabBackground,
   },
   image_logo: {
     flex: 2,
@@ -281,7 +280,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.4, 
-    backgroundColor: color.colorBottomTabBackground,
+    backgroundColor: color.colorBackground,
     alignItems: 'center',
     elevation: 20,
   },
@@ -295,8 +294,9 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.4, 
-    backgroundColor: color.colorBottomTabBackground,
     elevation: 20,
+    backgroundColor: color.colorBackground,
+    marginBottom: 30,
     alignItems: 'center', 
   },
   textCard: {

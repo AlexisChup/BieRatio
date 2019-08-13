@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity,Image ,StyleSheet, View,  Text, Animated, Easing, FlatList, Dimensions } from 'react-native'
+import { TouchableOpacity,Image ,StyleSheet, View,  Text, Animated, Easing, FlatList, Dimensions, SafeAreaView } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 import BeerItemRatio from './BeerItemRatio'
@@ -176,7 +176,7 @@ class FavoriteBeer extends React.Component {
           <FlatList
             data = {this.props.favoritesBeers}
             keyExtractor={(item) => item.bid.toString()}
-            ListFooterComponent = {<View></View>}
+            ListFooterComponent = {<View style= {{ marginBottom: 30 }} ></View>}
             renderItem = {({item}) => (
               <BeerItemRatio
                 beer = { item }
@@ -198,8 +198,7 @@ class FavoriteBeer extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-    backgroundColor: color.colorBackground,
-    marginVertical: 20,
+    backgroundColor: color.colorBottomTabBackground,
   },
   animation_view: {
     backgroundColor: 'red',
@@ -229,7 +228,8 @@ textHeaderAny: {
   dspSearch: {
     flexDirection: "row",
     flex: 1,
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
+    marginVertical: 10,
   },
   dspSearchCard: {
     flexDirection: "column",
@@ -241,7 +241,7 @@ textHeaderAny: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.4, 
-    backgroundColor: color.colorBottomTabBackground,
+    backgroundColor: color.colorBackground,
     alignItems: 'center',
     elevation: 20,
   },

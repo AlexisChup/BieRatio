@@ -127,13 +127,14 @@ class RatioSearchBeer extends React.Component{
           </Text>
           <Slider
             value = {this.ibu}
-            minimumValue = {1}
+            minimumValue = {0}
             minimumTrackTintColor = {color.colorIbu}
             maximumValue = {120}
             maximumTrackTintColor = {color.colorBackItem}
             disabled = {true}
             style = { styles.slider }
             thumbTintColor = {this.colorSlider}
+            thumbStyle = {styles.thumbSlider}
           />
         </View>
 
@@ -155,13 +156,14 @@ class RatioSearchBeer extends React.Component{
           </Text>
           <Slider
             value = {this.price}
-            minimumValue = {1}
+            minimumValue = {0}
             minimumTrackTintColor = {color.colorPrice}
             maximumValue = {5}
             maximumTrackTintColor = {color.colorBackItem}
             disabled = {true}
             style = { styles.slider }
             thumbTintColor = {this.colorSlider}
+            thumbStyle = {styles.thumbSlider}
           />
         </View>
       )
@@ -182,13 +184,14 @@ class RatioSearchBeer extends React.Component{
           </Text>
           <Slider
             value = {this.abv}
-            minimumValue = {1}
+            minimumValue = {0}
             minimumTrackTintColor = {color.colorAlcool}
             maximumValue = {13}
             maximumTrackTintColor = {color.colorBackItem}
             disabled = {true}
             style = { styles.slider }
             thumbTintColor = {this.colorSlider}
+            thumbStyle = {styles.thumbSlider}
           />
         </View>
       )
@@ -199,13 +202,20 @@ class RatioSearchBeer extends React.Component{
 
 
   _displayCriterion(){
+
     return(
       <View>
-        {this._sliderIbu()}
+        <View style = { styles.dspCriterions } >
+          <Text style = { styles.textCriterions }> VOS RATIOS </Text>
+  
+          {this._sliderIbu()}
 
-        {this._sliderPrice()}
+          {this._sliderPrice()}
 
-        {this._sliderAbv()}
+          {this._sliderAbv()}
+
+          
+        </View>
         <View style = {styles.divider} ></View>
       </View>
     )
@@ -364,34 +374,39 @@ class RatioSearchBeer extends React.Component{
   _displayPagination(){
     const page = this.state.totalPage > 1 ? "pages" : "page"
     const biere = this.state.nbBeers > 1 ? "bières" : "bière"
-    return(
-      <View style = {styles.viewPagination} >
-        <View style = {styles.pagination} >
-          {this._displayButtonFirst()}
-          {this._displayButtonMinus()}
-          <Text style = { styles.descPagination } >
-            Page n°{this.state.currentPage}
-          </Text>
-          {this._displayButtonPlus()}
-          {this._displayButtonLast()}
+    if(this.state.nbBeers !==0){
+      return(
+        <View style = {styles.viewPagination} >
+          <View style = {styles.dividerPagination} ></View>
+          <View style = {styles.pagination} >
+            {this._displayButtonFirst()}
+            {this._displayButtonMinus()}
+            <Text style = { styles.descPagination } >
+              Page n°{this.state.currentPage}
+            </Text>
+            {this._displayButtonPlus()}
+            {this._displayButtonLast()}
+          </View>
+          <View style = { styles.pagination }>
+            <Text style = { styles.descPagination }>
+              Nombre de {page} : {this.state.totalPage}
+            </Text>
+            <Text style = { styles.descPagination }>
+              Nombre de {biere} : {this.state.nbBeers}
+            </Text>
+          </View>
         </View>
-        <View style = { styles.pagination }>
-          <Text style = { styles.descPagination }>
-            Nombre de {page} : {this.state.totalPage}
-          </Text>
-          <Text style = { styles.descPagination }>
-            Nombre de {biere} : {this.state.nbBeers}
-          </Text>
-        </View>
-      </View>
-    )
+      )
+    } else {
+      return null
+    }
   }
 
 
   render() {
     if( !this.state.isLoading){
       return(
-        <View style = {{flex: 1, backgroundColor: color.colorBackground}}>
+        <View style = {{flex: 1, backgroundColor: color.colorBottomTabBackground}}>
           {this._displayCriterion()}
           {this._emptySearch()}
           {this._displayFlatList()}
@@ -400,7 +415,7 @@ class RatioSearchBeer extends React.Component{
 }
       else{
         return(
-          <View style = {{ backgroundColor: color.colorBackground }}>
+          <View style = {{ backgroundColor: color.colorBottomTabBackground }}>
             { this._displayLoading() }
           </View>
         )
@@ -419,6 +434,14 @@ const styles = StyleSheet.create({
   viewPagination:{
     marginTop: 10,
     marginBottom: 10,
+  },
+  dividerPagination :{
+    height: 5,
+    backgroundColor: color.colorDivider,
+    borderRadius: 10,
+    width: width - 40,
+    marginBottom: 10,
+    alignSelf: "center",
   },
   pagination:{
     flexDirection: "row",
@@ -441,23 +464,26 @@ const styles = StyleSheet.create({
   slider: {
     flex :1,
     paddingRight: 30,
+    marginRight: 10,
   },
   slider_text: {
     fontFamily: 'MPLUSRounded1c-Bold',
     color: color.colorDivider,
     paddingRight: 15,
-    fontSize: 30,
+    fontSize: 15,
     fontWeight: 'bold',
+    marginTop: 10,
   },
   image: {
     width: 200,
     height: 200,
   },
   image_slider: {
-    width: 40,
-    height: 40,
+    width: 20,
+    height: 20,
     marginLeft: 15,
     marginRight: 5,
+    marginTop: 10,
   },
   error: {
     margin: 15,
@@ -494,5 +520,24 @@ const styles = StyleSheet.create({
     height: 30,
     marginTop: -5,
   },
+  dspCriterions: {
+    backgroundColor: color.colorBackground,
+    borderColor: color.colorDivider,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    elevation: 20,
+    margin: 10,
+  },
+  textCriterions: {
+    textAlign: 'center',
+    fontFamily: "MPLUSRounded1c-Bold",
+    color: color.colorDivider,
+  },
+  thumbSlider: {
+    height: 10,
+    width: 10,
+  }
 })
 export default RatioSearchBeer
