@@ -727,7 +727,7 @@ class DescriptionBeer extends React.Component{
                 </View>
               </View>
             </Card>
-
+{/* 
             <View style = {{ flexDirection: 'row', justifyContent: "space-evenly" }} >
               <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >Saisir Prix : </Text>
               <TextInput
@@ -758,7 +758,7 @@ class DescriptionBeer extends React.Component{
               disabled = {this.state.disabled}
               onPress = {() => this._updateDescription()}
               buttonStyle = {{margin: 10, height: 40, backgroundColor: this.state.backgroundColor }}
-            />
+            /> */}
 
 
 
@@ -838,7 +838,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.colorBottomTabBackground
   },
   view_slider_icon: {
-    marginTop: -20,
+    paddingBottom: 50,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -854,7 +854,8 @@ const styles = StyleSheet.create({
   },
   buttonBuyStyle: {
     borderRadius: 100,
-
+    borderWidth: 5,
+    borderColor: color.colorDivider,
     backgroundColor: color.colorDivider
   },
   buttonBuyText: {
@@ -872,8 +873,10 @@ const styles = StyleSheet.create({
     width: 30,
   },
   container_slider: {
+    justifyContent: "space-evenly",
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    marginLeft: 5,
+    marginRight: 5,
   },
   iconContainer: {
     flexDirection: 'row',
@@ -898,6 +901,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.colorDivider,
     opacity: 100,
     height: 3,
+    borderRadius: 10,
   },
   cardSubTitle: {
     color: color.colorDivider,
@@ -916,8 +920,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    margin: 60,
-    
+    marginHorizontal: 60,
+    marginBottom: 20,
   },
   beer_title : {
     fontSize: 20,

@@ -16,7 +16,7 @@ class BeerItemRatio extends React.Component {
     const  beer = this.props.beer
     if(this.props.showIBU){
       return(
-        <View style = {{ flexDirection: "row" }}>
+        <View style = { [styles.showRatio,{backgroundColor: color.colorIbu, borderColor: color.colorIbu} ] }>
           <Image
             style = { styles.image_slider }
             source = {require ('../Images/ic_hop.png')}
@@ -30,7 +30,7 @@ class BeerItemRatio extends React.Component {
     const  beer = this.props.beer
     if(this.props.showPRICE){
       return(
-        <View style = {{ flexDirection: "row" }}>
+        <View style = { [styles.showRatio ,{backgroundColor: color.colorPrice, borderColor: color.colorPrice, marginHorizontal: 6,} ] }>
           <Image
             style = { styles.image_slider }
             source = {require ('../Images/ic_euro.png')}
@@ -44,7 +44,7 @@ class BeerItemRatio extends React.Component {
     const  beer = this.props.beer
     if(this.props.showABV){
       return(
-        <View style = {{ flexDirection: "row" }}>
+        <View style = { [styles.showRatio,{backgroundColor: color.colorAlcool, borderColor: color.colorAlcool} ] }>
           <Image
             style = { styles.image_slider }
             source = {require ('../Images/ic_alcohol.png')}
@@ -142,10 +142,10 @@ class BeerItemRatio extends React.Component {
               <View style = {styles.texte_item}>
                 {this._showAbuCriterion()}
                 
-                {this._showFirstDivider()}
+                {/* {this._showFirstDivider()} */}
                 {this._showPriceCriterion()}
 
-                {this._showSecondDivider()}
+                {/* {this._showSecondDivider()} */}
 
                 {this._showAbvCriterion()}
 
@@ -156,7 +156,6 @@ class BeerItemRatio extends React.Component {
 
             </View>
           </View>
-          {/* <Divider style = { styles.divider }/> */}
 
         </TouchableOpacity>
       </FadeIn>
@@ -187,8 +186,9 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   image_slider: {
-    height: 30,
-    width: 30,
+    height: 25,
+    width: 25,
+
   },
   image_item: {
     height: 100,
@@ -218,15 +218,16 @@ const styles = StyleSheet.create({
     flex: 3,
   },
   description_texte:{
-    fontSize: 15,
-    color: color.colorDivider,
-    fontFamily: 'MPLUSRounded1c-Regular'
+    fontSize: 13,
+    color: color.colorBackground,
+    fontFamily: 'MPLUSRounded1c-Bold',
+    paddingTop: 2,
   },
   separate: {
     height: 21,
     width: 1,
-    borderWidth:2,
-    backgroundColor: 'black',
+    borderWidth:1,
+    backgroundColor: color.colorDivider,
   },
   divider: {
     height: 5,
@@ -245,6 +246,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  showRatio: {
+    flexDirection: "row",
+    borderRadius: 10, 
+    borderWidth: 5,
+  }
 })
 
 export default BeerItemRatio

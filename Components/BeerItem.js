@@ -25,6 +25,9 @@ class BeerItem extends React.Component {
 
   componentDidMount(){
     getBeerByBid(this.props.beer.beer.bid).then(data => {
+      // console.log('====================================');
+      // console.log("totalItems: " + data["hydra:totalItems"]);
+      // console.log('====================================');
       if(data["hydra:totalItems"] === 1){
         this.setState({
           colorPastille: "green"
@@ -96,7 +99,9 @@ class BeerItem extends React.Component {
 
           <FadeIn>
             <TouchableOpacity
-              onPress ={() => displayDetailForBeer(beer.beer.bid)}>
+              onPress ={() => displayDetailForBeer(beer.beer.bid)}
+              style = {styles.mainContainer}
+            >
               <View style = {styles.beer_item}>
                 <Image
                   style ={styles.image_item}
@@ -117,7 +122,7 @@ class BeerItem extends React.Component {
                   </View>
                 </View>
               </View>
-              <Divider style = { styles.divider }/>
+              {/* <Divider style = { styles.divider }/> */}
 
             </TouchableOpacity>
           </FadeIn>
@@ -141,6 +146,17 @@ class BeerItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    backgroundColor: color.colorBackground,
+    borderColor: color.colorDivider,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    elevation: 20,
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
   beer_item: {
     flexDirection: 'row',
     padding: 3,

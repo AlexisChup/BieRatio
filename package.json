@@ -33,6 +33,7 @@
     "react-navigation-transitions": "^1.0.11",
     "react-redux": "^7.1.0",
     "redux": "^4.0.1",
+    "redux-persist": "^5.10.0",
     "rn-vertical-slider": "^1.0.4",
     "victory-native": "^32.0.2"
   },

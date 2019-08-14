@@ -170,13 +170,13 @@ class FavoriteBeer extends React.Component {
         {/* <Animated.View style={[styles.animation_view, { top : this.state.topPosition, left: this.state.leftPosition }]}>
         </Animated.View> */}
         {this.props.favoritesBeers.length ===0 ? this._anyFavorite() : 
-        <View>
+        <View style = {{ flex: 1 }}>
           <Text style = { styles.textHeader } > {this.props.favoritesBeers.length} {nbBiereText} {nbFavoriteText}</Text>
           <View style = {{ backgroundColor: color.colorDivider, height: 5, width: width }} ></View>
           <FlatList
             data = {this.props.favoritesBeers}
             keyExtractor={(item) => item.bid.toString()}
-            ListFooterComponent = {<View style= {{ marginBottom: 30 }} ></View>}
+            ListFooterComponent = {<View style= {{ marginBottom: 10 }} ></View>}
             renderItem = {({item}) => (
               <BeerItemRatio
                 beer = { item }
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     color: color.colorDivider,
     fontSize: 25,
     textAlign: "center",
-    fontFamily: "MPLUSRounded1c-Regular",
+    fontFamily: "MPLUSRounded1c-Bold",
   },
 textHeaderAny: {
     color: color.colorDivider,

@@ -200,14 +200,28 @@ class RatioSearchBeer extends React.Component{
     }
   }
 
+  _showHeader(){
+    if(this.ibu != 150 || this.price != 150 || this.abv != 150){
+      return(
+        <Text style = { styles.textCriterions }> VOS RATIOS </Text>
+      )
+    }else {  
+      return(
+        <Text style = { styles.textCriterions }> TOUTES LES BIERES </Text>
+      )
+    }
+  }
+
 
   _displayCriterion(){
 
     return(
       <View>
         <View style = { styles.dspCriterions } >
-          <Text style = { styles.textCriterions }> VOS RATIOS </Text>
-  
+
+          
+          {this._showHeader()}
+
           {this._sliderIbu()}
 
           {this._sliderPrice()}

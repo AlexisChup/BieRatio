@@ -5,7 +5,8 @@ import { Provider } from 'react-redux'
 import Navigation from './Navigation/Navigation'
 import Store from './Store/configureStore'
 import * as Font from 'expo-font'
-
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/es/integration/react'
 export default class App extends React.Component {
 
   constructor(props){
@@ -28,10 +29,13 @@ export default class App extends React.Component {
 
 
   render() {
+    let persistor = persistStore(Store)
     if (this.state.fontLoaded){
       return (
-        <Provider store = {Store} >
-          <Navigation/>
+        <Provider store={Store}>
+          <PersistGate persistor={persistor}>
+            <Navigation />
+          </PersistGate>
         </Provider> 
 
       )

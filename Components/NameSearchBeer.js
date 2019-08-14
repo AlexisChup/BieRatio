@@ -119,17 +119,19 @@ class NameSearchBeer extends React.Component {
   _waitingSearch(){
     if( this.searchedText.length === 0) {
       return(
-        <TouchableOpacity 
-          style = { styles.iconView }
-          onPress = {() => this._searchBeers()} >
-          <Icon
-            type = "ionicon"
-            name = "ios-search"
-            size = {200}
-            color = {color.colorDivider}
-
-          />
-        </TouchableOpacity>
+        <View style = {styles.iconView} >
+          <TouchableOpacity 
+            style = { styles.iconViewIcon }
+            onPress = {() => this._searchBeers()} >
+            <Icon
+              type = "ionicon"
+              name = "ios-search"
+              size = {200}
+              color = {color.colorDivider}
+              iconStyle = {{ paddingTop: 20, }}
+            />
+          </TouchableOpacity>
+        </View>
       )
     }
   }
@@ -138,7 +140,7 @@ class NameSearchBeer extends React.Component {
     const nbBeers = this.state.nbBeers
     if(nbBeers ===0 ){
       return(
-        <View style = {styles.iconView} >
+        <View style = {{  }} >
           <Text style = {styles.iconText} >
             Aucunes bières ne correspond à votre recherche
           </Text>
@@ -167,21 +169,23 @@ class NameSearchBeer extends React.Component {
   render() {
     return (
       <SafeAreaView style = {styles.main_container}>
-        <Madoka
-          label={'Saisir le nom de la bière'}
-          // this is used as active and passive border color
-          borderColor={this.inputColor}
-          inputPadding={16}
-          labelHeight={24}
-          labelStyle={{ color: this.inputColor,fontFamily: "MPLUSRounded1c-Regular",fontWeight: "400",}}
-          inputStyle={{ color: this.inputColor,  fontSize: 20, fontFamily: "MPLUSRounded1c-Regular", fontWeight: "100", }}
-          style = {styles.textInput}
-          clearButtonMode="always"
-          onChangeText={(text) => this._searchTextInputChanged(text)}
-          onSubmitEditing= {() => this._searchBeers()}
-          autoCorrect = {false}
-          style = {{ margin: 10, }}
-        />
+        <View style = { styles.dspInput } >
+          <Madoka
+            label={'Saisir le nom de la bière'}
+            // this is used as active and passive border color
+            borderColor={this.inputColor}
+            inputPadding={16}
+            labelHeight={24}
+            labelStyle={{ color: this.inputColor,fontFamily: "MPLUSRounded1c-Regular",fontWeight: "400", }}
+            inputStyle={{ color: this.inputColor,  fontSize: 20, fontFamily: "MPLUSRounded1c-Regular", fontWeight: "100"}}
+            style = {styles.textInput}
+            clearButtonMode="always"
+            onChangeText={(text) => this._searchTextInputChanged(text)}
+            onSubmitEditing= {() => this._searchBeers()}
+            autoCorrect = {false}
+          />
+          
+        </View>
         <View style = {styles.divider} ></View>
 
         {this._waitingSearch()}
@@ -192,6 +196,7 @@ class NameSearchBeer extends React.Component {
           style = {styles.list}
           data = {this.state.beers}
           keyExtractor={(item) => item.beer.bid.toString()}
+          ListFooterComponent = {<View style= {{ marginBottom: 10 }} ></View>}
           renderItem = {({item}) => (
             <BeerItem
               beer = { item }
@@ -214,10 +219,20 @@ class NameSearchBeer extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-    backgroundColor: color.colorBackground
+    backgroundColor: color.colorBottomTabBackground
   },
   list: {
     flex: 1,
+  },
+  dspInput: {
+    backgroundColor: color.colorBackground,
+    borderColor: color.colorDivider,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    elevation: 20,
+    margin: 10,
   },
   loading_container: {
     position: 'absolute',
@@ -232,7 +247,8 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   textInput: {
-    margin: 5,
+    margin: 10,
+    borderRadius: 10,
   },
   divider: {
     height: 5,
@@ -244,6 +260,7 @@ const styles = StyleSheet.create({
     width: 200,
     marginTop: 25,
     resizeMode: 'contain',
+    alignSelf: "center"
     
   },
   iconView: {
@@ -251,6 +268,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+
+
+  },
+  iconViewIcon: {
+    backgroundColor: color.colorBackground,
+    borderColor: color.colorDivider,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    elevation: 20,
+    height: 250,
+    width: 250,
   },
   iconText: {
     textAlign: 'center',
