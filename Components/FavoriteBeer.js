@@ -171,7 +171,9 @@ class FavoriteBeer extends React.Component {
         </Animated.View> */}
         {this.props.favoritesBeers.length ===0 ? this._anyFavorite() : 
         <View style = {{ flex: 1 }}>
-          <Text style = { styles.textHeader } > {this.props.favoritesBeers.length} {nbBiereText} {nbFavoriteText}</Text>
+          <View style = { styles.viewHeader }>
+            <Text style = { styles.textHeader } > {this.props.favoritesBeers.length} {nbBiereText} {nbFavoriteText}</Text>
+          </View>
           <View style = {{ backgroundColor: color.colorDivider, height: 5, width: width }} ></View>
           <FlatList
             data = {this.props.favoritesBeers}
@@ -214,7 +216,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "MPLUSRounded1c-Bold",
   },
-textHeaderAny: {
+  viewHeader: {
+    backgroundColor: color.colorBackground,
+    borderColor: color.colorDivider,
+    borderWidth: 1,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4, 
+    elevation: 20,
+    margin: 10,
+  },  
+  textHeaderAny: {
     color: color.colorDivider,
     fontSize: 25,
     textAlign: "center",

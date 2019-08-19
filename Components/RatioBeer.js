@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Image, TouchableOpacity, StyleSheet, View, Text, Dimensions} from 'react-native'
+import { Image, TouchableOpacity, StyleSheet, View, Text, Dimensions, SafeAreaView} from 'react-native'
 import VerticalSlider from 'rn-vertical-slider'
 import { Icon, Tooltip, Button, Card } from 'react-native-elements'
 import ToolTipRatios from './ToolTipRatios'
@@ -151,10 +151,8 @@ class RatioBeer extends React.Component{
 
 
   render() {
-        
-    const colorBackground = color.colorBackground
     return(
-      <View style = {styles.main_container}>
+      <SafeAreaView style = {styles.main_container}>
         <Card
           title = " AJUSTEZ VOS RATIOS "
           containerStyle = { styles.card }
@@ -322,7 +320,7 @@ class RatioBeer extends React.Component{
             />
           </View>
         </Card>
-      </View>
+      </SafeAreaView>
 
     )
   }
@@ -344,7 +342,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    margin: 60,
+    marginHorizontal: 60,
+    marginBottom: 60,
+    marginTop: 10,
   },
   description_slider: {
     flex: 1,
@@ -355,7 +355,6 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   buttonBuyView: {
-
   },  
   buttonBuyStyle: {
     borderRadius: 100,
@@ -397,6 +396,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4, 
     elevation: 20,
     marginBottom: 10,
+    justifyContent: "space-evenly",
+    flex: 1,
   },
   cardDivider:{
     backgroundColor: color.colorDivider,
@@ -406,7 +407,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     color: color.colorDivider,
     fontFamily: 'MPLUSRounded1c-Bold',
-    fontWeight: "300"
+    fontWeight: "400"
 
   },
 })

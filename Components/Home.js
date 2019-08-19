@@ -14,6 +14,7 @@ import {
 } from 'react-native-elements'
 
 import * as color from '../assets/colors'
+import { contains } from 'react-native-redash';
 
 const HAS_LAUNCHED = 'hasLaunched';
 
@@ -78,6 +79,10 @@ class Home extends React.Component {
           size = {50}
           iconStyle = {styles.iconLogo}
         />
+        <Image
+          source = {require('../Images/pbu_160_white.png')}
+          style = {styles.untappdLogo}
+        />  
       </View>
     )
   }
@@ -219,7 +224,8 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: "center",
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+
   },
   textLogo: {
     fontFamily: 'Pacifico-Regular',
@@ -229,6 +235,16 @@ const styles = StyleSheet.create({
   },
   iconLogo: {
     marginLeft: 20,
+
+  }, 
+  untappdLogo: {
+    width: 80,
+    height: 80,
+    resizeMode: 'contain',
+    position: "absolute",
+    alignSelf: "flex-end",
+    right: 10,
+    bottom: -20,
   },  
   description_item: {
     fontSize: 30,

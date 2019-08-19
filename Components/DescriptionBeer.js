@@ -727,10 +727,10 @@ class DescriptionBeer extends React.Component{
                 </View>
               </View>
             </Card>
-{/* 
-            <View style = {{ flexDirection: 'row', justifyContent: "space-evenly" }} >
-              <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >Saisir Prix : </Text>
-              <TextInput
+ 
+             <View style = {{ flexDirection: 'row', justifyContent: "space-evenly" }} >
+               <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >Saisir Prix : </Text>
+               <TextInput
                 editable = {this.state.editable}
                 value = {this.state.priceText}
                 onChangeText ={(text) => this.setState({ priceText: text }) }
@@ -758,7 +758,7 @@ class DescriptionBeer extends React.Component{
               disabled = {this.state.disabled}
               onPress = {() => this._updateDescription()}
               buttonStyle = {{margin: 10, height: 40, backgroundColor: this.state.backgroundColor }}
-            /> */}
+            />
 
 
 
@@ -814,7 +814,7 @@ class DescriptionBeer extends React.Component{
       )
     }else{
       return(
-        <View style = {styles.iconView} >
+        <View style = {[styles.iconView , {backgroundColor: color.colorBottomTabBackground} ]} >
           <Text style = {styles.iconText} >
             Limite de recherches atteintes pour cette heure. Veuillez attendre la prochaine heure pour en rechercher de nouvelles.
           </Text>

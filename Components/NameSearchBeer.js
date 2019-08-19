@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, Text, FlatList, SafeAreaView, Dimensions } from 'react-native'
+import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, Text, FlatList, SafeAreaView, Dimensions, Alert } from 'react-native'
 import { getsBeersFromApiWithSearchedText } from '../API/UntappdApi'
 import BeerItem from './BeerItem'
 import { Madoka } from 'react-native-textinput-effects';
@@ -53,7 +53,7 @@ class NameSearchBeer extends React.Component {
     this.searchedText = text
   }
 
-  _searchBeers(){             //call when user look for an other beer
+  _searchBeers(){           //call when user look for an other beer
     this.setState(        //Re set var
       {
       isLoading: true,
@@ -140,7 +140,7 @@ class NameSearchBeer extends React.Component {
     const nbBeers = this.state.nbBeers
     if(nbBeers ===0 ){
       return(
-        <View style = {{  }} >
+        <View style = {{ marginHorizontal: 10, }} >
           <Text style = {styles.iconText} >
             Aucunes bières ne correspond à votre recherche
           </Text>
@@ -152,7 +152,7 @@ class NameSearchBeer extends React.Component {
       )
     }else if (nbBeers === -1){
         return(
-          <View style = {styles.iconView} >
+          <View style = {{ marginHorizontal: 10, }} >
             <Text style = {styles.iconText} >
               Limite de recherches atteintes pour cette heure. Veuillez attendre la prochaine heure pour en rechercher de nouvelles.
             </Text>
@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
   dspInput: {
     backgroundColor: color.colorBackground,
     borderColor: color.colorDivider,
+    borderWidth: 1,
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
