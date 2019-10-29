@@ -19,6 +19,9 @@ function toggleFavorite(state = initialState, action) {
           favoritesBeers: [...state.favoritesBeers, action.value]
         }
       }
+      // nextState={
+      //   state
+      // }
       return nextState || state
   default:
     return state
