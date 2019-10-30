@@ -48,7 +48,7 @@ class ToolTipRatios extends React.Component {
                             />
                             <Text style = {{ color: color.colorDivider, fontFamily: 'MPLUSRounded1c-Bold'}} > : Argent{'\n'}</Text>
                             </View>
-                            <Text style = {styles.desText}>Unité arbitraire sur 5.{'\n'}Même si le prix de la bière peut varier d'un bar à l'autre.{'\n'}Plus cette valeur est élevée plus la bière est chère en général.</Text>
+                            <Text style = {styles.desText}>Unité arbitraire sur 5.{'\n'}Même si le prix de la bière peut varier d'un bar à l'autre.{'\n'}Plus cette valeur est élevée plus la bière est chère.</Text>
                         </View>
                         <View style = {{ marginTop: 10 }}>
                             <View style = { styles.tooltipHeader }>
@@ -58,9 +58,15 @@ class ToolTipRatios extends React.Component {
                             />
                             <Text style = {{color: color.colorDivider,fontFamily: 'MPLUSRounded1c-Bold' }} > : TAV{'\n'}</Text>
                             </View>
-                            <Text style = {styles.desText}>Unité en degré d'alcool.{'\n'}Le titre alcoométrique volumique (TAV), aussi appelé degré alcoolique, est la proportion d'alcool dans une boisson.{'\n'}Plus cette valeur est élevée plus la bière contient de l'alcool{'\n'}</Text>
+                            <Text style = {styles.desText}>Unité en degré d'alcool.{'\n'}Le titre alcoométrique volumique (TAV), aussi appelé degré alcoolique, est la proportion d'alcool dans une boisson.{'\n'}Plus cette valeur est élevée plus la bière contient de l'alcool.{'\n'}</Text>
                             {/* <Text style = {{color: color.colorDivider, textAlign : 'right', marginRight: 25,fontFamily:'MPLUSRounded1c-Regular' , }} >source : Wikipédia</Text> */}
-                        </View>           
+                        </View> 
+                        <View>
+                            <Text style = {[styles.desText, {fontSize: 15}]}>
+                                Les critères peuvent être supprimés en touchant l'interrupteur sous la barre lors du choix des ratios. Il faut néanmoins 1 critère minimum.
+                            </Text>    
+                            
+                        </View>          
                     </View>
                 }
                 

@@ -47,38 +47,30 @@ class RatioBeer extends React.Component{
       alcool: 0,
       
       enabledSlidersIBU: true,
-      disabledSwitchIBU: false,
       colorIbu: color.colorIbu,
       
       enabledSlidersPRICE: true,
-      disabledSwitchPRICE: false,
       colorPrice: color.colorPrice,
       
       enabledSlidersABV: true,
-      disabledSwitchABV: false,
       colorAbv: color.colorAlcool,
 
       beers :[],
       isLoading: false,
 
-      nbEnableSlider: 3
+      nbEnableSlider: 3,
+
+      isFirstLaunch: false
 
     },
     this.sliderWidth = 35,
     this.sliderHeight = height/3,
     this.sliderBallIndicatorWidth = 35,
-    this.sliderBallIndicatorPosition = -40    
+    this.sliderBallIndicatorPosition = -40  
     
 
   }
-  // componentDidMount(){
-  //   console.log("toolTip " + this.toolTipVisible);
-  //   if{this.toolTipVisible !== undefined}{
-  //     this.setState({
 
-  //     })
-  //   }
-  // }
 
 
   _updateSliderIbu (value){
@@ -112,7 +104,7 @@ class RatioBeer extends React.Component{
       enabledSlidersIBU : val,
       colorIbu: colorSlider,
       nbEnableSlider: this.state.nbEnableSlider + nbToAdd
-    }, () => console.log("Nombre de critère : " + this.state.nbEnableSlider))
+    })
     
   }
   _disableSliderPrice(val){
@@ -123,7 +115,7 @@ class RatioBeer extends React.Component{
       enabledSlidersPRICE : val,
       colorPrice: colorSlider,
       nbEnableSlider: this.state.nbEnableSlider + nbToAdd
-    }, () => console.log("Nombre de critère : " + this.state.nbEnableSlider))
+    })
 
   }
   _disableSliderABV(val){
@@ -134,7 +126,7 @@ class RatioBeer extends React.Component{
       enabledSlidersABV : val,
       colorAbv: colorSlider,
       nbEnableSlider: this.state.nbEnableSlider + nbToAdd
-    }, () => console.log("Nombre de critère : " + this.state.nbEnableSlider))
+    })
 
     
   }
@@ -168,7 +160,7 @@ class RatioBeer extends React.Component{
       this.props.navigation.navigate('RatioSearchBeer', {ibu: ibu, price: price, abv: abv})
 
     }else{
-      Alert.alert("Un critère minimum est requis");
+      Alert.alert("Il faut 1 critère minimum.");
     }
     
   }

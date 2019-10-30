@@ -69,7 +69,7 @@ class Home extends React.Component {
     return(
       <View  style= {styles.logo} >
 
-        <Text style = {styles.textLogo} >
+        {/* <Text style = {styles.textLogo} >
           BieRatio
         </Text>
         <Icon
@@ -78,9 +78,15 @@ class Home extends React.Component {
           color = {color.colorDivider}
           size = {50}
           iconStyle = {styles.iconLogo}
-        />
+        /> */}
+
         <Image
-          source = {require('../Images/pbu_160_white.png')}
+          source = {require('../Images/BieRatio_Logo.png')}
+          style = {styles.BieRatio_logo}
+        />
+
+        <Image
+          source = {require('../Images/pbu_320_black.png')}
           style = {styles.untappdLogo}
         />  
       </View>
@@ -245,7 +251,12 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     right: 10,
     bottom: -20,
-  },  
+  },
+  BieRatio_logo: {
+    resizeMode: "contain",
+    width: 150,
+    height: 150,
+  } , 
   description_item: {
     fontSize: 30,
     fontWeight: '600',

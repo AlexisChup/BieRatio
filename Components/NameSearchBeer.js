@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, Text, FlatList, SafeAreaView, Dimensions, Alert } from 'react-native'
+import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, Text, FlatList, SafeAreaView, Dimensions, Alert} from 'react-native'
 import { getsBeersFromApiWithSearchedText } from '../API/UntappdApi'
 import BeerItem from './BeerItem'
 import { Madoka } from 'react-native-textinput-effects';
@@ -120,7 +120,7 @@ class NameSearchBeer extends React.Component {
     if( this.searchedText.length === 0) {
       return(
         <View style = {styles.iconView} >
-          <TouchableOpacity 
+          {/* <TouchableOpacity 
             style = { styles.iconViewIcon }
             onPress = {() => this._searchBeers()} >
             <Icon
@@ -130,7 +130,11 @@ class NameSearchBeer extends React.Component {
               color = {color.colorDivider}
               iconStyle = {{ paddingTop: 20, }}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <Image
+            source = {require('../Images/BieRatio_Logo.png')}
+            style = {styles.logoWaiting}
+          />
         </View>
       )
     }
@@ -288,6 +292,12 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: color.colorDivider
+  },
+  logoWaiting: {
+    height: null,
+    width: width,
+    resizeMode: 'contain',
+    flex: 1,
   }
 
 })

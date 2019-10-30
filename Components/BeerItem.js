@@ -2,7 +2,6 @@ import React from 'react'
 import { Image, TouchableOpacity, StyleSheet, View, Text, } from 'react-native'
 
 import {
-  Divider,
   Icon,
 } from 'react-native-elements'
 
