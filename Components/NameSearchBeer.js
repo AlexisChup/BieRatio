@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, Text, FlatList, SafeAreaView, Dimensions, Alert} from 'react-native'
+import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, Text, FlatList, SafeAreaView, Dimensions} from 'react-native'
 import { getsBeersFromApiWithSearchedText } from '../API/UntappdApi'
 import BeerItem from './BeerItem'
 import { Madoka } from 'react-native-textinput-effects';
@@ -53,15 +53,15 @@ class NameSearchBeer extends React.Component {
     this.searchedText = text
   }
 
-  _searchBeers(){           //call when user look for an other beer
-    this.setState(        //Re set var
+  _searchBeers(){           
+    this.setState(        
       {
       isLoading: true,
       beers: [],
       nbBeers: 1,
       },
       () => {
-        this._loadBeers()   //load beer in the array beers
+        this._loadBeers()   
     })
 
   }
@@ -76,9 +76,6 @@ class NameSearchBeer extends React.Component {
               isLoading: false,
             })
           }else{
-            console.log('====================================');
-            console.log("Limite d'appels atteint");
-            console.log('====================================');
             this.setState({
               nbBeers: -1,
               isLoading: false,
@@ -93,9 +90,7 @@ class NameSearchBeer extends React.Component {
     }
   }
 
-  _test(){
-      console.log("Ce que on a récuperer : " +this.state.beers[0].beer.beer_name)
-  }
+
 
   _displayLoading() {
     if(this.state.isLoading){
@@ -120,17 +115,6 @@ class NameSearchBeer extends React.Component {
     if( this.searchedText.length === 0) {
       return(
         <View style = {styles.iconView} >
-          {/* <TouchableOpacity 
-            style = { styles.iconViewIcon }
-            onPress = {() => this._searchBeers()} >
-            <Icon
-              type = "ionicon"
-              name = "ios-search"
-              size = {200}
-              color = {color.colorDivider}
-              iconStyle = {{ paddingTop: 20, }}
-            />
-          </TouchableOpacity> */}
           <Image
             source = {require('../Images/BieRatio_Logo.png')}
             style = {styles.logoWaiting}
@@ -176,7 +160,6 @@ class NameSearchBeer extends React.Component {
         <View style = { styles.dspInput } >
           <Madoka
             label={'Saisir le nom de la bière'}
-            // this is used as active and passive border color
             borderColor={this.inputColor}
             inputPadding={16}
             labelHeight={24}
@@ -273,19 +256,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-
-
-  },
-  iconViewIcon: {
-    backgroundColor: color.colorBackground,
-    borderColor: color.colorDivider,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4, 
-    elevation: 20,
-    height: 250,
-    width: 250,
   },
   iconText: {
     textAlign: 'center',
@@ -299,7 +269,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     flex: 1,
   }
-
 })
 
 

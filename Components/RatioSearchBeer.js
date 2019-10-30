@@ -14,9 +14,6 @@ import * as Font from 'expo-font'
 
 class RatioSearchBeer extends React.Component{
   static navigationOptions = () => ({
-    // headerTitleStyle : {
-    //   fonts: 10,
-    // },
     headerRight: (
       <ToolTipRatios
       />
@@ -84,14 +81,28 @@ class RatioSearchBeer extends React.Component{
           isLoading: false,
         })
       }else{
+        
         this.setState({
           beers: data["hydra:member"],
           nbBeers: data["hydra:totalItems"],
-          isLoading: false,
-        })
+          
+        }, () => this._lastCheck())
       }
       
     })
+  }
+  _lastCheck(){
+    const index = this.state.beers.findIndex(item =>  item.bid === 57894648)
+    if(index !== -1){
+      this.setState({
+        nbBeers: this.state.nbBeers -1,
+        isLoading: false,
+      })
+    }else{
+      this.setState({
+        isLoading: false,
+      })
+    }
   }
   
   _displayDetailForBeer = (bid, description, ibu, price, abv) => {
@@ -100,8 +111,9 @@ class RatioSearchBeer extends React.Component{
   }
 
 
-  _emptySearch(){
-    if ( this.state.beers.length === 0 && this.state.isLoading === false){
+  _emptySearch(){   
+    if ( this.state.nbBeers === 0 && this.state.isLoading === false){
+
       return(
         <View style = { styles.error } >
           <Text style = { styles.error_text }>Aucune bières ne correspond à vos ratios</Text>
@@ -420,18 +432,18 @@ class RatioSearchBeer extends React.Component{
   render() {
     if( !this.state.isLoading){
       return(
-        <View style = {{flex: 1, backgroundColor: color.colorBottomTabBackground}}>
+        <SafeAreaView style = {{flex: 1, backgroundColor: color.colorBottomTabBackground}}>
           {this._displayCriterion()}
           {this._emptySearch()}
           {this._displayFlatList()}
-        </View>
+        </SafeAreaView>
       )
 }
       else{
         return(
-          <View style = {{ backgroundColor: color.colorBottomTabBackground }}>
+          <SafeAreaView style = {{ backgroundColor: color.colorBottomTabBackground }}>
             { this._displayLoading() }
-          </View>
+          </SafeAreaView>
         )
       }
   }
@@ -523,16 +535,6 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: color.colorDivider,
     marginTop: 5,
-  },
-  tooltipHeader: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10
-  },
-  imageTooltip: {
-    width: 30,
-    height: 30,
-    marginTop: -5,
   },
   dspCriterions: {
     backgroundColor: color.colorBackground,

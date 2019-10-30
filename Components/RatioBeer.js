@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Image, TouchableOpacity, StyleSheet, View, Text, Dimensions, SafeAreaView, Alert} from 'react-native'
 import VerticalSlider from 'rn-vertical-slider'
-import { Icon, Tooltip, Button, Card } from 'react-native-elements'
+import { Icon,Button, Card } from 'react-native-elements'
 import ToolTipRatios from './ToolTipRatios'
 
 import { Switch } from 'react-native-switch';
@@ -214,7 +214,6 @@ class RatioBeer extends React.Component{
                   this._updateSliderPrice (value)
                 }}
                 onComplete={(value) => {
-                  //console.log("COMPLETE", value);
                 }}
                 width={ this.sliderWidth}
                 height={ this.sliderHeight}
@@ -382,19 +381,6 @@ const styles = StyleSheet.create({
     color: color.colorBackground,
     marginRight: 10,
     fontFamily: 'MPLUSRounded1c-Bold',
-  },
-  buttonBuyIon: {
-
-  }, 
-  tooltipHeader: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10
-  },
-  imageTooltip: {
-    width: 30,
-    height: 30,
-    marginTop: -5,
   },
   icon: {
     marginLeft: 8,

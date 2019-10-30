@@ -1,10 +1,9 @@
 import React from 'react'
 
-import { SafeAreaView ,ActivityIndicator, Image, StyleSheet, View, FlatList, Text, Dimensions,TouchableOpacity } from 'react-native'
+import { Image, StyleSheet, View, Text, Dimensions,TouchableOpacity } from 'react-native'
 import { Slider, Button, Icon } from 'react-native-elements'
 import Tooltip from 'react-native-walkthrough-tooltip';
 import * as color from '../assets/colors'
-var {height, width } = Dimensions.get('window')
 
 class ToolTipRatios extends React.Component {
     constructor(props) {
@@ -22,7 +21,6 @@ class ToolTipRatios extends React.Component {
                 animated = {true}
                 isVisible= {this.state.toolTipVisible}
                 placement= "bottom"
-                // childlessPlacementPadding= {50}
                 arrowSize = {{width: 18, height: 10}}
                 arrowStyle = {{ alignSelf: "center" }}
                 contentStyle= {{ marginLeft: 15, }}
@@ -38,7 +36,6 @@ class ToolTipRatios extends React.Component {
                             <Text style = {{  color: color.colorDivider,fontFamily: 'MPLUSRounded1c-Bold' }} > : IBU{'\n'}</Text>
                             </View>
                             <Text style = {styles.desText}>Unité en amertume.{'\n'}International bitterness unit (symbole IBU) est une unité utilisée par les brasseurs pour mesurer l'amertume de leurs bières.{'\n'}Plus cette valeur est élevée plus la bière est amère. {'\n'}</Text>
-                            {/* <Text style = {{ color: color.colorDivider,textAlign : 'right', marginRight: 25,fontFamily:'MPLUSRounded1c-Regular' , }} >source : Wikipédia</Text> */}
                         </View>
                         <View style = {{ marginTop: 10 }}>
                             <View style = { styles.tooltipHeader }>
@@ -59,7 +56,6 @@ class ToolTipRatios extends React.Component {
                             <Text style = {{color: color.colorDivider,fontFamily: 'MPLUSRounded1c-Bold' }} > : TAV{'\n'}</Text>
                             </View>
                             <Text style = {styles.desText}>Unité en degré d'alcool.{'\n'}Le titre alcoométrique volumique (TAV), aussi appelé degré alcoolique, est la proportion d'alcool dans une boisson.{'\n'}Plus cette valeur est élevée plus la bière contient de l'alcool.{'\n'}</Text>
-                            {/* <Text style = {{color: color.colorDivider, textAlign : 'right', marginRight: 25,fontFamily:'MPLUSRounded1c-Regular' , }} >source : Wikipédia</Text> */}
                         </View> 
                         <View>
                             <Text style = {[styles.desText, {fontSize: 15}]}>

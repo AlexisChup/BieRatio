@@ -1,8 +1,6 @@
 import React from 'react'
-import { ActivityIndicator, Image, TouchableOpacity, StyleSheet, View, Text } from 'react-native'
-import {
-  Divider,
-} from 'react-native-elements'
+import { Image, TouchableOpacity, StyleSheet, View, Text } from 'react-native'
+
 
 import FadeIn from './Animations/FadeIn'
 
@@ -125,45 +123,44 @@ class BeerItemRatio extends React.Component {
 
   render(){
     const { beer, displayDetailForBeer } = this.props
-    return(
-      <FadeIn>
-        <TouchableOpacity
-          onPress ={() => displayDetailForBeer(beer.bid, beer.description, beer.ibu, beer.price, beer.abv)}
-          style = {styles.mainContainer}
-        >
-          <View style = {styles.beer_item}>
-            <Image
-              style ={styles.image_item}
-              source={{uri: beer.label}}
-            />
-            <View style = {styles.description_item}>
-              <Text style = {styles.title_item} numberOfLines={1}>{beer.name}</Text>
-
-              <View style = {styles.texte_item}>
-                {this._showAbuCriterion()}
-                
-                {/* {this._showFirstDivider()} */}
-                {this._showPriceCriterion()}
-
-                {/* {this._showSecondDivider()} */}
-
-                {this._showAbvCriterion()}
-
-                {this._showAnyCriterion()}
-
-
+    if(beer.bid !== 57894648){
+      return(
+        <FadeIn>
+          <TouchableOpacity
+            onPress ={() => displayDetailForBeer(beer.bid, beer.description, beer.ibu, beer.price, beer.abv)}
+            style = {styles.mainContainer}
+          >
+            <View style = {styles.beer_item}>
+              <Image
+                style ={styles.image_item}
+                source={{uri: beer.label}}
+              />
+              <View style = {styles.description_item}>
+                <Text style = {styles.title_item} numberOfLines={1}>{beer.name}</Text>
+  
+                <View style = {styles.texte_item}>
+                  {this._showAbuCriterion()}
+                  
+                  {this._showPriceCriterion()}
+  
+  
+                  {this._showAbvCriterion()}
+  
+                  {this._showAnyCriterion()}
+  
+  
+                </View>
+  
               </View>
-
             </View>
-          </View>
-
-        </TouchableOpacity>
-      </FadeIn>
-
-
-
-
-    )
+  
+          </TouchableOpacity>
+        </FadeIn>
+  
+      )
+    }else {
+      return null
+    }
   }
 
 

@@ -1,20 +1,15 @@
-//Components/Home.js PAGE D'ACCEUIL
 
 import React from 'react'
 import { Dimensions, Image, TouchableOpacity, StyleSheet, Text, SafeAreaView, Platform,AsyncStorage,ActivityIndicator, View } from 'react-native'
 
 import checkIfFirstLaunch from '../assets/checkIfFirstLaunch';
-import * as Font from 'expo-font'
 
 import {
-  Card,
   Divider,
   Icon,
-  Button
 } from 'react-native-elements'
 
 import * as color from '../assets/colors'
-import { contains } from 'react-native-redash';
 
 const HAS_LAUNCHED = 'hasLaunched';
 
@@ -24,9 +19,6 @@ class Home extends React.Component {
 
   constructor(props) {
     super(props)
-    this.differentMenu = {
-      menu: ["La bière de la semaine","Bars à proximités","Mon compte"]
-    },
     this.sizeIcon = height/10
     this.iconColor = color.colorIbu
     this.state = {
@@ -45,11 +37,7 @@ class Home extends React.Component {
 
   _getKeyFromUntappd(){
     const isFirstLaunch = this.state.isFirstLaunch
-    console.log('====================================');
-    console.log("First launch ? " + isFirstLaunch + " || Plateform : " +Platform.OS);
-    console.log('====================================');
     if(isFirstLaunch){
-      //get key on Untappd
       this.setState({
         hasCheckedAsyncStorage: true
       })
@@ -68,23 +56,10 @@ class Home extends React.Component {
   _dspLogo(){
     return(
       <View  style= {styles.logo} >
-
-        {/* <Text style = {styles.textLogo} >
-          BieRatio
-        </Text>
-        <Icon
-          type = 'ionicon'
-          name = 'md-beer'
-          color = {color.colorDivider}
-          size = {50}
-          iconStyle = {styles.iconLogo}
-        /> */}
-
         <Image
           source = {require('../Images/BieRatio_Logo.png')}
           style = {styles.BieRatio_logo}
         />
-
         <Image
           source = {require('../Images/pbu_320_black.png')}
           style = {styles.untappdLogo}
@@ -104,52 +79,9 @@ class Home extends React.Component {
       return(
 
         <SafeAreaView style = {styles.main_container}>
-
-          {/* <Image
-            style = {styles.image_logo}
-            source = {require('../Images/ic_logo_app.jpg')}
-          /> */}
           {this._dspLogo()}
 
           <Divider style = {{ backgroundColor: color.colorDivider, height:5 }} />
-          {/* <TouchableOpacity
-            style = {styles.item}
-            onPress = {() => this.props.navigation.navigate('RatioBeer')}>
-            <Icon
-              name = "bar-chart-2"
-              type = "feather"
-              color = {this.iconColor}
-              size = {this.sizeIcon}
-              iconStyle = { styles.icon }
-            />
-            <Text style = {styles.description_item}>Ratio</Text>
-          </TouchableOpacity>
-          <Divider style = {styles.divider} />
-          <TouchableOpacity
-            style = {styles.item}
-            onPress = {() => this.props.navigation.navigate('NameSearchBeer')}>
-            <Icon
-              name = "format-letter-case"
-              type = "material-community"
-              color = {this.iconColor}
-              size = {this.sizeIcon}
-              iconStyle = { styles.icon }
-            />
-            <Text style = {styles.description_item}>Prénom</Text>
-          </TouchableOpacity>
-          <Divider style = {styles.divider} />
-          <TouchableOpacity
-            style = {styles.item}
-            onPress = {() => this.props.navigation.navigate('FavoriteBeer')}>
-            <Icon
-              name = "ios-heart"
-              type = "ionicon"
-              color = {this.iconColor}
-              size = {this.sizeIcon}
-              iconStyle = { styles.icon, {marginLeft: 25} }
-            />
-            <Text style = { styles.description_item }>Favoris</Text>
-          </TouchableOpacity> */}
           <Text style = {styles.presentation} >
             TYPE DE RECHERCHE 
           </Text>
@@ -191,12 +123,6 @@ class Home extends React.Component {
               size = {50}
             />
           </TouchableOpacity>
-            
-          {/* <Button
-            buttonStyle = {{  height: 50 }}
-            title = "Remettre First launch"
-            onPress = {() => this._setFirstLaunch()}
-          /> */}
         </SafeAreaView>
       )
   
@@ -222,10 +148,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: color.colorBottomTabBackground,
   },
-  image_logo: {
-    flex: 2,
-    width: width,
-  },
   logo: {
     flex: 3,
     justifyContent: "center",
@@ -233,16 +155,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
 
   },
-  textLogo: {
-    fontFamily: 'Pacifico-Regular',
-    textAlign: 'center',
-    fontSize: 50,
-    color : color.colorDivider
-  },
-  iconLogo: {
-    marginLeft: 20,
-
-  }, 
   untappdLogo: {
     width: 80,
     height: 80,
@@ -257,22 +169,8 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   } , 
-  description_item: {
-    fontSize: 30,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginRight: 20,
-    flex: 1,
-    color: color.colorDivider
-  },
   icon: {
     marginLeft: 20,
-  },
-  item: {
-    flex: 1,
-    margin: 3,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   divider: {
     backgroundColor: color.colorDivider,
@@ -332,19 +230,6 @@ const styles = StyleSheet.create({
     fontFamily: 'MPLUSRounded1c-Bold',
 
   },
-  dividerCard: {
-    backgroundColor: color.colorPrice,
-    height: 5,
-    borderRadius: width/16,
-    marginHorizontal: width/20,
-    marginBottom: 20,
-  },
-  dividerCardFavorite: {
-    backgroundColor: color.colorPrice,
-    height: 5,
-    borderRadius: width/16,
-    marginHorizontal: width/20,
-  },
   presentation: {
     textAlign: "center",
     fontFamily: "MPLUSRounded1c-Bold",
@@ -352,7 +237,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: color.colorDivider
   },
-
 })
 
 

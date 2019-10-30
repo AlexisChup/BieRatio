@@ -61,8 +61,6 @@ class BeerItem extends React.Component {
       if(!this.state.isLoading){
 
         const { beer, displayDetailForBeer } = this.props
-
-
         return(
 
           <FadeIn>
@@ -101,7 +99,7 @@ class BeerItem extends React.Component {
     
       else{
         return(
-          <View></View>
+          null
         )
       }
       
@@ -146,10 +144,6 @@ const styles = StyleSheet.create({
   flag:{
     justifyContent: 'center',
     flexDirection: 'row',
-  },
-  divider: {
-    height: 5,
-    backgroundColor: color.colorDivider,
   },
   image: {
     marginTop: 10,

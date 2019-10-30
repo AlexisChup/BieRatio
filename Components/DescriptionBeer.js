@@ -1,5 +1,5 @@
 import React from 'react'
-import {  ScrollView, ActivityIndicator, Image, StyleSheet, View, TextInput, Text, Platform, Alert, Animated, Linking, Dimensions, TouchableOpacity } from 'react-native'
+import { SafeAreaView, ScrollView, ActivityIndicator, Image, StyleSheet, View, Text, Linking } from 'react-native'
 import { getBeerDetailFromApi } from '../API/UntappdApi'
 import { getBeerByBid } from '../API/BieRatioApi'
 import VerticalSlider from 'rn-vertical-slider'
@@ -11,21 +11,14 @@ import ViewMoreText from 'react-native-view-more-text';
 
 import { Card, Icon, ThemeProvider ,Button, } from 'react-native-elements'
 
-import { ProviderTypes, TranslatorConfiguration, TranslatorFactory } from 'react-native-power-translator';
-
-import { keyMicrosftAzure } from '../Access_Token/keyMicrosoftAzure'
-
 import * as color  from '../assets/colors'
 
-import EnlargeShrink from './Animations/EnlargeShrink'
-
-import { Ipv4 } from '../assets/Ip'
 import ToolTipRatios from './ToolTipRatios'
 
-var {height, width} = Dimensions.get('window');
 
 
-//TranslatorConfiguration.setConfig(ProviderTypes.Microsoft, keyMicrosftAzure,'fr');
+
+
 
 class DescriptionBeer extends React.Component{
   static navigationOptions = ({}) => ({
@@ -41,7 +34,6 @@ class DescriptionBeer extends React.Component{
       beer: undefined,
       beerToSendFavorite: undefined,
       isLoading: true,
-      progress: 0,
       codeState: undefined,
       disabled: true,
       addButon: "Déjà existante",
@@ -155,9 +147,6 @@ class DescriptionBeer extends React.Component{
 
   _displayFlag(){
     const beer = this.state.beer
-    console.log('====================================');
-    console.log('bid : ' + beer.bid)
-    console.log('====================================');
     const { getCode } = require('country-list');
     var codeState = this.state.existInAPI === true ? getCode (beer.countryName) : getCode(beer.brewery.country_name)
     if(codeState === undefined){
@@ -505,9 +494,7 @@ class DescriptionBeer extends React.Component{
 
       const beer = this.state.beer
       const title = this.state.existInAPI === true ? beer.name : beer.beer_name
-      const ratingScore = this.state.existInAPI === true ? beer.ratingScore : beer.rating_score.toFixed(1)
       if( beer != undefined){
-        const { selectedIndex } = this.state
         return(
           <ScrollView style = {styles.main_container}>
             <Card
@@ -531,13 +518,7 @@ class DescriptionBeer extends React.Component{
               </View>
             </Card>
  
-
-
-
-
             {this._displaySlider()}
-
-            
 
             {this._displayTextDescription()}
 
@@ -561,10 +542,6 @@ class DescriptionBeer extends React.Component{
               {this._displayFavoriteBeer()}
 
             </View>
-
-
-
-
             <View style = {{ marginBottom: 10 }} ></View>
 
           </ScrollView>
@@ -579,14 +556,14 @@ class DescriptionBeer extends React.Component{
     
     if(this.state.callRemaining){
       return(
-        <View style={styles.main_container}>
+        <SafeAreaView style={styles.main_container}>
           {this._displayLoading()}
           {this._displayBeer()}
-        </View>
+        </SafeAreaView>
       )
     }else{
       return(
-        <View style = {[styles.iconView , {backgroundColor: color.colorBottomTabBackground} ]} >
+        <SafeAreaView style = {[styles.iconView , {backgroundColor: color.colorBottomTabBackground} ]} >
           <Text style = {styles.iconText} >
             Limite de recherches atteintes pour cette heure. Veuillez attendre la prochaine heure pour en rechercher de nouvelles.
           </Text>
@@ -594,7 +571,7 @@ class DescriptionBeer extends React.Component{
             style = {styles.iconImage}
             source = {require('../Images/emoji_man_shrugging.png')}
           />
-        </View>
+        </SafeAreaView>
       )
     }
   }
@@ -637,9 +614,6 @@ const styles = StyleSheet.create({
     fontFamily: 'MPLUSRounded1c-Bold',
     fontWeight: "300",
   },
-  buttonBuyIon: {
-
-  }, 
   image_slider: {
     height: 30,
     width: 30,
@@ -715,11 +689,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
 
   },
-  header_image: {
-    width: 35,
-    height: 35,
-    marginLeft: 25,
-  },
   show_More: {
     textAlign: 'right',
     color: color.colorAlcool,
@@ -754,245 +723,3 @@ const mapStateToProps = (state) => {
 
 
 export default connect(mapStateToProps)(DescriptionBeer)
-  // handleClick = () => {
-  //   Linking.canOpenURL(this.props.url).then(supported => {
-  //     if (supported) {
-  //       Linking.openURL(this.props.url);
-  //     } else {
-  //       console.log("Don't know how to open URI: " + this.props.url);
-  //     }
-  //   });
-  // }
-
-  // _updateDescriptionAfterToggleFavorite(){
-  //   /*
-  //         TRADUCTION NE MARCHE PLUS !!!
-  //   */
-  //   // const beer = this.state.beer
-  //   // var description = beer.beer_description
-  //   // this.setState({
-  //   //   isLoading: true,
-  //   // })
-  //   // const translator = TranslatorFactory.createTranslator();
-  //   // translator.translate(description, 'fr').then(translated => {
-  //   // //Do something with the translated text which would be in French
-  //   //   description = translated
-  //   //   this.setState({
-  //   //     description: description
-  //   //   }, () => this._addToAPIAfterToggleFavorite())
-
-  //   // })
-    
-  //   const beer = this.state.beer
-  //   var description = beer.beer_description
-  //   this.setState({
-  //     isLoading: true,
-  //     description: description
-  //   }, () => this._addToAPIAfterToggleFavorite())
-  
-  // }
-  // _addToAPIAfterToggleFavorite(){
-  //   const beer = this.state.beer
-  //   const imageHD =  beer.beer_label_hd.length > 0 ? beer.beer_label_hd : beer.beer_label
-  //   const url = 'https://frozen-beyond-26948.herokuapp.com/api/beers'
-    
-  //   if(this.state.priceText.length === 3 && parseFloat(this.state.priceText)>= 0 && parseFloat(this.state.priceText)<= 5  ){
-  //     fetch(url, {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         bid: beer.bid,
-  //         name: beer.beer_name,
-  //         abv: beer.beer_abv,
-  //         ibu: beer.beer_ibu,
-  //         price: parseFloat(this.state.priceText),
-  //         ratingScore :parseFloat(beer.rating_score.toFixed(1)),
-  //         ratingCount :1,
-  //         description: this.state.description,
-  //         label: imageHD,
-  //         countryName : beer.brewery.country_name
-  //       }),
-  //     }).then(response => {
-  //       const price = parseFloat(this.state.text)
-  //       if(response.status === 201){
-  //         this.setState({
-  //           disabled: true,
-  //           addButon: "Bière envoyé !",
-  //           price : price,
-  //           editable: false,
-  //           text: "Prix envoyé !",
-  //           backgroundColor: '#D9D9D9',
-  //           randomDisabled: true,
-            
-  //         }, () => this._reloadBeerAfterAdToToggleFavorite())
-  //       }
-  //     });
-  //   }
-  //   else{
-  //     this.setState({
-  //       isLoading: false
-  //     })
-  //     Alert.alert('Le prix doit être compris entre 0.0 et 5.0')
-  //   }
-  // }
-
-  // // _reloadBeerAfterAdToToggleFavorite(){
-  // //   getBeerByBid(this.props.navigation.state.params.bid).then(data => {  
-  // //     this.setState({
-  // //       beer: data["hydra:member"][0],
-  // //       existInAPI: true,
-  // //     }, () => {this._checkPropsAfterAdd()}  )
-  // //   })
-  // // }
-  // // _reloadBeerAfterAd(){
-  // //   getBeerByBid(this.props.navigation.state.params.bid).then(data => {  
-  // //     this.setState({
-  // //       beer: data["hydra:member"][0],
-  // //       existInAPI: true,
-  // //     }, () => {this._checkProps()}  )
-  // //   })
-  // // }
-
-  // // _updateDescription(){
-  // //   /*
-  // //         TRADUCTION NE MARCHE PLUS !!!
-  // //   */
-  // //   // const beer = this.state.beer
-  // //   // var description = beer.beer_description
-  // //   // this.setState({
-  // //   //   isLoading: true,
-  // //   // })
-  // //   // const translator = TranslatorFactory.createTranslator();
-  // //   // translator.translate(description, 'fr').then(translated => {
-  // //   // //Do something with the translated text which would be in French
-  // //   //   description = translated
-  // //   //   this.setState({
-  // //   //     description: description
-  // //   //   }, () => this._addToAPI())
-
-  // //   // })
-
-
-  // //   const beer = this.state.beer
-  // //   var description = beer.beer_description
-  // //   this.setState({
-  // //     isLoading: true,
-  // //     description: description
-  // //     }, () => this._addToAPI())
-
-  // // }
-  
-  // // _addToAPI(){
-  // //   const beer = this.state.beer
-  // //   const imageHD =  beer.beer_label_hd.length > 0 ? beer.beer_label_hd : beer.beer_label
-  // //   const url = 'http://' + Ipv4 + ':8000/api/beers'
-  // //   console.log("En train de poster  , url : " + url);
-    
-  // //   //const url = 'https://frozen-beyond-26948.herokuapp.com/api/beers'
-    
-  // //   if(this.state.priceText.length === 3 && parseFloat(this.state.priceText)>= 0 && parseFloat(this.state.priceText)<= 5  ){
-  // //     fetch(url, {
-  // //       method: 'POST',
-  // //       headers: {
-  // //         Accept: 'application/json',
-  // //         'Content-Type': 'application/json',
-  // //       },
-  // //       body: JSON.stringify({
-  // //         bid: beer.bid,
-  // //         name: beer.beer_name,
-  // //         abv: beer.beer_abv,
-  // //         ibu: beer.beer_ibu,
-  // //         price: parseFloat(this.state.priceText),
-  // //         ratingScore :parseFloat(beer.rating_score.toFixed(1)),
-  // //         ratingCount :1,
-  // //         description: this.state.description,
-  // //         label: imageHD,
-  // //         countryName : beer.brewery.country_name
-  // //       }),
-  // //     }).then(response => {
-  // //       const price = parseFloat(this.state.text)
-  // //       if(response.status === 201){
-  // //         this.setState({
-  // //           disabled: true,
-  // //           addButon: "Bière envoyé !",
-  // //           price : price,
-  // //           editable: false,
-  // //           text: "Prix envoyé !",
-  // //           backgroundColor: '#D9D9D9',
-  // //           randomDisabled: true,
-            
-
-            
-            
-  // //         }, () => this._reloadBeerAfterAd() )
-  // //       }else {
-  // //         console.log("Pas poster");
-  // //       }
-  // //     });
-  // //   }
-  // //   else{
-  // //     this.setState({
-  // //       isLoading: false
-  // //     })
-  // //     Alert.alert('Le prix doit être compris entre 0.0 et 5.0')
-  // //   }
-  // // }
-
-    // _getRandomColor() {
-  //   var letters = '0123456789ABCDEF';
-  //   var color = '#';
-  //   for (var i = 0; i < 6; i++) {
-  //     color += letters[Math.floor(Math.random() * 16)];
-  //   }
-  //   return color;
-  // }
-
-  // _randomPrice(){
-  //   const price = (Math.random() *5).toFixed(1)
-  //   this.setState({
-  //     priceText : price,
-  //     backgroundColor: this._getRandomColor()
-  //   })
-  // }
-
-               {/* <View style = {{ flexDirection: 'row', justifyContent: "space-evenly" }} >
-               <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >Saisir Prix : </Text>
-               <TextInput
-                editable = {this.state.editable}
-                value = {this.state.priceText}
-                onChangeText ={(text) => this.setState({ priceText: text }) }
-                style = {{ textAlign: 'center', fontSize: 20, height: 30, color: '#D9D9D9', width: 150, color: this.state.backgroundColor }}
-                placeholder = "Veuillez saisir le prix/ 5"
-                placeholderTextColor = '#D9D9D9'
-                onSubmitEditing = {() => this._updateDescription()}
-              />
-            </View> */}
-
-
-            {/* <View style = {{flexDirection: "row", justifyContent : "space-evenly", alignItems: 'center'}} >
-              <Text style = {{ fontSize: 20, fontWeight: 'bold' }}>Random Prix :</Text>
-              <Button 
-                title = {this.state.priceText}
-                disabled = {this.state.randomDisabled}
-                onPress = {() => this._randomPrice() }
-                buttonStyle = {{margin : 10, height: 40, width: 150, backgroundColor:this.state.backgroundColor }}
-                titleStyle = {{ fontSize:20 }}
-              />
-            </View> */}
-
-            {/* <Button
-              title = {this.state.addButon}
-              disabled = {this.state.disabled}
-              onPress = {() => this._updateDescription()}
-              buttonStyle = {{margin: 10, height: 40, backgroundColor: this.state.backgroundColor }}
-            /> */}
-
-  // _checkPropsAfterAdd(){
-  //   this.setState({
-  //     priceText: this.state.beer.price.toFixed(1),
-  //     isLoading: false,
-  //   }, this._toggleFavorite())
-  // }
