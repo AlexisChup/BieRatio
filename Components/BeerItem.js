@@ -9,8 +9,6 @@ import {
 import Flag from 'react-native-flags';
 
 import FadeIn from './Animations/FadeIn'
-
-import { getBeerByBid } from '../API/BieRatioApi'
 import * as color from '../assets/colors'
 
 class BeerItem extends React.Component {
@@ -18,41 +16,12 @@ class BeerItem extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      colorPastille : "red",
-      isLoading: true
+      isLoading: false
     }
   }
 
-  componentDidMount(){
-    getBeerByBid(this.props.beer.beer.bid).then(data => {
-      // console.log('====================================');
-      // console.log("totalItems: " + data["hydra:totalItems"]);
-      // console.log('====================================');
-      if(data["hydra:totalItems"] === 1){
-        this.setState({
-          colorPastille: "green"
-        }
-        , ()=> this._updatePastille())
-      }else{
-        this.setState({
-          colorPastille: "red"
-        }, () => this._upateState())
-        
-      }
-    })
-  }
 
-  _upateState(){
-    this.setState({
-      isLoading: false
-    })
-  }
 
-  _updatePastille(){
-    this.setState({
-      isLoading: false
-    })
-  }
 
   _displayFlag(){
     const beer = this.props.beer
@@ -111,7 +80,6 @@ class BeerItem extends React.Component {
                   <Text style = {styles.title_item} numberOfLines={1}>
                     {beer.beer.beer_name}
                   </Text>
-                  <View style = {{ width: 20, height: 20, backgroundColor: this.state.colorPastille, borderRadius: 100/2 }} ></View>
                   <View style = { styles.flag }>
                     <Image
                       style = { styles.image }
@@ -122,7 +90,6 @@ class BeerItem extends React.Component {
                   </View>
                 </View>
               </View>
-              {/* <Divider style = { styles.divider }/> */}
 
             </TouchableOpacity>
           </FadeIn>
