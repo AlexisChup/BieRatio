@@ -104,153 +104,72 @@ class RatioBeer extends React.Component{
   }
 
 
-  _disableSliderIBU(val, nb){
+  _disableSliderIBU(val){
     const colorSlider = val === false ? color.colorDisabled : color.colorIbu
     const nbToAdd = val === false ? -1 : 1
-    if(!this.state.disabledSwitchIBU){
-
-      this.setState(
-        {
-        enabledSlidersIBU : val,
-        colorIbu: colorSlider,
-        nbEnableSlider: this.state.nbEnableSlider + nbToAdd
-        }, () => this._updateDisabledSwitch(val, nb))
-    }else{
-      console.log('====================================');
-      console.log("Nombre de sliders dispo : " + this.state.nbEnableSlider+ "\n Disable ? :\nIBU " + this.state.disabledSwitchIBU + "\nPRICE: "+ this.state.disabledSwitchPRICE +"\nABV : " +this.state.disabledSwitchABV);
-      console.log('====================================');
-      this._updateDisabledSwitch(val, nb);
-    }
+    this.setState(
+      {
+      enabledSlidersIBU : val,
+      colorIbu: colorSlider,
+      nbEnableSlider: this.state.nbEnableSlider + nbToAdd
+    }, () => console.log("Nombre de critère : " + this.state.nbEnableSlider))
+    
   }
-  _disableSliderPrice(val, nb){
+  _disableSliderPrice(val){
     const colorSlider = val === false ? color.colorDisabled : color.colorPrice
     const nbToAdd = val === false ? -1 : 1
-    if(!this.state.disabledSwitchPRICE){
-      this.setState(
-        {
-        enabledSlidersPRICE : val,
-        colorPrice: colorSlider,
-        nbEnableSlider: this.state.nbEnableSlider + nbToAdd
-        }, () => this._updateDisabledSwitch(val, nb))
-    }else{
-      console.log('====================================');
-      console.log("Nombre de sliders dispo : " + this.state.nbEnableSlider+ "\n Disable ? :\nIBU " + this.state.disabledSwitchIBU + "\nPRICE: "+ this.state.disabledSwitchPRICE +"\nABV : " +this.state.disabledSwitchABV);
-      console.log('====================================');
-      this._updateDisabledSwitch(val, nb);
-    }
+    this.setState(
+      {
+      enabledSlidersPRICE : val,
+      colorPrice: colorSlider,
+      nbEnableSlider: this.state.nbEnableSlider + nbToAdd
+    }, () => console.log("Nombre de critère : " + this.state.nbEnableSlider))
+
   }
-  _disableSliderABV(val, nb){
+  _disableSliderABV(val){
     const colorSlider = val === false ? color.colorDisabled : color.colorAlcool
     const nbToAdd = val === false ? -1 : 1
-    if(!this.state.disabledSwitchABV){
-      this.setState(
-        {
-        enabledSlidersABV : val,
-        colorAbv: colorSlider,
-        nbEnableSlider: this.state.nbEnableSlider + nbToAdd
-        }, () => this._updateDisabledSwitch(val, nb))
+    this.setState(
+      {
+      enabledSlidersABV : val,
+      colorAbv: colorSlider,
+      nbEnableSlider: this.state.nbEnableSlider + nbToAdd
+    }, () => console.log("Nombre de critère : " + this.state.nbEnableSlider))
 
-    }else{
-      console.log('====================================');
-      console.log("Nombre de sliders dispo : " + this.state.nbEnableSlider+ "\n Disable ? :\nIBU " + this.state.disabledSwitchIBU + "\nPRICE: "+ this.state.disabledSwitchPRICE +"\nABV : " +this.state.disabledSwitchABV);
-      console.log('====================================');
-      this._updateDisabledSwitch(val, nb);
-    }
+    
   }
 
-  _updateDisabledSwitch(val,type){
-    const nbES = this.state.nbEnableSlider
 
-    console.log("On vérifie");
-    console.log('====================================');
-    console.log("Nombre de enable : " + nbES);
-    
-    console.log("EnableIBU : " + this.state.enabledSlidersIBU);
-    console.log("\tDisable ? : " +this.state.disabledSwitchIBU);
-    
-    console.log("EnablePrice : " + this.state.enabledSlidersPRICE);
-    console.log("\tDisable ? : " +this.state.disabledSwitchPRICE);
-
-    console.log("EnableABV : " + this.state.enabledSlidersABV);
-    console.log("\tDisable ? : " +this.state.disabledSwitchABV);
-
-    console.log('====================================');
-        
-    
-    //S'il y en à disabler
-    if(nbES === 1){
-      Alert.alert("Un critère minimum est requis")
-      console.log("Val ? : " + val);
-      
-      //IBU
-      if(this.state.enabledSlidersIBU === true){
-        var disSI = true
-        console.log("!!!!ibu!!!");
-        
-      }else{
-        var disSI = false
-      }
-
-      //PRICE
-      if(this.state.enabledSlidersPRICE === true){
-        var disSP = true
-        console.log("!!!price!!!");
-        
-      }else{
-        var disSP = false
-      }
-
-      //ABV
-      if(this.state.enabledSlidersABV === true){
-        var disSA = true
-        console.log("!!!abv!!!");
-        
-      }else{
-        var disSA = false
-      }
-
-      //On modifie
-      this.setState({
-        disabledSwitchIBU: disSI,
-        disabledSwitchPRICE: disSP,
-        disabledSwitchABV: disSA
-      })
-      
-    }
-    //Sinon on active tout
-    else{
-      this.setState({
-        disabledSwitchIBU: false,
-        disabledSwitchPRICE: false,
-        disabledSwitchABV: false
-      })
-    }
-  }
 
 
 
 
 
   _displayRatioSearchBeer(){
-    var ibu =0
-    if( this.state.enabledSlidersIBU ){
-      ibu = this.state.ibu
-    }else if( !this.state.enabledSlidersIBU ){
-      ibu = 150
+    if(this.state.nbEnableSlider > 0){
+      var ibu =0
+      if( this.state.enabledSlidersIBU ){
+        ibu = this.state.ibu
+      }else if( !this.state.enabledSlidersIBU ){
+        ibu = 150
+      }
+      var price =0
+      if( this.state.enabledSlidersPRICE ){
+        price = this.state.price
+      }else if( !this.state.enabledSlidersPRICE ){
+        price = 150
+      }
+      var abv =0
+      if( this.state.enabledSlidersABV){
+        abv = this.state.alcool
+      }else if( !this.state.enabledSlidersABV ) {
+        abv = 150
+      }
+      this.props.navigation.navigate('RatioSearchBeer', {ibu: ibu, price: price, abv: abv})
+
+    }else{
+      Alert.alert("Un critère minimum est requis");
     }
-    var price =0
-    if( this.state.enabledSlidersPRICE ){
-      price = this.state.price
-    }else if( !this.state.enabledSlidersPRICE ){
-      price = 150
-    }
-    var abv =0
-    if( this.state.enabledSlidersABV){
-      abv = this.state.alcool
-    }else if( !this.state.enabledSlidersABV ) {
-      abv = 150
-    }
-    this.props.navigation.navigate('RatioSearchBeer', {ibu: ibu, price: price, abv: abv})
     
   }
 
@@ -347,8 +266,7 @@ class RatioBeer extends React.Component{
           <View style = {styles.description_slider}>
             <Switch
               value={ this.state.enabledSlidersIBU }
-              disabled= {this.state.disabledSwitchIBU}
-              onValueChange={(val) => this._disableSliderIBU(val, 1)}
+              onValueChange={(val) => this._disableSliderIBU(val)}
               circleSize={40}
               barHeight={10}
               circleBorderWidth={0}
@@ -368,8 +286,7 @@ class RatioBeer extends React.Component{
             />
             <Switch
               value={ this.state.enabledSlidersPRICE}
-              onValueChange={(val) => this._disableSliderPrice(val, 2)}
-              disabled= {this.state.disabledSwitchPRICE}
+              onValueChange={(val) => this._disableSliderPrice(val)}
               circleSize={40}
               barHeight={10}
               circleBorderWidth={0}
@@ -384,13 +301,12 @@ class RatioBeer extends React.Component{
 
                 />
               }
-              changeValueImmediately={false}
+              changeValueImmediately={true}
 
             />
             <Switch
               value={ this.state.enabledSlidersABV}
-              onValueChange={(val) => this._disableSliderABV(val, 3)}
-              disabled= {this.state.disabledSwitchABV}
+              onValueChange={(val) => this._disableSliderABV(val)}
               circleSize={40}
               barHeight={10}
               circleBorderWidth={0}
